@@ -1,0 +1,130 @@
+{
+  "id": "13deee53-f5ed-448d-a63a-216ac2e39532",
+  "at": "2026-09-21T20:19:33.807Z",
+  "url": "chrome-error://chromewebdata/",
+  "title": "127.0.0.1",
+  "frames": [
+    []
+  ],
+  "frameTexts": {
+    "(top)": "127.0.0.1 is blocked This page has been blocked by Chromium ERR_BLOCKED_BY_CLIENT Reload"
+  },
+  "nodeCount": 5,
+  "nodes": [
+    {
+      "ref": "(top)::1",
+      "role": "heading",
+      "name": "127.0.0.1 is blocked",
+      "enabled": true,
+      "visible": true,
+      "framePath": [],
+      "childRefs": [
+        "(top)::2"
+      ],
+      "raw": {
+        "tag": "h1",
+        "attrs": {}
+      },
+      "text": "127.0.0.1 is blocked",
+      "labelled": false,
+      "bounds": {
+        "x": 340,
+        "y": 239,
+        "w": 600,
+        "h": 30
+      }
+    },
+    {
+      "ref": "(top)::2",
+      "role": "text",
+      "name": "127.0.0.1",
+      "enabled": true,
+      "visible": true,
+      "framePath": [],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "attrs": {}
+      },
+      "text": "127.0.0.1",
+      "labelled": false,
+      "bounds": {
+        "x": 340,
+        "y": 240,
+        "w": 115,
+        "h": 28
+      },
+      "parentRef": "(top)::1"
+    },
+    {
+      "ref": "(top)::3",
+      "role": "text",
+      "name": "This page has been blocked by Chromium",
+      "enabled": true,
+      "visible": true,
+      "framePath": [],
+      "childRefs": [],
+      "raw": {
+        "tag": "p",
+        "attrs": {}
+      },
+      "text": "This page has been blocked by Chromium",
+      "labelled": false,
+      "bounds": {
+        "x": 340,
+        "y": 288,
+        "w": 315,
+        "h": 18
+      }
+    },
+    {
+      "ref": "(top)::4",
+      "role": "text",
+      "name": "ERR_BLOCKED_BY_CLIENT",
+      "enabled": true,
+      "visible": true,
+      "framePath": [],
+      "childRefs": [],
+      "raw": {
+        "tag": "div",
+        "className": "error-code",
+        "attrs": {
+          "class": "error-code"
+        }
+      },
+      "text": "ERR_BLOCKED_BY_CLIENT",
+      "labelled": false,
+      "bounds": {
+        "x": 340,
+        "y": 321,
+        "w": 600,
+        "h": 24
+      }
+    },
+    {
+      "ref": "(top)::5",
+      "role": "button",
+      "name": "Reload",
+      "enabled": true,
+      "visible": true,
+      "framePath": [],
+      "childRefs": [],
+      "raw": {
+        "tag": "button",
+        "domId": "reload-button",
+        "className": "blue-button text-button",
+        "attrs": {
+          "class": "blue-button text-button"
+        }
+      },
+      "text": "Reload",
+      "labelled": false,
+      "bounds": {
+        "x": 866,
+        "y": 396,
+        "w": 74,
+        "h": 31
+      }
+    }
+  ]
+}

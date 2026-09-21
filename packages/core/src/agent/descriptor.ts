@@ -135,32 +135,58 @@ export function templatiseUrl(url: string, ctx: SynthesisContext): string {
 /**
  * Pick the column that best identifies a grid row.
  *
- * A row is identified by a value the caller supplied, if one is present — that
- * is what makes the step parameterised rather than pinned to whatever record
- * happened to be on screen during discovery. Failing that, prefer a column
- * whose values look like identifiers over one holding a name or a status.
+ * There is exactly one good answer and everything else is a compromise: a value
+ * the caller supplied. That is what makes the step parameterised — the
+ * descriptor records `row where Member # = {{input.memberNumber}}`, and the
+ * next invocation finds the next member's row.
+ *
+ * Everything else is a *literal from this one run*. An account number, a
+ * balance, a name: correct once and wrong forever. A capability that ships with
+ * `rowWhere.equals: "0100482-01"` fails closed on the next invocation — the
+ * resolver refuses rather than clicking the wrong row, which is the right
+ * failure — but it is still a capability pinned to one record, which is the
+ * thing this module exists to prevent.
+ *
+ * So a row key is only accepted when it is parameterised or when it is
+ * classifier-like (a product type, a status — values drawn from a small fixed
+ * vocabulary that mean the same thing for every member). A run-specific
+ * identifier is refused, and the caller falls back to a descriptor without a
+ * row key: weaker, honestly weaker, and not silently wrong.
  */
 function chooseRowKey(node: UiNode, ctx: SynthesisContext, hints?: SynthesisHints): { columnHeader: string; value: string } | null {
   if (!node.table) return null;
   const entries = Object.entries(node.table.rowValues).filter(([h, v]) => h && v && v.length <= 60);
   if (!entries.length) return null;
 
-  // What the model said identifies this row, if it said anything.
+  /** A value this run was handed, which `templatise` will turn back into a placeholder. */
+  const isParameter = (value: string): boolean =>
+    Object.values(ctx.parameters).some((pv) => pv && value.trim() === String(pv).trim());
+
+  // 1. What the model said identifies this row — but only if it is a value the
+  //    caller supplied or a classifier, held to the same bar as anything else.
   if (hints?.rowMatch) {
     const want = hints.rowMatch.replace(/\s+/g, ' ').trim().toLowerCase();
     const hit = entries.find(([, v]) => v.replace(/\s+/g, ' ').trim().toLowerCase() === want);
-    if (hit) return { columnHeader: hit[0], value: hit[1] };
+    if (hit && (isParameter(hit[1]) || !looksLikeData(hit[1]))) return { columnHeader: hit[0], value: hit[1] };
   }
 
+  // 2. A caller-supplied value anywhere in the row. The best case.
   for (const [header, value] of entries) {
-    for (const pv of Object.values(ctx.parameters)) {
-      if (pv && value.trim() === String(pv).trim()) return { columnHeader: header, value };
-    }
+    if (isParameter(value)) return { columnHeader: header, value };
   }
-  const identifierish = entries.find(([, v]) => /^[0-9][0-9-]{3,}$/.test(v.trim()));
-  if (identifierish) return { columnHeader: identifierish[0], value: identifierish[1] };
-  const first = entries[0] as [string, string];
-  return { columnHeader: first[0], value: first[1] };
+
+  // 3. A classifier: "SPECIAL SAVINGS", "ACTIVE", "CHECKING". These are the
+  //    application's own vocabulary rather than this member's data, so a
+  //    descriptor built on one is portable. `looksLikeData` is what tells the
+  //    two apart, and it is the same test used for anchors and checkpoints.
+  const classifier = entries.find(([, v]) => {
+    const t = v.trim();
+    return t.length >= 3 && !looksLikeData(t) && /[A-Za-z]/.test(t);
+  });
+  if (classifier) return { columnHeader: classifier[0], value: classifier[1] };
+
+  // 4. Nothing here identifies the row without identifying the member.
+  return null;
 }
 
 /**

@@ -112,7 +112,7 @@
       "http://127.0.0.1:4711"
     ],
     "allowedPathPatterns": [
-      "^/(content|nav|main|signon|compliance-ack)"
+      "^/($|(content|nav|main|signon|compliance-ack))"
     ],
     "allowedActions": [
       "navigate",
@@ -767,5 +767,5 @@
       "The stop payment itself was accepted outright (MSG 0740) with no further approval step required."
     ]
   },
-  "contentHash": "32a75c29731894afa8acc14bb72874bd48a285c0313987260bae355f8ff05db5"
+  "contentHash": "53b07d2a6b4e559989ad1ed091932295ca4ec57846576fd7c17bd8390f77e8c4"
 }

@@ -244,7 +244,11 @@ async function cmdDiscover(argv: string[], cfg: SwivelConfig, store: SwivelStore
     parameters,
     policy: {
       allowedOrigins: [origin],
-      allowedPathPatterns: ['^/(content|nav|main|signon|compliance-ack)'],
+      // `^/$` is the sign-on page. Session establishment navigates there
+      // before the capability's own flow begins, and the allowlist is enforced
+      // at the wire as well as at the point of decision — so a pattern set that
+      // omits the root blocks the run before it starts.
+      allowedPathPatterns: ['^/($|(content|nav|main|signon|compliance-ack))'],
       allowedActions: ['navigate', 'click', 'fill', 'select', 'press', 'wait_for', 'extract', 'assert', 'dismiss_if_present'],
     },
     maxTurns: values['max-turns'] ? Number(values['max-turns']) : 22,

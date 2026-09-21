@@ -109,7 +109,7 @@
       "http://127.0.0.1:4711"
     ],
     "allowedPathPatterns": [
-      "^/(content|nav|main|signon|compliance-ack)"
+      "^/($|(content|nav|main|signon|compliance-ack))"
     ],
     "allowedActions": [
       "navigate",
@@ -639,5 +639,5 @@
       "Read-only inquiry; no changes were made. Balances reflect the business date shown on screen (09/21/2026) and may change with subsequent activity."
     ]
   },
-  "contentHash": "7c15bc9d71577287db67f0fdd136c0a511e112480930912343ef8c5f07800ca2"
+  "contentHash": "f69c08f7f6078326d9d47daa208e126ae01d592397fe7d196dfc4fc21f7b44aa"
 }

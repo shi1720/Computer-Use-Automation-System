@@ -85,3 +85,60 @@ describe('pattern backstop for text scraped off a screen', () => {
     assert.equal(s.email, 1);
   });
 });
+
+describe('the identifier this domain is actually built on', () => {
+  const r = () => new Redactor({ salt: 'test-salt', revealTail: 4 });
+
+  test('a member number is redacted, with and without its share suffix', () => {
+    // Every screen in this application is keyed on it, every escalation ticket
+    // quotes it, and until this rule existed it matched nothing at all — a
+    // redactor that covers SSNs and card numbers while writing 0100482 in
+    // clear is solving the easy half of the problem.
+    const out = r().text('Opened member 0100482, share 0100482-01');
+    assert.ok(!out.includes('0100482'));
+    assert.match(out, /«pii:/);
+  });
+
+  test('a currency amount is not mistaken for one', () => {
+    // Without a lookaround the rule eats the integer part of any six-figure
+    // amount. An evidence log where balances are tokenised as member numbers
+    // is worse than one where they are not tokenised at all: it is wrong about
+    // what it is hiding, and a reader cannot tell which is which.
+    assert.equal(r().text('balance 123456.78 and 18,402.66'), 'balance 123456.78 and 18,402.66');
+    assert.equal(r().text('$1,234.00'), '$1,234.00');
+  });
+
+  test('a date stamp is not mistaken for one either', () => {
+    // These screens print 20260921 in a dozen places. Tokenising it teaches
+    // readers that the pii markers are noise, which is how a redactor stops
+    // being read at all.
+    assert.equal(r().text('posted 20260921'), 'posted 20260921');
+  });
+
+  test('a routing number is still classified as a routing number', () => {
+    // Ordering matters: the member rule is last so more specific rules claim
+    // their matches first.
+    assert.match(r().text('routing 021000021'), /«sensitive:/);
+  });
+});
+
+describe('a declared classification tightens handling, never disables it', () => {
+  test('an `internal` field still goes through the pattern backstop', () => {
+    // The discovery loop classifies every non-money extract as `internal`. If
+    // that skipped the backstop, an extract named `member_ssn` was written to
+    // the manifest verbatim while the identical string in an *undeclared*
+    // field was tokenised — classification making the handling weaker, which
+    // is exactly backwards.
+    const r = new Redactor({ salt: 'test-salt' });
+    const out = r.field('SSN 123-45-6789 on file', 'internal', 'output.note');
+    assert.ok(!String(out).includes('123-45-6789'));
+  });
+
+  test('`public` is still a deliberate opt-out', () => {
+    // Screen codes, product names, column headers. Declaring a field public is
+    // a statement that it carries no member data, and it is the author's to
+    // make.
+    const r = new Redactor({ salt: 'test-salt' });
+    assert.equal(r.field('SCREEN INQ-0420', 'public', 'output.screen'), 'SCREEN INQ-0420');
+  });
+});

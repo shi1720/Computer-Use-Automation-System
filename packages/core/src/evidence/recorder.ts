@@ -22,8 +22,20 @@
  * pretend to be — it makes tampering *detectable*, which is what an examiner
  * asks for.
  *
- * Everything written here has already been through the `Redactor`. There is no
+ * Every *text* artefact written here has been through the `Redactor` — the
+ * event log, the manifest, perception snapshots, page captures. There is no
  * "raw" copy kept anywhere for convenience.
+ *
+ * Screenshots are the exception, and pretending otherwise would be worse than
+ * the exception itself. A PNG of a member inquiry screen contains the member's
+ * name, address and balances as pixels; tokenising that would need OCR, and an
+ * OCR pass that misses one field produces a file that *looks* redacted and is
+ * not — which is more dangerous than one everybody knows is sensitive. So they
+ * are treated as what they are: the most sensitive thing in the bundle. They
+ * are written only where they earn their place (failures and escalations, where
+ * a person needs to see the screen to act), the manifest records that the
+ * bundle contains them, and the console gates them behind an `evidence.read`
+ * role rather than any signed-in session.
  */
 import { createHash } from 'node:crypto';
 import { mkdir, writeFile, appendFile, readFile } from 'node:fs/promises';
@@ -68,6 +80,14 @@ export interface RunManifest {
   outcome?: Record<string, unknown>;
   counts: { events: number; steps: number; screenshots: number; signals: number; recoveries: number; escalations: number };
   redaction: Record<string, number>;
+  /**
+   * True when this bundle holds screenshots.
+   *
+   * Every text artefact here is redacted; a screenshot cannot be. This flag is
+   * how a retention policy, an export, or a reviewer decides how to handle the
+   * directory without opening it.
+   */
+  containsScreenCaptures?: boolean;
   /** Digest of the final event, so the manifest pins the whole chain. */
   chainTip?: string;
   swivelVersion: string;
@@ -89,6 +109,8 @@ export class EvidenceRecorder {
     private readonly redactor: Redactor,
     /** Also mirror events to stderr for CLI users. */
     private readonly onEvent?: (e: EvidenceEvent) => void,
+    /** Whether unredactable screen captures may be written at all. */
+    private readonly captures: 'on' | 'off' = 'on',
   ) {
     this.ready = mkdir(join(dir, 'steps'), { recursive: true }).then(() => undefined);
   }
@@ -144,7 +166,16 @@ export class EvidenceRecorder {
     return file;
   }
 
-  async screenshot(label: string, png: Buffer): Promise<string> {
+  /**
+   * Write a screen capture.
+   *
+   * This is the only unredacted artefact in the bundle — see the module header.
+   * `captures` defaults to 'on' because an escalation ticket without the screen
+   * the operator is being asked about is close to useless; a deployment with a
+   * stricter posture sets it to 'off' and loses that, knowingly.
+   */
+  async screenshot(label: string, png: Buffer): Promise<string | undefined> {
+    if (this.captures === 'off') return undefined;
     await this.ready;
     const file = join('steps', `${label}.png`);
     await writeFile(join(this.dir, file), png);
@@ -176,6 +207,7 @@ export class EvidenceRecorder {
       outcome: this.redactor.deep(outcome, 'outcome'),
       counts: { ...this.counts },
       redaction: this.redactor.summary(),
+      ...(this.counts.screenshots > 0 ? { containsScreenCaptures: true } : {}),
       chainTip: this.prevHash,
     };
     await writeFile(join(this.dir, 'run.json'), JSON.stringify(m, null, 2), 'utf8');

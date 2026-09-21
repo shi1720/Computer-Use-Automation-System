@@ -19,6 +19,7 @@ export * from './signals/profiles.js';
 export * from './agent/llm.js';
 export * from './agent/digest.js';
 export * from './agent/descriptor.js';
+export * from './agent/prose.js';
 export * from './agent/prompt.js';
 export * from './agent/discover.js';
 export * from './replay/assertions.js';

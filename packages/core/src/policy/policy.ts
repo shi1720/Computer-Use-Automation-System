@@ -231,6 +231,10 @@ export interface RiskSignals {
   key?: string;
   /** Visible text of the screen, for warnings the application itself prints. */
   pageText?: string;
+  /** href of a link, which is how a navigation link is told from a postback. */
+  href?: string;
+  /** For `navigate`: the destination, since legacy cores commit on GET. */
+  url?: string;
 }
 
 const IRREVERSIBLE_WORDS = [
@@ -244,8 +248,24 @@ const MUTATING_WORDS = [
 
 export function classifyRisk(kind: string, targetName: string | undefined, pageText: string, signals: RiskSignals = {}): RiskClass {
   // Reading and staging are free. Nothing has been committed.
-  if (kind === 'navigate' || kind === 'wait_for' || kind === 'extract' || kind === 'assert') return 'read_only';
+  if (kind === 'wait_for' || kind === 'extract' || kind === 'assert') return 'read_only';
   if (kind === 'fill' || kind === 'select') return 'read_only';
+
+  /**
+   * A GET is not a promise either.
+   *
+   * These cores commit on navigation all the time — `…/fee-reversal?confirm=1`
+   * is not a hypothetical shape — so a URL is read as a sentence like any other
+   * control name. Nothing in the query string that reads like a commit means
+   * read-only, which is the common case and stays free.
+   */
+  if (kind === 'navigate') {
+    const url = (signals.url ?? '').toLowerCase();
+    if (!url) return 'read_only';
+    if (IRREVERSIBLE_WORDS.some((w) => url.includes(w.replace(/\s+/g, '')) || url.includes(w))) return 'irreversible';
+    if (/\b(confirm|commit|post|apply|submit|execute|approve|delete|remove|void)\b/.test(url)) return 'medium';
+    return 'read_only';
+  }
 
   /**
    * Enter inside a form submits it.
@@ -268,13 +288,37 @@ export function classifyRisk(kind: string, targetName: string | undefined, pageT
   const method = (signals.formMethod ?? '').toLowerCase();
   const role = signals.role ?? '';
 
-  // Navigation is navigation, whatever the destination is called. A menu link
-  // reading "Stop Payment" opens a screen; it does not place a stop payment,
-  // and classifying it as irreversible would demand a confirmation token to
-  // open a form — which trains people to supply tokens reflexively.
-  if (role === 'link') return 'read_only';
+  /**
+   * Navigation is navigation, whatever the destination is called.
+   *
+   * A menu link reading "Stop Payment" opens a screen; it does not place a stop
+   * payment, and classifying it as irreversible would demand a confirmation
+   * token to open a form — which trains people to supply tokens reflexively,
+   * and a reflexive confirmation is no confirmation.
+   *
+   * But "link" is a role, not a promise. In WebForms a grid action link is
+   * `javascript:__doPostBack(...)`: it looks like a link, and it posts. So the
+   * exemption is for links that navigate — ones with a real href that is not a
+   * script — and a link that posts is classified like any other submit.
+   * Getting this wrong is quiet and expensive: a link-driven mutation recorded
+   * `read_only` also never sets the engine's "something has been committed"
+   * flag, which is what stops a session-expiry recovery from replaying a flow
+   * that has already posted.
+   */
+  let linkPostsBack = false;
+  if (role === 'link') {
+    // An absent href is not evidence of a postback — it is the caller not
+    // having told us. The web surface only assigns the `link` role to an
+    // element that has one, so absence here means the signal was not supplied,
+    // and the safe reading of "no information" is the common case: navigation.
+    const href = signals.href?.trim().toLowerCase();
+    linkPostsBack = method === 'post'
+      || (href !== undefined && (href.startsWith('javascript:') || href === '' || href === '#'));
+    if (!linkPostsBack) return 'read_only';
+  }
 
-  const submits = kind === 'press' || signals.inputType === 'submit' || signals.inputType === 'image' || method === 'post';
+  const submits = kind === 'press' || linkPostsBack
+    || signals.inputType === 'submit' || signals.inputType === 'image' || method === 'post';
   if (!submits) return 'read_only';
 
   const irreversibleByWord = IRREVERSIBLE_WORDS.some((w) => name.includes(w));
@@ -283,7 +327,11 @@ export function classifyRisk(kind: string, targetName: string | undefined, pageT
   const pageWarnsIrreversible = /irreversible|cannot be reversed|cannot be undone|fee will be assessed/.test(page);
 
   if (irreversibleByWord || pageWarnsIrreversible) return 'irreversible';
-  if (method !== 'post') return 'read_only';        // a GET submit is a query
+  // A GET submit is a query — a search button, a filter. A postback link is
+  // not: it has no form method to report because the form is submitted by
+  // script, and it is the shape most grid actions in this vendor's product
+  // take.
+  if (method !== 'post' && !linkPostsBack) return 'read_only';
   if (mutatingByWord) return 'high';
   return 'medium';
 }

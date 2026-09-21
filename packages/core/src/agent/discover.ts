@@ -36,6 +36,7 @@ import { addUsage, emptyUsage, estimateCostUsd, type LlmMessage, type LlmProvide
 import { classifyRisk, PolicyEngine, type ExecutionContext } from '../policy/policy.js';
 import { getProductProfile } from '../signals/profiles.js';
 import { evaluateAny } from '../replay/assertions.js';
+import { scrubProse, sentenceLeaksRunData } from './prose.js';
 import type { EvidenceRecorder } from '../evidence/recorder.js';
 
 export const SWIVEL_VERSION = '1.0.0';
@@ -234,16 +235,10 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
         ...Object.values(parameters).filter((v) => String(v).length >= 3).map(String),
         ...readableValues(snap, 250).map((n) => (n.text ?? '').trim()).filter((t) => t.length >= 3),
       ];
-      const scrub = (prose: string | undefined, label: string): string | undefined => {
-        if (!prose) return undefined;
-        const kept: string[] = [];
-        for (const sentence of prose.split(/(?<=[.!?])\s+/)) {
-          const leaks = forbidden.some((f) => sentence.includes(f)) || /\d[\d,]*\.\d{2}\b/.test(sentence);
-          if (leaks) void evidence.log('note', `Removed a sentence from the capability's ${label}: it described this run's data rather than what the capability does.`);
-          else kept.push(sentence);
-        }
-        return kept.join(' ').trim() || undefined;
-      };
+      const scrub = (prose: string | undefined, label: string): string | undefined =>
+        scrubProse(prose, forbidden, () => {
+          void evidence.log('note', `Removed a sentence from the capability's ${label}: it described this run's data rather than what the capability does.`);
+        });
 
       finished = {
         // Falling back to the operator's goal is right — it is the best
@@ -252,7 +247,7 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
         // turns it into a description of the capability rather than of the run.
         summary: scrub(String(call.input.summary ?? ''), 'summary')
           ?? templatise(req.goal, synth, { vocabWords: true }),
-        success_text: present ? proposed : deriveSuccessText(snap),
+        success_text: present ? proposed : deriveSuccessText(snap, synth),
         assertions: successAssertions(snap, present ? proposed : undefined, synth),
         ...(typeof call.input.caveats === 'string'
           ? (() => { const c = scrub(call.input.caveats as string, 'caveats'); return c ? { caveats: c } : {}; })()
@@ -286,6 +281,12 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
       role: node?.role,
       ...(node?.raw?.attrs?._formMethod ? { formMethod: node.raw.attrs._formMethod } : {}),
       ...(node?.raw?.inputType ? { inputType: node.raw.inputType } : {}),
+      // A WebForms grid action link is `javascript:__doPostBack(...)` — it has
+      // the role of a link and the effect of a submit. The href is how the two
+      // are told apart.
+      ...(node?.raw?.attrs?.href !== undefined ? { href: node.raw.attrs.href } : {}),
+      ...(call.name === 'press' && call.input.key ? { key: String(call.input.key) } : {}),
+      ...(call.name === 'navigate' && call.input.url ? { url: String(call.input.url) } : {}),
     });
 
     const urlArg = call.name === 'navigate' ? String(call.input.url ?? '') : undefined;
@@ -479,15 +480,35 @@ function synthesiseCheckpoint(
     };
   }
 
-  if (after.title && after.title !== before.title) {
+  /**
+   * Last resort: the page title changed.
+   *
+   * It goes through exactly the same guards as the model's own proposal, and
+   * for the same reason. A title is not inherently safe — plenty of cores stamp
+   * record context into it ("Account Inquiry - 0100482"), and baking that into
+   * a checkpoint pins the capability to one member and fails every subsequent
+   * replay for a reason nobody can see from the artifact. MERIDIAN's titles
+   * happen to be `institution - screen`, which is fine; relying on that being
+   * true of the next vendor is not a position worth holding.
+   */
+  const titleTail = after.title && after.title !== before.title
+    ? (after.title.split(' - ').pop() ?? after.title).trim()
+    : '';
+  if (titleTail && !containsParameter(titleTail) && !touchesDisplayedData(titleTail)
+      && !looksLikeData(titleTail) && discriminates(titleTail)) {
     return {
       id: `${stepId}_ok`,
-      description: `Page title becomes "${after.title}"`,
-      all: [{ kind: 'text_present', text: after.title.split(' - ').pop() ?? after.title, because: 'the screen changed to a different page after this action' }],
+      description: `Page title becomes "${titleTail}"`,
+      all: [{ kind: 'text_present', text: templatise(titleTail, synth, { vocabWords: true }), because: 'the screen changed to a different page after this action' }],
       timeoutMs: 15_000,
       stableForMs: 0,
     };
   }
+
+  // Nothing on this screen can be asserted without asserting data. Returning
+  // nothing is the honest answer: the validator will flag a mutating step with
+  // no checkpoint as an error, which is a problem a reviewer can see and act
+  // on, unlike a checkpoint that quietly encodes one member's name.
   return undefined;
 }
 
@@ -518,7 +539,11 @@ function buildStep(
     return {
       id: stepId, intent, kind: 'navigate',
       url: templatiseUrl(String(call.input.url ?? ''), synth),
-      risk: 'low',
+      // The classifier's answer, not a hardcoded 'low'. Legacy cores commit on
+      // GET routinely — `…/fee-reversal?confirm=1` is a real shape — and
+      // discarding the classification here was how such a step got recorded as
+      // harmless, which then propagated to the capability's own risk class.
+      risk,
       expect: synthesiseCheckpoint(before, after, undefined, synth, stepId),
       authoredBy: 'model',
       note: 'Direct navigation. Prefer clicking through the application where possible; recorded URLs are more sensitive to routing changes than recorded controls.',
@@ -609,17 +634,46 @@ function successAssertions(snap: Snapshot, proposed: string | undefined, synth: 
     });
   }
   if (!out.length) {
-    out.push({ kind: 'text_present', text: deriveSuccessText(snap), because: 'fallback: screen identity derived from the final page' });
+    const derived = deriveSuccessText(snap, synth);
+    out.push({
+      kind: 'text_present', text: templatise(derived, synth, { vocabWords: true }),
+      because: 'fallback: screen identity derived from the final page',
+    });
   }
   return out;
 }
 
-function deriveSuccessText(snap: Snapshot): string {
+/**
+ * Something on the final screen that identifies it, and is not a member's data.
+ *
+ * The screen code is by far the best answer and is what this almost always
+ * returns. The title is a fallback, and it goes through the data guards first:
+ * a core that stamps record context into `<title>` ("Account Inquiry -
+ * 0100482") would otherwise pin the capability's success condition — the one
+ * assertion every future replay depends on — to the member this run happened
+ * to use.
+ *
+ * When neither is usable the product name is used. That is a weak assertion and
+ * it is meant to be: it says "still inside the application", which is honest
+ * about how little the final screen offered, and the validator's
+ * WEAK_SUCCESS_CHECKPOINT rule is what surfaces it to a reviewer.
+ */
+function deriveSuccessText(snap: Snapshot, synth: SynthesisContext): string {
   const text = Object.values(snap.frameTexts).join('\n');
   const code = text.match(/SCREEN\s+([A-Z]{2,4}-\d{3,4})/);
   if (code) return `SCREEN ${code[1]}`;
-  if (snap.title) return snap.title.split(' - ').pop() ?? snap.title;
-  return 'MERIDIAN';
+
+  const titleTail = snap.title ? (snap.title.split(' - ').pop() ?? snap.title).trim() : '';
+  if (titleTail) {
+    const values = readableValues(snap, 250).map((n) => (n.text ?? '').replace(/\s+/g, ' ').trim().toLowerCase()).filter(Boolean);
+    const flat = titleTail.replace(/\s+/g, ' ').toLowerCase();
+    const carriesData =
+      looksLikeData(titleTail) ||
+      values.some((v) => v.includes(flat) || flat.includes(v)) ||
+      Object.values(synth.parameters).some((v) => v && String(v).length > 2 && titleTail.includes(String(v)));
+    if (!carriesData) return titleTail;
+  }
+  return snap.title?.split(' - ')[0]?.trim() || 'MERIDIAN';
 }
 
 function detectProfileSignal(signals: Signal[], snap: Snapshot, ctx: TemplateContext) {
@@ -694,10 +748,46 @@ function assembleCapability(a: {
 }): Capability {
   const { req, profile, vocabulary, outputs, steps, finish, llm, synth } = a;
 
-  const mutating = steps.some((s) => s.risk && s.risk !== 'read_only' && s.kind === 'click');
+  /**
+   * What this capability actually does, derived from what its steps do.
+   *
+   * `mutating` used to require `kind === 'click'`, which meant a mutating
+   * `select`, a mutating `press` (Enter submits these forms) or a postback link
+   * produced `mutating: false`. Everything downstream is derived from this one
+   * predicate — `riskClass`, `idempotent`, `financialImpact`,
+   * `requiresPerInvocationConfirmation` — so a single wrong answer let a
+   * state-changing capability be admitted unattended with no confirmation
+   * token and no financial role. The validator's RISK_MISLABELLED rule could
+   * not catch it either, because both sides of the comparison came from the
+   * same mistake.
+   *
+   * The risk class is the step risk, and nothing else needs to know how the
+   * step was performed.
+   */
+  const mutating = steps.some((s) => (s.risk ?? 'read_only') !== 'read_only');
   const irreversible = steps.some((s) => s.risk === 'irreversible');
+  const high = steps.some((s) => s.risk === 'high');
   const riskClass: Capability['contract']['effects']['riskClass'] =
-    irreversible ? 'irreversible' : mutating ? 'medium' : 'read_only';
+    irreversible ? 'irreversible' : high ? 'high' : mutating ? 'medium' : 'read_only';
+
+  /**
+   * Does this capability move money or incur a charge?
+   *
+   * Tying this to `irreversible` alone was too narrow by exactly the case that
+   * matters most. A funds transfer classifies as `high` — it POSTs and its
+   * control says "Transfer" — and is not `irreversible`, because a transfer
+   * between a member's own shares genuinely can be reversed. So
+   * `financialImpact` was false, the per-invocation confirmation gate never
+   * engaged, and the `capability.invoke.financial` role was never required. A
+   * capability that moves money ran unattended with neither.
+   *
+   * Money moving and money being irrecoverable are different questions, and
+   * only the second one was being asked.
+   */
+  const MONEY_WORDS = /transfer|payment|disburse|withdraw|deposit|wire|fee|charge|post(ing)?\b|refund|reversal|stop pay/i;
+  const financialImpact = irreversible || (mutating && steps.some((s) =>
+    (s.risk ?? 'read_only') !== 'read_only' &&
+    (MONEY_WORDS.test(s.intent) || MONEY_WORDS.test(s.target?.name?.value ?? '') || MONEY_WORDS.test(req.goal))));
 
   const base = skeletonCapability(req, profile.outcomes, profile.signals, vocabulary);
 
@@ -714,7 +804,7 @@ function assembleCapability(a: {
         reversible: !irreversible,
         riskClass,
         dualControl: /pending approval|second authorized user/i.test(finish.caveats ?? ''),
-        financialImpact: irreversible,
+        financialImpact,
         idempotent: !mutating,
         summary: finish.caveats ?? (mutating
           ? 'This capability changes state in the institution\'s system of record.'
@@ -723,7 +813,9 @@ function assembleCapability(a: {
     },
     policy: {
       ...base.policy,
-      requiresPerInvocationConfirmation: irreversible,
+      // Anything that moves money asks the caller to say so explicitly, not
+      // only the subset that cannot be undone afterwards.
+      requiresPerInvocationConfirmation: irreversible || financialImpact,
     },
     flow: {
       steps,

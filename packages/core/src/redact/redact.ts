@@ -57,6 +57,22 @@ const BUILT_IN: Array<{ name: string; re: RegExp; kind: Sensitivity }> = [
   { name: 'routing_number', re: /\b[0-9]{9}\b/g, kind: 'sensitive' },
   { name: 'bearer_token', re: /\b(?:sk-[A-Za-z0-9_-]{16,}|Bearer\s+[A-Za-z0-9._-]{16,})/g, kind: 'secret' },
   { name: 'password_kv', re: /\b(?:password|passwd|pwd|secret|token)\s*[:=]\s*\S+/gi, kind: 'secret' },
+  /**
+   * A member or account number — the primary identifier of this entire domain,
+   * and it matched nothing at all until now.
+   *
+   * Six to ten digits, optionally with the two-digit share suffix the core
+   * appends: 0100482, 0100482-01. Last in the list so a PAN, a routing number
+   * or an SSN is classified as itself rather than as this.
+   *
+   * The lookaround is doing real work. Without it the rule eats the integer
+   * part of any six-figure amount — `123456.78` becomes a token — and an
+   * evidence log where balances are redacted as member numbers is worse than
+   * one where they are not redacted at all, because it is wrong about what it
+   * is hiding. Digits adjacent to a decimal point, a comma, a currency symbol
+   * or more digits are part of something else.
+   */
+  { name: 'member_number', re: /(?<![\d.,$-])\d{6,10}(?:-\d{2})?(?!\d)(?!\.\d)(?!,\d{3})/g, kind: 'pii' },
 ];
 
 /** Luhn check, so a 16-digit reference number is not mistaken for a card. */
@@ -88,11 +104,22 @@ export class Redactor {
     return `«${kind}:${h}${tail}»`;
   }
 
-  /** Redact one value whose classification is known from the contract. */
+  /**
+   * Redact one value whose classification is known from the contract.
+   *
+   * A declared classification *tightens* handling; it never disables it. A
+   * field declared `internal` still goes through the pattern backstop, because
+   * declaring a field is a statement about how it should be treated, not a
+   * guarantee about what is in it — and the discovery loop classifies every
+   * non-money extract as `internal` by default. Before this, an extract named
+   * `member_ssn` was written to the manifest verbatim while the identical
+   * string in an undeclared field was tokenised.
+   */
   field(value: unknown, sensitivity: Sensitivity | undefined, path: string): unknown {
     const s = sensitivity ?? 'internal';
     if (value === null || value === undefined) return value;
-    if (s === 'public' || s === 'internal') return value;
+    if (s === 'public') return value;
+    if (s === 'internal') return typeof value === 'string' ? this.text(value, path) : value;
     if (s === 'secret') {
       this.events.push({ at: new Date().toISOString(), kind: 'field', rule: 'secret', at_path: path });
       return '«secret:withheld»';
@@ -108,6 +135,10 @@ export class Redactor {
       out = out.replace(p.re, (m) => {
         if (p.name === 'card_pan' && !luhnValid(m)) return m;
         if (p.name === 'routing_number' && /\b(19|20)\d{7}\b/.test(m)) return m; // date-like
+        // Same exemption for member numbers: `20260921` is a timestamp these
+        // screens print in a dozen places, and tokenising it teaches readers
+        // that the pii markers are noise.
+        if (p.name === 'member_number' && /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/.test(m)) return m;
         this.events.push({ at: new Date().toISOString(), kind: 'pattern', rule: p.name, at_path: path });
         return this.token(m, p.kind);
       });
@@ -129,7 +160,7 @@ export class Redactor {
       const f = byName.get(k);
       out[k] = typeof v === 'string' && !f
         ? this.text(v, `${path}.${k}`)                 // undeclared: patterns only
-        : this.field(v, f?.sensitivity, `${path}.${k}`);
+        : this.field(v, f?.sensitivity, `${path}.${k}`);  // declared: classification, then patterns
     }
     return out;
   }

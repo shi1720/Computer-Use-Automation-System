@@ -13,7 +13,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   PolicyEngine, classifyRisk, ControlLeaseManager, LeasedSurface, LeaseViolation,
-  EscalationBroker, EvidenceRecorder, verifyChain, Redactor, stabilityScore,
+  EscalationBroker, EvidenceRecorder, verifyChain, Redactor, stabilityScore, scrubProse,
   type Capability, type ExecutionContext, type Surface,
 } from '@swivel/core';
 
@@ -151,6 +151,9 @@ describe('risk classification', () => {
     // Opening the Stop Payment screen does not place a stop payment. Demanding
     // a confirmation token to open a form teaches people to supply them
     // reflexively, which is how the control stops meaning anything.
+    assert.equal(classifyRisk('click', 'Stop Payment', '', { role: 'link', href: '/content/stop-payment' }), 'read_only');
+    // And with no href signal at all: absence of information is not evidence
+    // of a postback, and navigation is what a link overwhelmingly is.
     assert.equal(classifyRisk('click', 'Stop Payment', '', { role: 'link' }), 'read_only');
   });
 
@@ -385,28 +388,89 @@ describe('confidence scoring', () => {
 });
 
 describe('capability prose never carries one run\'s data', () => {
-  // The summary is published to every calling agent and shared across every
-  // institution using the capability. A model narrating what it just saw will
-  // put a member's name and balance in it unless something stops it.
-  const scrub = (prose: string, forbidden: string[]): string =>
-    prose.split(/(?<=[.!?])\s+/)
-      .filter((s) => !forbidden.some((f) => s.includes(f)) && !/\d[\d,]*\.\d{2}\b/.test(s))
-      .join(' ').trim();
+  // The summary is published in the artifact, served to every calling agent
+  // through the tool catalogue, and shared across every institution that
+  // adopts the capability. A model narrating what it just saw will put a
+  // member's name and balance in it unless something stops it.
+  //
+  // This exercises the scrubber the discovery loop actually calls. An earlier
+  // version of this file defined its own copy and tested that, which meant
+  // these tests would have passed with the real one deleted — and the real one
+  // had defects the copy did not.
+  const forbidden = ['0100482', 'WHITFIELD, DOLORES', '18,402.66', 'SPECIAL SAVINGS'];
 
   test('drops a sentence naming the member the run happened to use', () => {
-    const out = scrub(
-      'Looks up a member and reads their savings balance. For member 0100482 (Dolores Whitfield) the balance was 18,402.66.',
-      ['0100482', 'Dolores Whitfield', '18,402.66'],
+    assert.equal(
+      scrubProse('Looks up a member and reads their savings balance. For member 0100482 the balance was 18,402.66.', forbidden),
+      'Looks up a member and reads their savings balance.',
     );
-    assert.equal(out, 'Looks up a member and reads their savings balance.');
+  });
+
+  test('matches regardless of case, because the screen shouts and the prose does not', () => {
+    // The core renders `WHITFIELD, DOLORES`. A case-sensitive substring test
+    // finds nothing in "Whitfield, Dolores" and the name ships in the artifact.
+    assert.equal(scrubProse('Reads a balance. Verified against Whitfield, Dolores.', forbidden), 'Reads a balance.');
+  });
+
+  test('catches a name the model reordered into natural word order', () => {
+    // `WHITFIELD, DOLORES` on screen becomes "Dolores Whitfield" in prose
+    // without being asked. No substring of the forbidden value appears at all.
+    assert.equal(
+      scrubProse('Reads a share balance. During discovery this returned Dolores Whitfield\'s account.', forbidden),
+      'Reads a share balance.',
+    );
   });
 
   test('drops any sentence containing a currency amount, declared or not', () => {
-    assert.equal(scrub('Reads a balance. It returned 1,015.44 today.', []), 'Reads a balance.');
+    // Independent of the forbidden list: a paraphrased balance appears verbatim
+    // in no node on the screen, and is still this run's data.
+    assert.equal(scrubProse('Reads a balance. It returned about 1,015.44 today.', []), 'Reads a balance.');
+  });
+
+  test('a caveat list with no full stops does not take the whole summary out', () => {
+    // Prose with no sentence terminator used to be one enormous "sentence", so
+    // a single leak anywhere in it removed everything. That fails safe, and
+    // silently, and the surviving content was worth keeping.
+    const out = scrubProse('Requires an active session\nMember 0100482 was used in discovery\nThe share must exist', forbidden);
+    assert.ok(out?.includes('Requires an active session'));
+    assert.ok(out?.includes('The share must exist'));
+    assert.ok(!out?.includes('0100482'));
   });
 
   test('keeps prose that describes the capability rather than the run', () => {
     const prose = 'Looks up a member by member number and reads the balance of a named share product.';
-    assert.equal(scrub(prose, ['0100482']), prose);
+    assert.equal(scrubProse(prose, forbidden), prose);
+  });
+
+  test('returns undefined rather than an empty string when nothing survives', () => {
+    // So the caller falls back to something written, rather than shipping a
+    // capability whose summary is "".
+    assert.equal(scrubProse('Member 0100482 had 18,402.66.', forbidden), undefined);
+  });
+});
+
+describe('what a capability says it does', () => {
+  // Everything the safety model gates on is derived from these two predicates.
+  // A wrong answer here is not a mislabelling; it is an unattended invocation
+  // with no confirmation token.
+
+  test('a link that posts is not read-only just because it is a link', () => {
+    // In WebForms a grid action link is `javascript:__doPostBack(...)`: the
+    // role of a link, the effect of a submit. Recording it as read_only also
+    // means replay never marks the flow as having committed, which is what
+    // lets a session-expiry recovery replay a flow that already posted.
+    assert.equal(classifyRisk('click', 'Place Stop Payment', '', { role: 'link', href: 'javascript:__doPostBack(\'ctl00$Main$grd\',\'\')' }), 'irreversible');
+    // A real menu link still opens a screen and still costs nothing.
+    assert.equal(classifyRisk('click', 'Stop Payment', '', { role: 'link', href: '/content/stop-payment' }), 'read_only');
+  });
+
+  test('a GET that commits is not read-only just because it is a GET', () => {
+    assert.equal(classifyRisk('navigate', undefined, '', { url: 'http://core/content/fee-reversal?confirm=1' }), 'medium');
+    assert.equal(classifyRisk('navigate', undefined, '', { url: 'http://core/content/member-inquiry?id=1' }), 'read_only');
+  });
+
+  test('Enter inside a form is a submit', () => {
+    assert.equal(classifyRisk('press', 'Post Transfer', '', { key: 'Enter', formMethod: 'post' }), 'high');
+    assert.equal(classifyRisk('press', 'Member #', '', { key: 'Tab', formMethod: 'post' }), 'read_only');
   });
 });

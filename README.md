@@ -198,7 +198,7 @@ websocket, if you would rather watch it than click it.
 
 <div align="center">
 <img src="docs/screens/operator-live-driving.png" width="880" alt="The operator console driving a paused live session over a CDP screencast.">
-<br><sub>Not a screenshot of a ticket: the operator's click has just navigated the paused session to this institution's Customer Search screen.</sub>
+<br><sub>Not a screenshot of a ticket. The operator's click has just used the Display control the base artifact has no step for — compare the live view, top left, with “Screen when it stopped” on the right.</sub>
 </div>
 
 ### 6 · The agent interface

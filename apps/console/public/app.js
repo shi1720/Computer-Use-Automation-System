@@ -22,6 +22,16 @@ const h = (tag, attrs = {}, ...children) => {
   }
   return el;
 };
+/**
+ * `replaceChildren`, minus the footgun.
+ *
+ * The native method stringifies whatever it is given, so a conditional child
+ * written `cond ? h(…) : null` — the idiom this file uses everywhere —
+ * renders the literal text "null" into the page. Two of them in a row rendered
+ * "nullnull" on the run detail view for weeks. `h()` already filters its own
+ * children; this makes the top-level call behave the same way.
+ */
+const setChildren = (el, ...kids) => el.replaceChildren(...kids.flat().filter((c) => c != null && c !== false));
 const $ = (s, r = document) => r.querySelector(s);
 const fmtTime = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—');
 const ago = (iso) => {
@@ -123,7 +133,7 @@ function connectEvents() {
 // ── render ───────────────────────────────────────────────────────────────────
 function render() {
   const root = $('#root');
-  root.replaceChildren(state.user ? shell() : loginView());
+  setChildren(root, state.user ? shell() : loginView());
 }
 
 function loginView() {
@@ -131,14 +141,14 @@ function loginView() {
   const form = h('form', {
     onsubmit: async (e) => {
       e.preventDefault();
-      err.replaceChildren();
+      setChildren(err);
       try {
         const r = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ id: $('#u').value, password: $('#p').value }) });
         state.user = r.user;
         await refreshAll();
         render();
         connectEvents();
-      } catch (e2) { err.replaceChildren(h('div', { class: 'err-box' }, e2.message)); }
+      } catch (e2) { setChildren(err, h('div', { class: 'err-box' }, e2.message)); }
     },
   },
     err,
@@ -265,12 +275,12 @@ function capabilityDetail(id) {
   (async () => {
     let data;
     try { data = await api(`/api/capabilities/${encodeURIComponent(id)}`); }
-    catch (e) { wrap.replaceChildren(h('div', { class: 'err-box' }, e.message)); return; }
+    catch (e) { setChildren(wrap, h('div', { class: 'err-box' }, e.message)); return; }
     const cap = data.capability;
     const tabs = { Contract: () => contractTab(cap, data), Flow: () => flowTab(cap), Signals: () => signalsTab(cap), Evidence: () => provenanceTab(cap, data), 'Tool definition': () => h('pre', { class: 'json' }, JSON.stringify(data.tool, null, 2)), Artifact: () => h('pre', { class: 'json' }, JSON.stringify(cap, null, 2)) };
     let active = 'Contract';
     const body = h('div', {});
-    const paint = () => body.replaceChildren(tabs[active]());
+    const paint = () => setChildren(body, tabs[active]());
     const tabBar = h('div', { class: 'tabs' }, Object.keys(tabs).map((t) =>
       h('div', { class: `tab${t === active ? ' active' : ''}`, onclick: (e) => { active = t; [...e.target.parentNode.children].forEach((x) => x.classList.toggle('active', x === e.target)); paint(); } }, t)));
     paint();
@@ -289,7 +299,7 @@ function capabilityDetail(id) {
       },
     }, cap.quality.approvalState === 'approved' ? 'Approved' : 'Approve for unattended use');
 
-    wrap.replaceChildren(
+    setChildren(wrap, 
       h('div', { class: 'crumb' }, h('a', { href: '#/capabilities' }, 'Capabilities'), ' / ', cap.metadata.id),
       h('div', { class: 'page-head' },
         h('div', {},
@@ -420,14 +430,14 @@ function runPanel(cap) {
 
   const btn = h('button', { class: 'btn primary', onclick: async () => {
     btn.disabled = true; btn.textContent = 'Running…';
-    out.replaceChildren(h('div', { class: 'small muted' }, 'Replaying — no model in the loop.'));
+    setChildren(out, h('div', { class: 'small muted' }, 'Replaying — no model in the loop.'));
     try {
       const body = { version: cap.metadata.version, tenant: tenantSel.value, inputs, unattended: false };
       if (cap.policy.requiresPerInvocationConfirmation) body.confirmationToken = `console-${Date.now()}`;
       const r = await api(`/api/capabilities/${encodeURIComponent(cap.metadata.id)}/invoke`, { method: 'POST', body: JSON.stringify(body) });
-      out.replaceChildren(resultCard(r));
+      setChildren(out, resultCard(r));
       await refreshAll();
-    } catch (e) { out.replaceChildren(h('div', { class: 'err-box' }, e.message)); }
+    } catch (e) { setChildren(out, h('div', { class: 'err-box' }, e.message)); }
     btn.disabled = false; btn.textContent = 'Replay';
   } }, 'Replay');
 
@@ -483,19 +493,35 @@ function runDetail(runId) {
   (async () => {
     let d;
     try { d = await api(`/api/runs/${runId}`); }
-    catch (e) { wrap.replaceChildren(h('div', { class: 'err-box' }, e.message)); return; }
+    catch (e) { setChildren(wrap, h('div', { class: 'err-box' }, e.message)); return; }
     const { run, manifest, events, chain } = d;
 
     const shots = events.filter((e) => e.data?.evidence?.screenshot).map((e) => e.data.evidence.screenshot);
     const kindClass = (k) => k.includes('fail') || k.includes('blocked') ? 'err' : k.startsWith('signal') ? 'sig' : k.startsWith('recovery') ? 'rec' : k.startsWith('escalation') ? 'esc' : k.startsWith('model') ? 'model' : '';
 
-    wrap.replaceChildren(
+    setChildren(wrap, 
       h('div', { class: 'crumb' }, h('a', { href: '#/runs' }, 'Runs'), ' / ', runId),
       h('div', { class: 'page-head' },
         h('div', {}, h('h1', {}, run.summary ?? runId),
           h('div', { class: 'sub mono small' }, `${run.kind} · ${run.capabilityId ?? ''} · ${run.tenantId ?? ''} · ${fmtTime(run.startedAt)}`)),
         h('div', { class: 'row' }, statusPill(run.status),
-          h('span', { class: `pill ${chain.ok ? 'ok' : 'danger'}`, title: chain.message }, chain.ok ? `✓ chain intact (${chain.events})` : `✗ chain broken at ${chain.brokenAt}`))),
+          // Three states, not two. A chain can be intact, broken at a named
+          // event, or *absent* — and "broken at undefined" is what the last one
+          // used to read, which tells a reviewer nothing about the one case
+          // they most need to understand.
+          h('span', { class: `pill ${chain.ok ? 'ok' : 'danger'}`, title: chain.message },
+            chain.ok ? `✓ chain intact (${chain.events})`
+              : chain.brokenAt != null ? `✗ chain broken at event ${chain.brokenAt}`
+              : chain.events ? '✗ chain incomplete'
+              : '✗ no evidence bundle'))),
+
+      // A run row whose bundle is gone is exactly the case an examiner asks
+      // about, so it is stated rather than rendered as an empty page.
+      !events.length && !manifest
+        ? h('div', { class: 'err-box' },
+            `This run has no readable evidence bundle at ${run.evidenceDir}. ` +
+            `Either it is still in flight, or the directory has been removed since the run finished.`)
+        : null,
 
       manifest ? h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Manifest')),
         h('dl', { class: 'kv' },
@@ -550,7 +576,7 @@ function operatorView(id) {
   (async () => {
     let i;
     try { i = (await api(`/api/interventions/${id}`)).intervention; }
-    catch (e) { wrap.replaceChildren(h('div', { class: 'err-box' }, e.message)); return; }
+    catch (e) { setChildren(wrap, h('div', { class: 'err-box' }, e.message)); return; }
 
     const log = h('div', { class: 'action-log' });
     const statusDot = h('span', { class: 'dot idle' });
@@ -600,9 +626,24 @@ function operatorView(id) {
     document.addEventListener('keydown', keyHandler);
     window.addEventListener('hashchange', () => document.removeEventListener('keydown', keyHandler), { once: true });
 
+    // The header's status pill, updated in place.
+    //
+    // Re-rendering the view would be the obvious way to refresh it and is the
+    // one thing this page must not do: the live session lives in DOM this view
+    // owns, and replacing it drops the operator's connection mid-takeover. So
+    // the two things that change on a claim are changed directly.
+    const pill = statusPill(i.status);
+    const showStatus = (status) => {
+      const next = statusPill(status);
+      pill.className = next.className;
+      pill.textContent = next.textContent;
+    };
+
     const claimBtn = h('button', { class: 'btn primary', disabled: i.status !== 'open', onclick: async () => {
       try {
+        claimBtn.disabled = true;
         await api(`/api/interventions/${id}/claim`, { method: 'POST' });
+        showStatus('claimed');
         toast('Claimed. Waiting for the run to hand over control…');
         // The run grants control asynchronously; poll briefly for the channel.
         for (let n = 0; n < 40; n++) {
@@ -610,9 +651,19 @@ function operatorView(id) {
           if (i.context.control) break;
           await new Promise((r) => setTimeout(r, 300));
         }
-        if (i.context.control) { connect(); pushLog('control granted'); }
-        else toast('The run has not granted control yet.', 'err');
-      } catch (e) { toast(e.message, 'err'); }
+        showStatus(i.context.control ? 'in_control' : i.status);
+        if (i.context.control) {
+          // The button's job is done and its label should say so. Leaving it
+          // reading "Claim and take control" next to a live session invites the
+          // operator to wonder whether the claim worked.
+          claimBtn.textContent = 'You have control';
+          connect();
+          pushLog('control granted');
+        } else {
+          toast('The run has not granted control yet.', 'err');
+          claimBtn.disabled = false;
+        }
+      } catch (e) { claimBtn.disabled = false; toast(e.message, 'err'); }
     } }, 'Claim and take control');
 
     const handBack = (resolution, label, cls) => h('button', { class: `btn ${cls}`, onclick: async () => {
@@ -629,15 +680,16 @@ function operatorView(id) {
     // or reloaded the page mid-session — reconnect straight away. Losing the
     // live session to a browser refresh would be an unforced error.
     if (i.context.control && ['claimed', 'in_control'].includes(i.status)) {
+      claimBtn.textContent = 'You have control';
       setTimeout(() => { connect(); pushLog('reconnected to the live session'); }, 0);
     }
 
-    wrap.replaceChildren(
+    setChildren(wrap, 
       h('div', { class: 'crumb' }, h('a', { href: '#/operators' }, 'Operator queue'), ' / ', id),
       h('div', { class: 'page-head' },
         h('div', {}, h('h1', {}, i.context.capability?.title ?? 'Intervention'),
           h('div', { class: 'sub' }, i.context.diagnosis.message)),
-        h('div', { class: 'row' }, statusPill(i.status), claimBtn)),
+        h('div', { class: 'row' }, pill, claimBtn)),
 
       h('div', { class: 'grid two' },
         h('div', {},
@@ -677,7 +729,7 @@ function tenantsView() {
   const wrap = h('div', {}, h('div', { class: 'empty' }, 'Loading…'));
   (async () => {
     const { tenants } = await api('/api/tenants');
-    wrap.replaceChildren(
+    setChildren(wrap, 
       h('div', { class: 'page-head' }, h('div', {}, h('h1', {}, 'Tenants'),
         h('div', { class: 'sub' }, 'Institutions running the same vendor product. One capability, one overlay each — never a re-recording.'))),
       h('div', { class: 'grid two' }, tenants.map((t) => h('div', { class: 'card' },
@@ -701,7 +753,7 @@ function agentsView() {
   (async () => {
     const { tools } = await api('/api/tools?all=1').catch(() => ({ tools: [] }));
     const approved = tools.filter((t) => t.annotations.approvalState === 'approved');
-    wrap.replaceChildren(
+    setChildren(wrap, 
       h('div', { class: 'page-head' }, h('div', {}, h('h1', {}, 'Agent interface'),
         h('div', { class: 'sub' }, 'Approved capabilities compile straight into tool definitions. This is what the agent-facing product calls.'))),
       h('div', { class: 'card mb' },

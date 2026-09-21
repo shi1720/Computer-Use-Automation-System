@@ -196,11 +196,25 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
       status: 'failed', outputs,
       error: {
         class: cls, message,
-        ...(step ? { stepId: step.id, stepIntent: step.intent } : {}),
+        ...(step ? { stepId: step.id, stepIntent: readableIntent(step) } : {}),
         ...(expected ? { expected } : {}), ...(observed ? { observed } : {}),
         evidence: ev,
       },
     } as never);
+  };
+
+  /**
+   * A step's intent, as a person should read it.
+   *
+   * The artifact stores it templated — `{{input.shareType}}`, `{{vocab.share}}`
+   * — because it is shared across institutions. An operator being asked to
+   * rescue a run is not reading the artifact; they are reading a description of
+   * the thing in front of them, and "Record the current balance of the
+   * {{input.shareType}} {{vocab.share}} account" is the artifact leaking into
+   * an interface that should be showing them their job.
+   */
+  const readableIntent = (step: Step): string => {
+    try { return render(step.intent, ctx); } catch { return step.intent; }
   };
 
   const escalate = async (
@@ -212,7 +226,7 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
       runId, kind: 'replay',
       capability: { id: cap.metadata.id, version: cap.metadata.version, title: cap.metadata.title },
       tenant: { id: tenant.id, institution: tenant.institution ?? tenant.id },
-      ...(step ? { stepId: step.id, stepIntent: step.intent } : {}),
+      ...(step ? { stepId: step.id, stepIntent: readableIntent(step) } : {}),
       diagnosis,
       url: await o.surface.currentUrl().catch(() => ''),
       ...(ev.screenshot ? { screenshotRef: ev.screenshot } : {}),

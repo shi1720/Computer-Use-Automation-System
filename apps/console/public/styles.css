@@ -194,9 +194,16 @@ tr.click:hover td { background: var(--surface-2); }
 
 pre.json {
   background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
-  padding: 12px; overflow-x: auto; font-family: var(--mono); font-size: 12px;
+  padding: 12px; overflow: auto; font-family: var(--mono); font-size: 12px;
   color: #BCC7D6; max-height: 420px;
+  /* A failure's `observed` field is a sentence, not a token, and it is the most
+     useful line on this page. Wrapping keeps it inside the card instead of
+     pushing the layout sideways. */
+  white-space: pre-wrap; word-break: break-word;
 }
+/* The definition list this sits in must not be widened by its own content. */
+dl.kv { min-width: 0; }
+dl.kv dd { min-width: 0; overflow-wrap: anywhere; }
 .tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
 .tab { padding: 7px 13px; color: var(--muted); cursor: pointer; font-size: 13px; border-bottom: 2px solid transparent; }
 .tab:hover { color: var(--text); }

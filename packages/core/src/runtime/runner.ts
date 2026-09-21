@@ -124,7 +124,11 @@ export class Runner {
   // ── discovery ─────────────────────────────────────────────────────────────
 
   async runDiscovery(req: DiscoveryRequest, llm: LlmProvider): Promise<DiscoveryResult & { runId: string; evidenceDir: string }> {
-    // Same reasoning as replay: a discovery run can escalate too.
+    // Discovery holds a lease for the same reason replay does — one writer per
+    // session — even though nothing transfers control away from it today: the
+    // loop is read-only by construction and has no live-control path. The lease
+    // is the invariant, not the feature, and wiring it now is what makes adding
+    // escalation to discovery a change in one place rather than an audit.
     const runId = `disc_${randomUUID().slice(0, 8)}`;
     const redactor = new Redactor({ salt: defaultSalt(), revealTail: 4 });
     const evidence = this.makeRecorder(runId, {
@@ -143,7 +147,13 @@ export class Runner {
     const surface = await this.launchSurface(req.policy.allowedOrigins, evidence, req.policy.allowedPathPatterns);
     const leases = new ControlLeaseManager();
     const lease = leases.acquire('automation', 'swivel', `discovery ${runId}`);
-    const leased = new LeasedSurface(surface, leases, () => leases.lease?.id ?? lease.id);
+    // The same single-writer rule as replay, expressed the same way: the
+    // automation acts only while *it* holds the lease. Comparing the current
+    // lease id against "whatever the current lease id is" can never fail, which
+    // made this check a no-op and would have let the automation keep acting
+    // through an operator's takeover the moment discovery gained one.
+    const leased = new LeasedSurface(surface, leases, () => (leases.holder === 'automation' ? leases.lease?.id ?? null : null));
+    void lease;
 
     try {
       const signOn = this.opts.signOn === null ? null : (this.opts.signOn ?? MERIDIAN_SIGN_ON);

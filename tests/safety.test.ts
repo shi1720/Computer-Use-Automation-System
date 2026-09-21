@@ -276,6 +276,10 @@ describe('evidence integrity', () => {
     await rec.log('run.started', 'begin');
     await rec.log('step.acted', 'clicked the View link');
     await rec.log('run.finished', 'done');
+    // `finish()` writes the manifest, which pins the chain's final digest.
+    // Verification is not just "these events link up" but "these events are all
+    // of them", and the second half of that lives in run.json.
+    await rec.finish({ status: 'success' });
     assert.equal((await verifyChain(dir)).ok, true);
 
     // Someone edits the record to hide what happened.
@@ -302,11 +306,39 @@ describe('evidence integrity', () => {
     await rec.log('run.started', 'a');
     await rec.log('step.acted', 'b');
     await rec.log('run.finished', 'c');
+    await rec.finish({ status: 'success' });
 
     const path = join(dir, 'events.jsonl');
     const lines = (await readFile(path, 'utf8')).split('\n').filter(Boolean);
     await writeFile(path, `${[lines[0], lines[2]].join('\n')}\n`);
     assert.equal((await verifyChain(dir)).ok, false);
+  });
+
+  test('truncating the log is caught, which walking it forward cannot do', async () => {
+    // The easiest tampering, and the most useful: delete everything after the
+    // event you would rather nobody read. What remains is a valid chain — each
+    // event still names its predecessor — so a forward walk reports it intact.
+    // The manifest's recorded tip is what makes that a lie you cannot tell.
+    const dir = await mkdtemp(join(tmpdir(), 'swivel-ev-'));
+    const rec = new EvidenceRecorder(dir, {
+      runId: 'r', kind: 'replay', startedAt: new Date().toISOString(),
+      principal: { id: 'test', kind: 'system' }, counts: { events: 0, steps: 0, screenshots: 0, signals: 0, recoveries: 0, escalations: 0 },
+      redaction: {}, swivelVersion: '1.0.0',
+    }, new Redactor({ salt: 's' }));
+    await rec.log('run.started', 'a');
+    await rec.log('step.acted', 'placed a stop payment');
+    await rec.log('step.failed', 'the part somebody would rather hide');
+    await rec.log('run.finished', 'c');
+    await rec.finish({ status: 'failed' });
+    assert.equal((await verifyChain(dir)).ok, true);
+
+    const path = join(dir, 'events.jsonl');
+    const lines = (await readFile(path, 'utf8')).split('\n').filter(Boolean);
+    await writeFile(path, `${lines.slice(0, 2).join('\n')}\n`);
+
+    const v = await verifyChain(dir);
+    assert.equal(v.ok, false, 'a truncated chain is not an intact chain');
+    assert.match(v.message, /incomplete|removed from the end/);
   });
 
   test('sensitive values never reach the log in the first place', async () => {

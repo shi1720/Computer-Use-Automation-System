@@ -37,8 +37,6 @@ import { classifyRisk, PolicyEngine, type ExecutionContext } from '../policy/pol
 import { getProductProfile } from '../signals/profiles.js';
 import { evaluateAny } from '../replay/assertions.js';
 import type { EvidenceRecorder } from '../evidence/recorder.js';
-import type { EscalationBroker } from '../escalation/broker.js';
-import type { ControlLeaseManager } from '../escalation/lease.js';
 
 export const SWIVEL_VERSION = '1.0.0';
 
@@ -78,9 +76,17 @@ export interface DiscoveryDeps {
   surface: WebSurface;
   llm: LlmProvider;
   evidence: EvidenceRecorder;
-  broker?: EscalationBroker;
-  leases?: ControlLeaseManager;
-  /** Called when the run wants a human — wired by the CLI or console. */
+  /**
+   * Called when the run wants a human — wired by the CLI or console.
+   *
+   * Discovery escalates by *asking* rather than by handing over the session.
+   * It is read-only by construction (`policy.allowedActions` excludes every
+   * mutating kind, and `PolicyEngine.step` enforces it), so there is nothing
+   * mid-flight for an operator to take the wheel of: the useful answer is
+   * "carry on" or "stop", and a person who wants to drive can run the surface
+   * themselves. Replay is the path where control actually transfers, and it
+   * takes a broker and a lease manager for exactly that reason.
+   */
   onEscalate?: (reason: string, diagnosis: { code: string; message: string }) => Promise<'resume' | 'abort'>;
 }
 

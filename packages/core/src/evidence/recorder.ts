@@ -183,7 +183,24 @@ export class EvidenceRecorder {
   }
 }
 
-/** Re-verify a stored evidence chain. Used by the console and by `swivel verify`. */
+/**
+ * Re-verify a stored evidence chain. Used by the console and by `swivel verify`.
+ *
+ * Walking the chain forward proves that no event was edited, removed from the
+ * middle, or reordered — each event names its predecessor's digest, so any of
+ * those breaks the very next link.
+ *
+ * What it cannot prove on its own is that the chain is *complete*. Delete the
+ * last N lines — everything after the interesting event — and the remainder is
+ * a perfectly valid chain that verifies clean. That is the easiest tampering to
+ * perform and the most useful, so it has to be caught.
+ *
+ * The manifest is what catches it. `finish()` records `chainTip`: the digest of
+ * the final event, written once at the end of the run. Truncating the log
+ * leaves a tip that no longer matches, and no amount of trimming can produce
+ * one that does without also forging the manifest — which is a second file, and
+ * a separate act.
+ */
 export async function verifyChain(dir: string): Promise<{ ok: boolean; events: number; brokenAt?: number; message: string }> {
   let raw: string;
   try { raw = await readFile(join(dir, 'events.jsonl'), 'utf8'); }
@@ -204,5 +221,37 @@ export async function verifyChain(dir: string): Promise<{ ok: boolean; events: n
     prev = ev.hash;
     void i;
   }
-  return { ok: true, events: lines.length, message: `${lines.length} events verified; chain intact.` };
+
+  // ── completeness ─────────────────────────────────────────────────────────
+  let manifest: RunManifest | null = null;
+  try { manifest = JSON.parse(await readFile(join(dir, 'run.json'), 'utf8')) as RunManifest; }
+  catch { manifest = null; }
+
+  if (!manifest) {
+    return {
+      ok: false, events: lines.length,
+      message: `${lines.length} events chain correctly, but there is no run.json to pin them to. ` +
+        `An unfinished or interrupted run looks like this; so does one whose manifest has been removed.`,
+    };
+  }
+  if (!manifest.chainTip) {
+    return {
+      ok: false, events: lines.length,
+      message: `${lines.length} events chain correctly, but run.json records no chainTip, ` +
+        `so there is nothing to prove the log has not been truncated.`,
+    };
+  }
+  if (manifest.chainTip !== prev) {
+    return {
+      ok: false, events: lines.length,
+      ...(lines.length ? { brokenAt: (JSON.parse(lines[lines.length - 1] as string) as EvidenceEvent).seq } : {}),
+      message: `The chain is internally consistent but incomplete: run.json pins the final event at ` +
+        `${manifest.chainTip.slice(0, 12)}…, and the log ends at ${prev.slice(0, 12)}…. Events have been removed from the end.`,
+    };
+  }
+
+  return {
+    ok: true, events: lines.length,
+    message: `${lines.length} events verified; chain intact and complete to the tip recorded in run.json.`,
+  };
 }

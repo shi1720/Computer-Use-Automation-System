@@ -79,9 +79,21 @@ export class ControlLeaseManager {
   /**
    * Hand the wheel over. This is the only way control changes hands while a run
    * is live, and it always produces a history entry.
+   *
+   * `fromLeaseId` is the lease being given up. It is optional only so that the
+   * first grant of an unheld session reads naturally; whenever a lease *is*
+   * held, presenting it is how the caller shows it has the authority to hand it
+   * over. Without that check, anyone holding a reference to this manager could
+   * take the wheel off whoever is driving, which is precisely the thing
+   * `acquire()`'s own error message tells people to use `transfer()` to avoid.
    */
-  transfer(to: Holder, holderId: string, reason: string, ttlMs = 15 * 60_000): Lease {
-    const from = this.current?.holder ?? 'none';
+  transfer(to: Holder, holderId: string, reason: string, ttlMs = 15 * 60_000, fromLeaseId?: string): Lease {
+    const existing = this.lease;
+    if (existing && fromLeaseId !== undefined && existing.id !== fromLeaseId) {
+      throw new LeaseViolation(
+        `Cannot transfer control: ${fromLeaseId} is not the current lease (${existing.id}, held by ${existing.holder}/${existing.holderId}).`);
+    }
+    const from = existing?.holder ?? 'none';
     return this.install(to, holderId, reason, ttlMs, from);
   }
 
@@ -116,10 +128,27 @@ export class ControlLeaseManager {
     return lease;
   }
 
-  /** Extend an active lease — the operator console heartbeats through this. */
+  /**
+   * Extend an active lease — the operator console heartbeats through this.
+   *
+   * Note `this.lease`, not `this.current`. The getter is what reaps an expired
+   * lease and records the release; reading the field directly walked straight
+   * past it and resurrected a lease that had already lapsed, with no release
+   * event, so the history showed an unbroken operator hold across a period
+   * where there had been none.
+   *
+   * Worse than the audit gap was the race. Once a lease lapses, the
+   * automation's next `act()` reaps it and fails the run with "no control lease
+   * is held", which is the documented behaviour. If a stale console heartbeat
+   * landed first instead, the expired lease came back and the automation was
+   * blocked indefinitely. Which of the two happened was luck. An expired lease
+   * is gone; re-acquiring is the honest path, and it is recorded.
+   */
   renew(leaseId: string, ttlMs = 15 * 60_000): void {
-    if (this.current?.id !== leaseId) throw new LeaseViolation(`Cannot renew: ${leaseId} is not the current lease.`);
-    this.current.expiresAt = new Date(Date.now() + ttlMs).toISOString();
+    const l = this.lease;
+    if (!l) throw new LeaseViolation(`Cannot renew: lease ${leaseId} has expired and been released.`);
+    if (l.id !== leaseId) throw new LeaseViolation(`Cannot renew: ${leaseId} is not the current lease.`);
+    l.expiresAt = new Date(Date.now() + ttlMs).toISOString();
   }
 }
 

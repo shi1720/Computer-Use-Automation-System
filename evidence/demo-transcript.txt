@@ -11,7 +11,7 @@
 ────────────────────────────────────────────────────────────────────────────────────────────
   id                                version   state   risk           steps   replays   stability   title                          
   ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  meridian.stop-payment             0.1.0     draft   irreversible   10      0/0       —           Place a stop payment on a check
+  meridian.stop-payment             0.1.0     draft   irreversible   9       0/0       —           Place a stop payment on a check
   meridian.member-savings-balance   0.1.0     draft   read-only      6       0/0       —           Read a member's savings balance
 
 
@@ -33,30 +33,30 @@
   policy.decision        Invocation admitted
   note                   Establishing session at http://127.0.0.1:4711/
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
   step.resolved          Resolved action_cell { link name~"View" row[{{vocab.memberNumber}}={{input.memberNumber}}] col[Action] frame=contentFrame } → score 100, corroboration…
-  step.checkpoint        Held: Screen shows "Share Accounts"
-  step.started           Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.checkpoint        Held: Reached screen INQ-0420
+  step.started           Record the current balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "balance"
-  step.started           Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.started           Record the available balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved available_cell { cell row[Type={{input.shareType}}] col[Available] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "available"
-  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN INQ-0420
+  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   SUCCESS   4624ms · 6 steps · quality 100/100
+   SUCCESS   4698ms · 6 steps · quality 100/100
 
     outputs: {"balance":18402.66,"available":18402.66}
 
-  evidence: evidence/runs/rep_f9d3aab8
+  evidence: evidence/runs/rep_887bb08b
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -74,11 +74,11 @@
   model calls  0 — replay never consults a model
 ── run ─────────────────────────────────────────────────────────────────────────────────────
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   OUTCOME   3423ms · 3 steps · quality 100/100
+   OUTCOME   3371ms · 3 steps · quality 100/100
 
     RECORD_NOT_FOUND: No record matched the search criteria supplied by the caller.
 
-  evidence: evidence/runs/rep_3aee72c0
+  evidence: evidence/runs/rep_7291528c
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -99,12 +99,12 @@
   policy.decision        Invocation admitted
   note                   Establishing session at http://127.0.0.1:4711/
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 100, margin 100
   signal.fired           Operator session timed out (session_expired) after step "click_search"
   recovery.attempted     Applying "reauthenticate" for session_expired (attempt 1/2)
@@ -112,33 +112,33 @@
   note                   Establishing session at http://127.0.0.1:4711/
   recovery.succeeded     Recovery for session_expired succeeded
   note                   Session re-established. Restarting the flow from the beginning — nothing had been committed, so replaying it is safe.
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
   step.resolved          Resolved action_cell { link name~"View" row[{{vocab.memberNumber}}={{input.memberNumber}}] col[Action] frame=contentFrame } → score 100, corroboration…
-  step.checkpoint        Held: Screen shows "Share Accounts"
-  step.started           Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.checkpoint        Held: Reached screen INQ-0420
+  step.started           Record the current balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "balance"
-  step.started           Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.started           Record the available balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved available_cell { cell row[Type={{input.shareType}}] col[Available] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "available"
-  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN INQ-0420
+  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   SUCCESS   8061ms · 9 steps · quality 100/100
+   SUCCESS   8019ms · 9 steps · quality 100/100
 
     outputs: {"balance":18402.66,"available":18402.66}
 
   Recovered from:
     • Operator session timed out — reauthenticate, 1 attempt(s), at step "click_search"
 
-  evidence: evidence/runs/rep_1541fe2d
+  evidence: evidence/runs/rep_21ce687f
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -159,12 +159,12 @@
   policy.decision        Invocation admitted
   note                   Establishing session at http://127.0.0.1:4711/
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
@@ -172,23 +172,23 @@
   signal.fired           BSA/OFAC review notice (compliance_interstitial) after step "click_action_cell"
   recovery.attempted     Applying "run_steps" for compliance_interstitial (attempt 1/1)
   recovery.succeeded     Recovery for compliance_interstitial succeeded
-  step.checkpoint        Held after recovery: Screen shows "Share Accounts"
-  step.started           Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.checkpoint        Held after recovery: Reached screen INQ-0420
+  step.started           Record the current balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "balance"
-  step.started           Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.started           Record the available balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved available_cell { cell row[Type={{input.shareType}}] col[Available] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "available"
-  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN INQ-0420
+  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   SUCCESS   5209ms · 6 steps · quality 100/100
+   SUCCESS   5328ms · 6 steps · quality 100/100
 
     outputs: {"balance":1015.44,"available":0}
 
   Recovered from:
     • BSA/OFAC review notice — run_steps, 1 attempt(s), at step "click_action_cell"
 
-  evidence: evidence/runs/rep_f0778480
+  evidence: evidence/runs/rep_330284e8
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -206,13 +206,13 @@
   model calls  0 — replay never consults a model
 ── run ─────────────────────────────────────────────────────────────────────────────────────
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   FAILED   4ms · 0 steps · quality 100/100
+   FAILED   3ms · 0 steps · quality 100/100
 
     POLICY_DENIED at step "-" (-)
     Capability "Place a stop payment on a check" is irreversible and requires an explicit confirmationToken from the caller. Refusing to act without one.
-    evidence: evidence/runs/rep_f50e0192
+    evidence: evidence/runs/rep_85a97f60
 
-  evidence: evidence/runs/rep_f50e0192
+  evidence: evidence/runs/rep_85a97f60
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -230,12 +230,12 @@
   model calls  0 — replay never consults a model
 ── run ─────────────────────────────────────────────────────────────────────────────────────
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   OUTCOME   6972ms · 9 steps · quality 100/100
+   OUTCOME   6627ms · 8 steps · quality 100/100
 
     NOT_AUTHORIZED: The signed-in operator lacks authority for this transaction. A supervisor override is required.
     data: {"authorizationDetail":"OPERATOR NOT AUTHORIZED FOR THIS FUNCTION."}
 
-  evidence: evidence/runs/rep_b45dd9d7
+  evidence: evidence/runs/rep_98241b88
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -253,11 +253,11 @@
   model calls  0 — replay never consults a model
 ── run ─────────────────────────────────────────────────────────────────────────────────────
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   OUTCOME   4776ms · 5 steps · quality 100/100
+   OUTCOME   4848ms · 5 steps · quality 100/100
 
     SYSTEM_UNAVAILABLE_EOD (retryable): The core is in end-of-day processing. Maintenance functions are unavailable until it completes.
 
-  evidence: evidence/runs/rep_e7ee0900
+  evidence: evidence/runs/rep_738f29af
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -278,43 +278,41 @@
   policy.decision        Invocation admitted
   note                   Establishing session at http://127.0.0.1:4711/
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search to locate {{vocab.member}} {{input.memberNumber}} before initiating the stop payment.
-  step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
+  step.started           Open the Stop Payment function to begin placing a stop payment on a check.
+  step.resolved          Resolved stop_payment { link name~"Stop Payment" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Enter {{vocab.member}} number {{input.memberNumber}} into the {{vocab.member}} # search field to locate the correct {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number into the search field to find the {{vocab.member}}'s account for the stop payment.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the {{vocab.member}} search for {{vocab.member}} number {{input.memberNumber}} to retrieve their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number to locate their record for the stop payment.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
   step.resolved          Resolved action_cell { link name~"View" row[{{vocab.memberNumber}}={{input.memberNumber}}] col[Action] frame=contentFrame } → score 100, corroboration…
   step.checkpoint        Held: Reached screen INQ-0420
   step.started           Activate the "Stop Payment" button.
-  step.resolved          Resolved stop_payment { button name~"Stop Payment" frame=contentFrame } → score 100, corroboration 100, margin 100
+  step.resolved          Resolved stop_payment_2 { button name~"Stop Payment" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen SVC-0740
-  step.started           Enter check number {{input.checkNumber}} as the draft to be stopped for {{vocab.member}} {{input.memberNumber}}.
+  step.started           Enter the check number {{input.checkNumber}} into the Check Number field for the stop payment on the {{vocab.member}}'s {{vocab.share}} draft account.
   step.resolved          Resolved check_number { textbox right-of("Check Number") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Enter the amount ${{input.amount}} for the check being stopped, matching the check being disputed.
+  step.started           Enter the amount ${{input.amount}} into the Amount field for the stop payment on check {{input.checkNumber}}.
   step.resolved          Resolved amount { textbox right-of("Amount") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Set the stop payment reason to LOST / STOLEN as specified for this stop payment on check {{input.checkNumber}}.
-  step.resolved          Resolved reason { combobox right-of("Reason") frame=contentFrame } → score 100, corroboration 100, margin 100
-  step.started           Submit the stop payment request for check {{input.checkNumber}}, amount ${{input.amount}}, reason LOST/STOLEN, on {{vocab.member}} {{input.memberNumbe…
+  step.started           Submit the stop payment request with the entered check number, amount, and reason to place the stop payment on the {{vocab.member}}'s {{vocab.share}} …
   step.resolved          Resolved place_stop_payment { button name~"Place Stop Payment" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Screen shows "CONFIRM"
-  step.started           Capture the stop payment confirmation number to report back to the caller.
+  step.started           Capture the confirmation number from the Stop Payment confirmation screen to return to the caller.
   step.resolved          Resolved confirmation_number { text right-of("Confirmation Number") frame=contentFrame } → score 100, corroboration 100, margin 100
   extract                Extracted "confirmationNumber"
   step.checkpoint        Success checkpoint held: STOP PAYMENT - CONFIRMATION SCREEN
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   SUCCESS   7234ms · 10 steps · quality 100/100
+   SUCCESS   6833ms · 9 steps · quality 100/100
 
-    outputs: {"confirmationNumber":"SP-9675429"}
+    outputs: {"confirmationNumber":"SP-5721150"}
 
-  evidence: evidence/runs/rep_a482dc03
+  evidence: evidence/runs/rep_f29094df
 
 
 [90m  The core's own maintenance log, proving the side effect:[0m
-{"entries":[{"ref":"SP-9675429","at":"2026-09-21T20:41:00.658Z","operatorId":"sup02","action":"STOP_PAYMENT","memberNumber":"0100482","detail":{"checkNo":"1042","amount":"412.5"}}]}
+{"entries":[{"ref":"SP-5721150","at":"2026-09-21T21:19:22.632Z","operatorId":"sup02","action":"STOP_PAYMENT","memberNumber":"0100482","detail":{"checkNo":"1042","amount":"412.5"}}]}
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
 [1m[36m▸ 10 · Determinism[0m
@@ -323,24 +321,24 @@
   ◧ SWIVEL  ·  stability
   Read a member's savings balance · 5 consecutive replays
 ────────────────────────────────────────────────────────────────────────────────────────────
-  run 1/5  SUCCESS  4646ms
-  run 2/5  SUCCESS  4602ms
-  run 3/5  SUCCESS  4566ms
-  run 4/5  SUCCESS  4640ms
-  run 5/5  SUCCESS  4518ms
+  run 1/5  SUCCESS  4771ms
+  run 2/5  SUCCESS  4908ms
+  run 3/5  SUCCESS  4791ms
+  run 4/5  SUCCESS  4712ms
+  run 5/5  SUCCESS  4648ms
 
   #   status      time     quality   outputs                                  
   ────────────────────────────────────────────────────────────────────────────
-  1    SUCCESS    4646ms   100       {"balance":18402.66,"available":18402.66}
-  2    SUCCESS    4602ms   100       {"balance":18402.66,"available":18402.66}
-  3    SUCCESS    4566ms   100       {"balance":18402.66,"available":18402.66}
-  4    SUCCESS    4640ms   100       {"balance":18402.66,"available":18402.66}
-  5    SUCCESS    4518ms   100       {"balance":18402.66,"available":18402.66}
+  1    SUCCESS    4771ms   100       {"balance":18402.66,"available":18402.66}
+  2    SUCCESS    4908ms   100       {"balance":18402.66,"available":18402.66}
+  3    SUCCESS    4791ms   100       {"balance":18402.66,"available":18402.66}
+  4    SUCCESS    4712ms   100       {"balance":18402.66,"available":18402.66}
+  5    SUCCESS    4648ms   100       {"balance":18402.66,"available":18402.66}
 ── verdict ─────────────────────────────────────────────────────────────────────────────────
   runs               5
   distinct outcomes  1 (success)
   deterministic      yes — every run produced the same outcome
-  mean duration      4594ms
+  mean duration      4766ms
   flakiness          0%
 
 
@@ -363,32 +361,32 @@
   note                   Establishing session at http://127.0.0.1:4712/
   note                   Post-sign-on screen handled: Acknowledge the annual compliance policy (Meridian 10.1 only)
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 40, margin 100
   note                   Drift signal on "fill_member": identified confidently (100) but corroborating evidence agrees only 40%. Typically a vendor version change or a differe…
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 40, margin 100
   note                   Drift signal on "click_search": identified confidently (100) but corroborating evidence agrees only 40%. Typically a vendor version change or a differ…
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
   step.resolved          Resolved action_cell { link name~"View" row[{{vocab.memberNumber}}={{input.memberNumber}}] col[Action] frame=contentFrame } → score 100, corroboration…
   note                   Drift signal on "click_action_cell": identified confidently (100) but corroborating evidence agrees only 25%. Typically a vendor version change or a d…
-  step.checkpoint        Held: Screen shows "Share Accounts"
-  step.started           Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.checkpoint        Held: Reached screen INQ-0420
+  step.started           Record the current balance of the {{input.shareType}} {{vocab.share}} account.
   step.failed            Best candidate for "balance_cell" scored 0, below the required 60. Matched: [hints.tag]. Missed: [cell.columnHeader, cell.rowWhere(Type={{input.shareT…
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   FAILED   15005ms · 5 steps · quality 100/100
+   FAILED   14852ms · 5 steps · quality 100/100
 
-    TARGET_NOT_FOUND at step "extract_balance" (Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).)
+    TARGET_NOT_FOUND at step "extract_balance" (Record the current balance of the {{input.shareType}} {{vocab.share}} account.)
     Best candidate for "balance_cell" scored 0, below the required 60. Matched: [hints.tag]. Missed: [cell.columnHeader, cell.rowWhere(Type={{input.shareType}})].
     expected: balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame }
     observed: best candidate scored 0 (matched: hints.tag; missed: cell.columnHeader, cell.rowWhere(Type={{input.shareType}}))
-    evidence: evidence/runs/rep_a1b04bcf
+    evidence: evidence/runs/rep_1f026d75
 
-  evidence: evidence/runs/rep_a1b04bcf
+  evidence: evidence/runs/rep_1f026d75
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -423,36 +421,36 @@
   note                   Establishing session at http://127.0.0.1:4712/
   note                   Post-sign-on screen handled: Acknowledge the annual compliance policy (Meridian 10.1 only)
   note                   Session established (meridian-core-signon)
-  step.started           Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.
+  step.started           Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member_search { link name~"{{vocab.member}} Search" frame=navFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: Reached screen INQ-0410
-  step.started           Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.
+  step.started           Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.
   step.resolved          Resolved member { textbox right-of("{{vocab.memberNumber}}") frame=contentFrame } → score 100, corroboration 40, margin 100
   note                   Drift signal on "fill_member": identified confidently (100) but corroborating evidence agrees only 40%. Typically a vendor version change or a differe…
-  step.started           Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.
+  step.started           Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.
   step.resolved          Resolved search { button name~"Search" frame=contentFrame } → score 100, corroboration 40, margin 100
   note                   Drift signal on "click_search": identified confidently (100) but corroborating evidence agrees only 40%. Typically a vendor version change or a differ…
   step.checkpoint        Held: Reached screen INQ-0411
   step.started           Activate the "View" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.
   step.resolved          Resolved action_cell { link name~"View" row[{{vocab.memberNumber}}={{input.memberNumber}}] col[Action] frame=contentFrame } → score 100, corroboration…
   note                   Drift signal on "click_action_cell": identified confidently (100) but corroborating evidence agrees only 25%. Typically a vendor version change or a d…
-  step.checkpoint        Held: Screen shows "Share Accounts"
+  step.checkpoint        Held: Reached screen INQ-0420
   step.started           Reveal the deposit-account balances, which this institution's build hides by default
   step.resolved          Resolved display_accounts_button { button name~"Display {{vocab.shareList}}" frame=contentFrame } → score 100, corroboration 100, margin 100
   step.checkpoint        Held: The balances grid is on screen
-  step.started           Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.started           Record the current balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "balance"
-  step.started           Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).
+  step.started           Record the available balance of the {{input.shareType}} {{vocab.share}} account.
   step.resolved          Resolved available_cell { cell row[Type={{input.shareType}}] col[Available] frame=contentFrame } → score 100, corroboration 100, margin 31
   extract                Extracted "available"
-  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN INQ-0420
+  step.checkpoint        Success checkpoint held: MEMBER INQUIRY SCREEN
 ── result ──────────────────────────────────────────────────────────────────────────────────
-   SUCCESS   5854ms · 7 steps · quality 100/100
+   SUCCESS   5785ms · 7 steps · quality 100/100
 
     outputs: {"balance":18402.66,"available":18402.66}
 
-  evidence: evidence/runs/rep_9a7eaef4
+  evidence: evidence/runs/rep_c70518d9
 
 
 [90m────────────────────────────────────────────────────────────────────────────[0m
@@ -460,7 +458,7 @@
 [90m  Every run leaves a hash-chained bundle. Any edit to it is detectable.[0m
 
   ◧ SWIVEL  ·  verify evidence
-  evidence/runs/rep_9a7eaef4
+  evidence/runs/rep_c70518d9
 ────────────────────────────────────────────────────────────────────────────────────────────
   events  29
   chain   ✓ intact

@@ -43,6 +43,16 @@ export interface SynthesisContext {
   vocabulary: Record<string, string>;
   /** Base URL of the instance discovery ran against. */
   baseUrl: string;
+  /**
+   * Name of the institution discovery ran against, e.g. "Pine Ridge Federal
+   * Credit Union".
+   *
+   * Recorded so it can be *removed*. A model writing a summary names the
+   * institution it was looking at, and a capability is supposed to describe the
+   * vendor product rather than any one customer of it — "one artifact, N
+   * overlays" is not true of an artifact whose own summary says Pine Ridge.
+   */
+  institution?: string;
   /** Ids already allocated in this capability, to keep them unique. */
   usedIds: Set<string>;
 }
@@ -93,6 +103,13 @@ export function templatise(
     .sort((a, b) => String(b[1]).length - String(a[1]).length);
   for (const [name, v] of params) {
     if (out.includes(String(v))) out = out.split(String(v)).join(`{{input.${name}}}`);
+  }
+
+  // The institution's own name, which belongs to the tenant and not the
+  // artifact. Done before vocabulary so a name containing a vocabulary word
+  // ("Harbor Point Savings Bank") is replaced whole.
+  if (ctx.institution && ctx.institution.length >= 4 && out.includes(ctx.institution)) {
+    out = out.split(ctx.institution).join('{{tenant.institution}}');
   }
 
   if (opts.vocabWholeString !== false) {

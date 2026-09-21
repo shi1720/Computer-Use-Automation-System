@@ -8,7 +8,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   validateCapability, validateOverlay, resolveCapability, computeContentHash,
-  render, referencesOf, TemplateError, API_VERSION, generaliseOutputName,
+  render, referencesOf, TemplateError, API_VERSION, generaliseOutputName, templatise,
   type Capability, type TenantOverlay,
 } from '@swivel/core';
 
@@ -308,5 +308,41 @@ describe('an output name describes the field, not the invocation', () => {
 
   test('keeps the model\'s name rather than returning an empty one', () => {
     assert.equal(generaliseOutputName('specialSavings', ctx({ shareType: 'SPECIAL SAVINGS' })), 'specialSavings');
+  });
+});
+
+describe('a capability describes the vendor product, not one customer of it', () => {
+  const ctx = (over: Record<string, unknown> = {}) => ({
+    parameters: { memberNumber: '0100482' },
+    vocabulary: { member: 'Member' },
+    baseUrl: 'http://127.0.0.1:4711',
+    institution: 'Pine Ridge Federal Credit Union',
+    usedIds: new Set<string>(),
+    ...over,
+  }) as never;
+
+  test('the institution\'s own name is templatised out of prose', () => {
+    // "One artifact, N overlays" is not true of an artifact whose summary says
+    // Pine Ridge. The model writes what it was looking at; the name belongs to
+    // the tenant, so it is replaced rather than dropped — the sentence still
+    // explains what the capability does, and reads correctly at every
+    // institution that adopts it.
+    assert.equal(
+      templatise("Looks up a member in Pine Ridge Federal Credit Union's MERIDIAN Core system.", ctx(), { vocabWholeString: false }),
+      "Looks up a member in {{tenant.institution}}'s MERIDIAN Core system.",
+    );
+  });
+
+  test('a name is replaced whole, even when it contains a vocabulary word', () => {
+    const hp = ctx({ institution: 'Harbor Point Savings Bank', vocabulary: { bank: 'Bank' } });
+    assert.equal(
+      templatise('Recorded against Harbor Point Savings Bank.', hp, { vocabWholeString: false }),
+      'Recorded against {{tenant.institution}}.',
+    );
+  });
+
+  test('prose with no institution in it is left alone', () => {
+    const prose = 'Looks up a member by member number and reads a share balance.';
+    assert.equal(templatise(prose, ctx(), { vocabWholeString: false }), prose);
   });
 });

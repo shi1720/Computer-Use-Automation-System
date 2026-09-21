@@ -5,8 +5,8 @@
     "id": "meridian.member-savings-balance",
     "version": "0.1.0",
     "title": "Read a member's savings balance",
-    "summary": "Looks up a member by member number in Pine Ridge Federal Credit Union's MERIDIAN Core system and returns the current balance and available balance of a specified share account (e.g.",
-    "createdAt": "2026-09-21T20:38:34.632Z",
+    "summary": "Looks up a member by member number and returns the current balance and available balance of their {{input.shareType}} share account. Navigates Member Search -> exact-match search by Member # -> View member -> reads the Balance and Available columns from the Share Accounts grid for the row whose Type is {{input.shareType}}.",
+    "createdAt": "2026-09-21T21:16:57.303Z",
     "labels": {},
     "owner": "shivam"
   },
@@ -50,14 +50,14 @@
       {
         "name": "balance",
         "type": "money",
-        "description": "Current balance of the member's SPECIAL SAVINGS share account.",
+        "description": "Current balance of the SPECIAL SAVINGS share account for member 0100482.",
         "sensitivity": "sensitive",
         "required": false
       },
       {
         "name": "available",
         "type": "money",
-        "description": "Available balance of the member's SPECIAL SAVINGS share account.",
+        "description": "Available balance of the SPECIAL SAVINGS share account for member 0100482.",
         "sensitivity": "sensitive",
         "required": false
       }
@@ -101,7 +101,7 @@
       "dualControl": false,
       "financialImpact": false,
       "idempotent": true,
-      "summary": "This is a read-only inquiry; no changes were made to the member's record."
+      "summary": "Read-only inquiry; no transactions or record changes were submitted."
     },
     "preconditions": []
   },
@@ -301,7 +301,7 @@
     "steps": [
       {
         "id": "click_member_search",
-        "intent": "Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.",
+        "intent": "Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.",
         "kind": "click",
         "target": {
           "id": "member_search",
@@ -346,7 +346,7 @@
       },
       {
         "id": "fill_member",
-        "intent": "Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.",
+        "intent": "Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.",
         "kind": "fill",
         "target": {
           "id": "member",
@@ -387,7 +387,7 @@
       },
       {
         "id": "click_search",
-        "intent": "Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.",
+        "intent": "Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.",
         "kind": "click",
         "target": {
           "id": "search",
@@ -479,12 +479,12 @@
         "risk": "read_only",
         "expect": {
           "id": "click_action_cell_ok",
-          "description": "Screen shows \"Share Accounts\"",
+          "description": "Reached screen INQ-0420",
           "all": [
             {
               "kind": "text_present",
-              "text": "{{vocab.shareList}}",
-              "because": "the model nominated this as proof the step worked, and it was verified present during discovery"
+              "regex": "SCREEN\\s+INQ-0420",
+              "because": "the core stamps a screen identifier on every page; it is stable across runs and carries no member data"
             }
           ],
           "timeoutMs": 15000,
@@ -494,7 +494,7 @@
       },
       {
         "id": "extract_balance",
-        "intent": "Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).",
+        "intent": "Record the current balance of the {{input.shareType}} {{vocab.share}} account.",
         "kind": "extract",
         "target": {
           "id": "balance_cell",
@@ -541,7 +541,7 @@
       },
       {
         "id": "extract_available",
-        "intent": "Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).",
+        "intent": "Record the available balance of the {{input.shareType}} {{vocab.share}} account.",
         "kind": "extract",
         "target": {
           "id": "available_cell",
@@ -589,7 +589,7 @@
     ],
     "successCheckpoint": {
       "id": "capability_complete",
-      "description": "MEMBER INQUIRY SCREEN INQ-0420",
+      "description": "MEMBER INQUIRY SCREEN",
       "all": [
         {
           "kind": "text_present",
@@ -598,7 +598,7 @@
         },
         {
           "kind": "text_present",
-          "text": "{{vocab.member}} INQUIRY SCREEN INQ-0420",
+          "text": "{{vocab.member}} INQUIRY SCREEN",
           "because": "the discovery run verified this phrase was present on the final screen and that it is not run-varying data"
         }
       ],
@@ -607,7 +607,7 @@
     }
   },
   "provenance": {
-    "discoveredAt": "2026-09-21T20:38:34.632Z",
+    "discoveredAt": "2026-09-21T21:16:57.303Z",
     "discoveredBy": {
       "kind": "llm_discovery",
       "provider": "claude-cli",
@@ -617,7 +617,7 @@
     "swivelVersion": "1.0.0",
     "history": [
       {
-        "at": "2026-09-21T20:38:34.632Z",
+        "at": "2026-09-21T21:16:57.303Z",
         "actor": "shivam",
         "action": "discovered",
         "note": "via claude-cli/claude-code-cli"
@@ -637,8 +637,8 @@
     },
     "stabilityScore": 0,
     "notes": [
-      "This is a read-only inquiry; no changes were made to the member's record."
+      "Read-only inquiry; no transactions or record changes were submitted."
     ]
   },
-  "contentHash": "8498fc83690316b3fcafdb9dc57861d4f5277ab3410dc193f0196aec22ba2db1"
+  "contentHash": "9a8df99200ac49dca843a48ba418ec3d81192f77296e711a28e8f9024eb84604"
 }

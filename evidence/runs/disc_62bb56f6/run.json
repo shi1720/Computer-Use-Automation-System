@@ -1,0 +1,49 @@
+{
+  "runId": "disc_62bb56f6",
+  "kind": "discovery",
+  "startedAt": "2026-09-21T21:17:08.877Z",
+  "principal": {
+    "id": "shivam",
+    "kind": "human"
+  },
+  "goal": "Place a stop payment on check number 1042 for $412.50 against member 0100482's share draft account, with reason LOST / STOLEN, and reach the confirmation screen. Report the confirmation number.",
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "checkNumber": "1042",
+    "amount": "«sensitive:0857c417…2.50»"
+  },
+  "counts": {
+    "events": 33,
+    "steps": 9,
+    "screenshots": 0,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1,
+    "sensitive": 1,
+    "member_number": 228
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-21T21:18:09.165Z",
+  "outcome": {
+    "status": "success",
+    "message": "Discovered a 9-step capability in 10 model turns.",
+    "turns": 10,
+    "usage": {
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheCreationTokens": 0
+    },
+    "costUsd": 0,
+    "capability": "meridian.stop-payment@0.1.0"
+  },
+  "chainTip": "4b33947ef2490849418e05033786507fecdaee8932c82237bbca9952f7f2b3fb"
+}

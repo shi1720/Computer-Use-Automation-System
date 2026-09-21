@@ -5,8 +5,8 @@
     "id": "meridian.stop-payment",
     "version": "0.1.0",
     "title": "Place a stop payment on a check",
-    "summary": "Places a stop payment on a specific check for a credit union member's share draft account, given the member number, check number, amount, and reason. Navigates from the home screen through Member Search to locate and confirm the member, opens the Stop Payment servicing action from the member record, fills in the check number, amount, and reason (LOST/STOLEN), submits, and captures the resulting confirmation number.",
-    "createdAt": "2026-09-21T20:39:44.138Z",
+    "summary": "Places a stop payment on a specific check number and amount against a member's share draft account, using their member number, and returns the confirmation number, check number, amount, and expiration date from the confirmation screen. Requires memberNumber, checkNumber, and amount as inputs; the reason defaults to LOST/STOLEN. Navigates via member search, the member's servicing actions, and the Stop Payment entry form.",
+    "createdAt": "2026-09-21T21:18:09.132Z",
     "labels": {},
     "owner": "shivam"
   },
@@ -59,7 +59,7 @@
       {
         "name": "confirmationNumber",
         "type": "string",
-        "description": "The confirmation number issued for the stop payment placed on check 1042 for member 0100482's share draft account.",
+        "description": "The confirmation number issued for the stop payment placed on check 1042.",
         "sensitivity": "internal",
         "required": false
       }
@@ -103,7 +103,7 @@
       "dualControl": false,
       "financialImpact": true,
       "idempotent": false,
-      "summary": "The stop payment is fully in effect (MSG 0740 - STOP PAYMENT ACCEPTED), not pending further approval."
+      "summary": "The system confirmed the stop payment outright (MSG 0740 - STOP PAYMENT ACCEPTED) with no second approval required."
     },
     "preconditions": []
   },
@@ -302,11 +302,11 @@
   "flow": {
     "steps": [
       {
-        "id": "click_member_search",
-        "intent": "Open {{vocab.member}} Search to locate {{vocab.member}} {{input.memberNumber}} before initiating the stop payment.",
+        "id": "click_stop_payment",
+        "intent": "Open the Stop Payment function to begin placing a stop payment on a check.",
         "kind": "click",
         "target": {
-          "id": "member_search",
+          "id": "stop_payment",
           "role": "link",
           "frame": {
             "path": [
@@ -314,7 +314,7 @@
             ]
           },
           "name": {
-            "value": "{{vocab.member}} Search",
+            "value": "Stop Payment",
             "match": "exact"
           },
           "hints": {
@@ -332,7 +332,7 @@
         },
         "risk": "read_only",
         "expect": {
-          "id": "click_member_search_ok",
+          "id": "click_stop_payment_ok",
           "description": "Reached screen INQ-0410",
           "all": [
             {
@@ -348,7 +348,7 @@
       },
       {
         "id": "fill_member",
-        "intent": "Enter {{vocab.member}} number {{input.memberNumber}} into the {{vocab.member}} # search field to locate the correct {{vocab.member}}.",
+        "intent": "Enter the {{vocab.member}} number into the search field to find the {{vocab.member}}'s account for the stop payment.",
         "kind": "fill",
         "target": {
           "id": "member",
@@ -389,7 +389,7 @@
       },
       {
         "id": "click_search",
-        "intent": "Submit the {{vocab.member}} search for {{vocab.member}} number {{input.memberNumber}} to retrieve their record.",
+        "intent": "Search for the {{vocab.member}} using the entered {{vocab.member}} number to locate their record for the stop payment.",
         "kind": "click",
         "target": {
           "id": "search",
@@ -495,11 +495,11 @@
         "authoredBy": "model"
       },
       {
-        "id": "click_stop_payment",
+        "id": "click_stop_payment_2",
         "intent": "Activate the \"Stop Payment\" button.",
         "kind": "click",
         "target": {
-          "id": "stop_payment",
+          "id": "stop_payment_2",
           "role": "button",
           "frame": {
             "path": [
@@ -526,7 +526,7 @@
         },
         "risk": "read_only",
         "expect": {
-          "id": "click_stop_payment_ok",
+          "id": "click_stop_payment_2_ok",
           "description": "Reached screen SVC-0740",
           "all": [
             {
@@ -542,7 +542,7 @@
       },
       {
         "id": "fill_check_number",
-        "intent": "Enter check number {{input.checkNumber}} as the draft to be stopped for {{vocab.member}} {{input.memberNumber}}.",
+        "intent": "Enter the check number {{input.checkNumber}} into the Check Number field for the stop payment on the {{vocab.member}}'s {{vocab.share}} draft account.",
         "kind": "fill",
         "target": {
           "id": "check_number",
@@ -583,7 +583,7 @@
       },
       {
         "id": "fill_amount",
-        "intent": "Enter the amount ${{input.amount}} for the check being stopped, matching the check being disputed.",
+        "intent": "Enter the amount ${{input.amount}} into the Amount field for the stop payment on check {{input.checkNumber}}.",
         "kind": "fill",
         "target": {
           "id": "amount",
@@ -623,48 +623,8 @@
         "authoredBy": "model"
       },
       {
-        "id": "select_reason",
-        "intent": "Set the stop payment reason to LOST / STOLEN as specified for this stop payment on check {{input.checkNumber}}.",
-        "kind": "select",
-        "target": {
-          "id": "reason",
-          "role": "combobox",
-          "frame": {
-            "path": [
-              "contentFrame"
-            ]
-          },
-          "anchors": [
-            {
-              "relation": "right-of",
-              "text": {
-                "value": "Reason",
-                "match": "normalized"
-              },
-              "maxDistancePx": 320
-            }
-          ],
-          "hints": {
-            "css": [],
-            "nearText": [],
-            "attrs": {},
-            "idPattern": "ctl\\d+_Main_ddlReason",
-            "tag": "select"
-          },
-          "require": {
-            "minScore": 60,
-            "unique": true,
-            "timeoutMs": 10000
-          },
-          "note": "identified by anchor + idPattern (control has no accessible name — the application never associated a label)"
-        },
-        "value": "LOST / STOLEN",
-        "risk": "read_only",
-        "authoredBy": "model"
-      },
-      {
         "id": "click_place_stop_payment",
-        "intent": "Submit the stop payment request for check {{input.checkNumber}}, amount ${{input.amount}}, reason LOST/STOLEN, on {{vocab.member}} {{input.memberNumber}}'s {{vocab.share}} draft account.",
+        "intent": "Submit the stop payment request with the entered check number, amount, and reason to place the stop payment on the {{vocab.member}}'s {{vocab.share}} draft account.",
         "kind": "click",
         "target": {
           "id": "place_stop_payment",
@@ -711,7 +671,7 @@
       },
       {
         "id": "extract_confirmation_number",
-        "intent": "Capture the stop payment confirmation number to report back to the caller.",
+        "intent": "Capture the confirmation number from the Stop Payment confirmation screen to return to the caller.",
         "kind": "extract",
         "target": {
           "id": "confirmation_number",
@@ -774,7 +734,7 @@
     }
   },
   "provenance": {
-    "discoveredAt": "2026-09-21T20:39:44.138Z",
+    "discoveredAt": "2026-09-21T21:18:09.132Z",
     "discoveredBy": {
       "kind": "llm_discovery",
       "provider": "claude-cli",
@@ -784,7 +744,7 @@
     "swivelVersion": "1.0.0",
     "history": [
       {
-        "at": "2026-09-21T20:39:44.138Z",
+        "at": "2026-09-21T21:18:09.132Z",
         "actor": "shivam",
         "action": "discovered",
         "note": "via claude-cli/claude-code-cli"
@@ -804,8 +764,8 @@
     },
     "stabilityScore": 0,
     "notes": [
-      "The stop payment is fully in effect (MSG 0740 - STOP PAYMENT ACCEPTED), not pending further approval."
+      "The system confirmed the stop payment outright (MSG 0740 - STOP PAYMENT ACCEPTED) with no second approval required."
     ]
   },
-  "contentHash": "739b5fdc0c0849b159c9942814156ac75a77f7983605bbec809c54fcd315ce8c"
+  "contentHash": "74c0905eeb5005ec4828cb674e585219e5b4493d024e5d983bddc57f2c892b58"
 }

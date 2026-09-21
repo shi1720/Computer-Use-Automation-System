@@ -98,7 +98,10 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
 
   const vocabulary = { ...profile.vocabulary, ...(req.tenant.vocabulary ?? {}) };
   const parameters = Object.fromEntries(req.parameters.map((p) => [p.name, p.value]));
-  const synth: SynthesisContext = { parameters, vocabulary, baseUrl: req.tenant.baseUrl, usedIds: new Set() };
+  const synth: SynthesisContext = {
+    parameters, vocabulary, baseUrl: req.tenant.baseUrl, usedIds: new Set(),
+    ...(req.tenant.institution ? { institution: req.tenant.institution } : {}),
+  };
 
   const ctx: TemplateContext = {
     ...emptyContext(),
@@ -128,7 +131,7 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
   const outputs: FieldDef[] = [];
   let usage = emptyUsage();
   let turns = 0;
-  let finished: { summary: string; success_text: string; assertions?: Assertion[]; caveats?: string } | null = null;
+  let finished: { summary: string; success_text: string; assertions?: Assertion[]; caveats?: string; awaitsSecondApproval?: boolean } | null = null;
   let escalatedReason: string | null = null;
 
   const system = discoverySystemPrompt({
@@ -235,8 +238,14 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
         ...Object.values(parameters).filter((v) => String(v).length >= 3).map(String),
         ...readableValues(snap, 250).map((n) => (n.text ?? '').trim()).filter((t) => t.length >= 3),
       ];
+      // The summary and caveats go through `templatise` first, so the
+      // institution's name becomes `{{tenant.institution}}` rather than being
+      // dropped — a sentence that explains what the capability does is worth
+      // keeping, and only the tenant-specific part of it is the problem.
+      const portable = (prose: string | undefined): string | undefined =>
+        prose === undefined ? undefined : templatise(prose, synth, { vocabWholeString: false });
       const scrub = (prose: string | undefined, label: string): string | undefined =>
-        scrubProse(prose, forbidden, () => {
+        scrubProse(portable(prose), forbidden, () => {
           void evidence.log('note', `Removed a sentence from the capability's ${label}: it described this run's data rather than what the capability does.`);
         });
 
@@ -252,6 +261,7 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
         ...(typeof call.input.caveats === 'string'
           ? (() => { const c = scrub(call.input.caveats as string, 'caveats'); return c ? { caveats: c } : {}; })()
           : {}),
+        ...(call.input.awaits_second_approval === true ? { awaitsSecondApproval: true } : {}),
       };
       reply('Recorded. Assembling the capability artifact.');
       break;
@@ -376,6 +386,11 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
     finish: finished,
     llm: { provider: llm.name, model: llm.model },
     synth,
+    // The frames that existed on the entry screen. Replay checks them before
+    // step 1, so a build with a different frameset fails saying *that* rather
+    // than failing four steps later on a control it cannot find.
+    entryFrames: (recorded[0]?.snapshotBefore ?? (await surface.snapshot({ settleMs: 80 })))
+      .frames.map((f) => f.join('/')).filter(Boolean),
   });
 
   const findings = validateCapability(capability);
@@ -807,7 +822,8 @@ function assembleCapability(a: {
   vocabulary: Record<string, string>;
   outputs: FieldDef[];
   steps: Step[];
-  finish: { summary: string; success_text: string; assertions?: Assertion[]; caveats?: string };
+  finish: { summary: string; success_text: string; assertions?: Assertion[]; caveats?: string; awaitsSecondApproval?: boolean };
+  entryFrames: string[];
   llm: { provider: string; model: string };
   synth: SynthesisContext;
 }): Capability {
@@ -860,7 +876,7 @@ function assembleCapability(a: {
     ...base,
     metadata: { ...base.metadata, summary: finish.summary },
     target: { ...base.target, vendor: profile.vendor, product: profile.product, productVersions: req.tenant.productVersion ? `~${req.tenant.productVersion}` : '*',
-      entry: { ...base.target.entry, expectedFrames: [] } },
+      entry: { ...base.target.entry, expectedFrames: a.entryFrames } },
     contract: {
       ...base.contract,
       outputs,
@@ -868,7 +884,13 @@ function assembleCapability(a: {
         mutating,
         reversible: !irreversible,
         riskClass,
-        dualControl: /pending approval|second authorized user/i.test(finish.caveats ?? ''),
+        // Asked of the model as a structured claim, not grepped out of its
+        // prose. The previous rule tested the caveats for "pending approval" —
+        // and a run whose caveat read "the stop payment was accepted, *not*
+        // pending approval" set the flag, because a regex over free text cannot
+        // tell an assertion from its denial. A control-relevant field deserves
+        // a question with a yes or no answer.
+        dualControl: finish.awaitsSecondApproval ?? false,
         financialImpact,
         idempotent: !mutating,
         summary: finish.caveats ?? (mutating

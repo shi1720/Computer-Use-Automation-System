@@ -183,7 +183,11 @@ export const DISCOVERY_TOOLS = [
       properties: {
         summary: { type: 'string', description: 'One paragraph for the capability catalogue, written for an AI agent deciding whether to call this capability.' },
         success_text: { type: 'string', description: 'Stable text visible on the final screen that proves the flow completed.' },
-        caveats: { type: 'string', description: 'Anything a reviewer should know — e.g. that the change is pending a second approval.' },
+        caveats: { type: 'string', description: 'Anything a reviewer should know about this flow.' },
+        awaits_second_approval: {
+          type: 'boolean',
+          description: 'True only if the change you made is NOT yet in effect and is waiting for a second person to authorise it. If the application confirmed the change outright, this is false.',
+        },
       },
       required: ['summary', 'success_text'],
       additionalProperties: false,

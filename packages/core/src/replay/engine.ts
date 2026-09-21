@@ -289,6 +289,29 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
     await o.surface.act({ kind: 'navigate', url: entryUrl });
 
     let snap = await o.surface.snapshot({ settleMs: 150 });
+
+    /**
+     * The frames the flow expects.
+     *
+     * Checked once, here, because a build whose frameset differs is a different
+     * application as far as every subsequent step is concerned — and the failure
+     * it produces four steps later ("could not identify member_search")
+     * describes a symptom rather than the cause. A named frame that is simply
+     * absent is worth saying out loud.
+     */
+    const wantFrames = cap.target.entry.expectedFrames;
+    if (wantFrames.length) {
+      const present = new Set(snap.frames.map((f) => f.join('/')).filter(Boolean));
+      const missing = wantFrames.filter((f) => !present.has(f));
+      if (missing.length) {
+        return fail('PRECONDITION_FAILED',
+          `This capability expects the frames [${wantFrames.join(', ')}] and this screen has ` +
+          `[${[...present].join(', ') || 'none'}]. Missing: ${missing.join(', ')}. That usually means a ` +
+          `different build of the application, or a sign-on that did not complete.`,
+          undefined, wantFrames.join(', '), [...present].join(', ') || 'none');
+      }
+    }
+
     if (cap.contract.preconditions.length) {
       const pre = evaluateAll(cap.contract.preconditions, snap, ctx);
       if (!pre.held) {

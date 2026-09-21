@@ -159,8 +159,6 @@ export const RecoveryPlanSchema = z.object({
   backoffMs: z.number().int().nonnegative().default(1_000),
   /** For `run_steps` / `reauthenticate`: the remediation sequence. */
   steps: z.array(z.lazy(() => StepSchema)).default([]).optional(),
-  /** After recovery, resume at this step id instead of retrying the current. */
-  resumeAtStepId: z.string().optional(),
 }).strict();
 
 export const SignalSchema = z.object({

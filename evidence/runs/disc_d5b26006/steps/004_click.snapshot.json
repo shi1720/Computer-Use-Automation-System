@@ -1,0 +1,2756 @@
+{
+  "id": "4e«pii:846f3853…3921»-4ef5-4736-ab25-4750fda989c7",
+  "at": "2026-09-21T21:16:37.470Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14 Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14 Share Accounts Account Type Balance Available Status Rate «pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050% «pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850% «pii:6e08fead…2-70» SHARE DRAFT 1,184.23 934.23 OPEN 0.010% «pii:9ece3def…2-51» CERTIFICATE 25,000.00 0.00 OPEN 4.150% Servicing Actions F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»"
+  },
+  "nodeCount": 180,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "MEMBER INQUIRY",
+      "text": "MEMBER INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "MEMBER INQUIRY",
+      "text": "MEMBER INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIV",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "table",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "row",
+      "name": "",
+      "text": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "cell",
+      "name": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIV",
+      "text": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "table",
+      "name": "",
+      "text": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "Member # «pii:2a94040b…0482» Name Whitfield, Dolores",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "cell",
+      "name": "Member #",
+      "text": "Member #",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "text",
+      "name": "Member #",
+      "text": "Member #",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "cell",
+      "name": "«pii:2a94040b…0482»",
+      "text": "«pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "text",
+      "name": "«pii:2a94040b…0482»",
+      "text": "«pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_lblMemberNo"
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "cell",
+      "name": "Name",
+      "text": "Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "text",
+      "name": "Name",
+      "text": "Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "cell",
+      "name": "Whitfield, Dolores",
+      "text": "Whitfield, Dolores",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "text",
+      "name": "Whitfield, Dolores",
+      "text": "Whitfield, Dolores",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_lblName"
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "row",
+      "name": "",
+      "text": "SSN ***-**-4417 Date of Birth 1961-03-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "cell",
+      "name": "SSN",
+      "text": "SSN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "text",
+      "name": "SSN",
+      "text": "SSN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "cell",
+      "name": "***-**-4417",
+      "text": "***-**-4417",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "text",
+      "name": "***-**-4417",
+      "text": "***-**-4417",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "cell",
+      "name": "Date of Birth",
+      "text": "Date of Birth",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "text",
+      "name": "Date of Birth",
+      "text": "Date of Birth",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "cell",
+      "name": "1961-03-14",
+      "text": "1961-03-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "text",
+      "name": "1961-03-14",
+      "text": "1961-03-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "row",
+      "name": "",
+      "text": "Member Since 1994-06-02 Branch 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "cell",
+      "name": "Member Since",
+      "text": "Member Since",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::36",
+      "role": "text",
+      "name": "Member Since",
+      "text": "Member Since",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::37",
+      "role": "cell",
+      "name": "1994-06-02",
+      "text": "1994-06-02",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::38",
+      "role": "text",
+      "name": "1994-06-02",
+      "text": "1994-06-02",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::39",
+      "role": "cell",
+      "name": "Branch",
+      "text": "Branch",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::40",
+      "role": "text",
+      "name": "Branch",
+      "text": "Branch",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::41",
+      "role": "cell",
+      "name": "003 - CEDAR HOLLOW",
+      "text": "003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::42",
+      "role": "text",
+      "name": "003 - CEDAR HOLLOW",
+      "text": "003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::43",
+      "role": "row",
+      "name": "",
+      "text": "Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::44",
+      "role": "cell",
+      "name": "Address",
+      "text": "Address",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::45",
+      "role": "text",
+      "name": "Address",
+      "text": "Address",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::46",
+      "role": "cell",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::47",
+      "role": "text",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_lblAddress"
+    },
+    {
+      "ref": "contentFrame::48",
+      "role": "row",
+      "name": "",
+      "text": "Status ACTIVE Officer MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::49",
+      "role": "cell",
+      "name": "Status",
+      "text": "Status",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::50",
+      "role": "text",
+      "name": "Status",
+      "text": "Status",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::51",
+      "role": "cell",
+      "name": "ACTIVE",
+      "text": "ACTIVE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::52",
+      "role": "text",
+      "name": "ACTIVE",
+      "text": "ACTIVE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_lblStatus"
+    },
+    {
+      "ref": "contentFrame::53",
+      "role": "cell",
+      "name": "Officer",
+      "text": "Officer",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::54",
+      "role": "text",
+      "name": "Officer",
+      "text": "Officer",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::55",
+      "role": "cell",
+      "name": "MSR-14",
+      "text": "MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::56",
+      "role": "text",
+      "name": "MSR-14",
+      "text": "MSR-14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::57",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::58",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::59",
+      "role": "row",
+      "name": "",
+      "text": "Share Accounts Account Type Balance Available Status Rate «pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050% «pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850% «pii:6e08fead…2-70» SHARE DRAFT 1,184.23 934.23 OPEN 0.010% «pii:9ece3def…2-51» CERTIFICATE 25,000.00 0.00 OPEN 4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::60",
+      "role": "cell",
+      "name": "Share Accounts Account Type Balance Available Status Rate «pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050% «pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850% «pii:6e08fead…2-70» SHARE DRAFT 1,184",
+      "text": "Share Accounts Account Type Balance Available Status Rate «pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050% «pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850% «pii:6e08fead…2-70» SHARE DRAFT 1,184.23 934.23 OPEN 0.010% «pii:9ece3def…2-51» CERTIFICATE 25,000.00 0.00 OPEN 4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::61",
+      "role": "text",
+      "name": "Share Accounts",
+      "text": "Share Accounts",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::62",
+      "role": "table",
+      "name": "",
+      "text": "Account Type Balance Available Status Rate «pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050% «pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850% «pii:6e08fead…2-70» SHARE DRAFT 1,184.23 934.23 OPEN 0.010% «pii:9ece3def…2-51» CERTIFICATE 25,000.00 0.00 OPEN 4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_grdShares"
+    },
+    {
+      "ref": "contentFrame::63",
+      "role": "row",
+      "name": "",
+      "text": "Account Type Balance Available Status Rate",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::64",
+      "role": "columnheader",
+      "name": "Account",
+      "text": "Account",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::65",
+      "role": "columnheader",
+      "name": "Type",
+      "text": "Type",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::66",
+      "role": "columnheader",
+      "name": "Balance",
+      "text": "Balance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::67",
+      "role": "columnheader",
+      "name": "Available",
+      "text": "Available",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::68",
+      "role": "columnheader",
+      "name": "Status",
+      "text": "Status",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::69",
+      "role": "columnheader",
+      "name": "Rate",
+      "text": "Rate",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::70",
+      "role": "row",
+      "name": "",
+      "text": "«pii:b07e70ea…2-00» REGULAR SHARE 2,547.11 2,547.11 OPEN 0.050%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::71",
+      "role": "cell",
+      "name": "«pii:b07e70ea…2-00»",
+      "text": "«pii:b07e70ea…2-00»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::72",
+      "role": "text",
+      "name": "«pii:b07e70ea…2-00»",
+      "text": "«pii:b07e70ea…2-00»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::73",
+      "role": "cell",
+      "name": "REGULAR SHARE",
+      "text": "REGULAR SHARE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::74",
+      "role": "text",
+      "name": "REGULAR SHARE",
+      "text": "REGULAR SHARE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::75",
+      "role": "cell",
+      "name": "2,547.11",
+      "text": "2,547.11",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::76",
+      "role": "text",
+      "name": "2,547.11",
+      "text": "2,547.11",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::77",
+      "role": "cell",
+      "name": "2,547.11",
+      "text": "2,547.11",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::78",
+      "role": "text",
+      "name": "2,547.11",
+      "text": "2,547.11",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::79",
+      "role": "cell",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::80",
+      "role": "text",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::81",
+      "role": "cell",
+      "name": "0.050%",
+      "text": "0.050%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::82",
+      "role": "text",
+      "name": "0.050%",
+      "text": "0.050%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:b07e70ea…2-00»",
+          "Type": "REGULAR SHARE",
+          "Balance": "2,547.11",
+          "Available": "2,547.11",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::83",
+      "role": "row",
+      "name": "",
+      "text": "«pii:02de7c13…2-01» SPECIAL SAVINGS 18,402.66 18,402.66 OPEN 0.850%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::84",
+      "role": "cell",
+      "name": "«pii:02de7c13…2-01»",
+      "text": "«pii:02de7c13…2-01»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::85",
+      "role": "text",
+      "name": "«pii:02de7c13…2-01»",
+      "text": "«pii:02de7c13…2-01»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::86",
+      "role": "cell",
+      "name": "SPECIAL SAVINGS",
+      "text": "SPECIAL SAVINGS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::87",
+      "role": "text",
+      "name": "SPECIAL SAVINGS",
+      "text": "SPECIAL SAVINGS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::88",
+      "role": "cell",
+      "name": "18,402.66",
+      "text": "18,402.66",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::89",
+      "role": "text",
+      "name": "18,402.66",
+      "text": "18,402.66",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::90",
+      "role": "cell",
+      "name": "18,402.66",
+      "text": "18,402.66",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::91",
+      "role": "text",
+      "name": "18,402.66",
+      "text": "18,402.66",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::92",
+      "role": "cell",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::93",
+      "role": "text",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::94",
+      "role": "cell",
+      "name": "0.850%",
+      "text": "0.850%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::95",
+      "role": "text",
+      "name": "0.850%",
+      "text": "0.850%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:02de7c13…2-01»",
+          "Type": "SPECIAL SAVINGS",
+          "Balance": "18,402.66",
+          "Available": "18,402.66",
+          "Status": "OPEN",
+          "Rate": "0.850%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::96",
+      "role": "row",
+      "name": "",
+      "text": "«pii:6e08fead…2-70» SHARE DRAFT 1,184.23 934.23 OPEN 0.010%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::97",
+      "role": "cell",
+      "name": "«pii:6e08fead…2-70»",
+      "text": "«pii:6e08fead…2-70»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::98",
+      "role": "text",
+      "name": "«pii:6e08fead…2-70»",
+      "text": "«pii:6e08fead…2-70»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::99",
+      "role": "cell",
+      "name": "SHARE DRAFT",
+      "text": "SHARE DRAFT",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::100",
+      "role": "text",
+      "name": "SHARE DRAFT",
+      "text": "SHARE DRAFT",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::101",
+      "role": "cell",
+      "name": "1,184.23",
+      "text": "1,184.23",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::102",
+      "role": "text",
+      "name": "1,184.23",
+      "text": "1,184.23",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::103",
+      "role": "cell",
+      "name": "934.23",
+      "text": "934.23",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::104",
+      "role": "text",
+      "name": "934.23",
+      "text": "934.23",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::105",
+      "role": "cell",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::106",
+      "role": "text",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::107",
+      "role": "cell",
+      "name": "0.010%",
+      "text": "0.010%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::108",
+      "role": "text",
+      "name": "0.010%",
+      "text": "0.010%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 3,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:6e08fead…2-70»",
+          "Type": "SHARE DRAFT",
+          "Balance": "1,184.23",
+          "Available": "934.23",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::109",
+      "role": "row",
+      "name": "",
+      "text": "«pii:9ece3def…2-51» CERTIFICATE 25,000.00 0.00 OPEN 4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::110",
+      "role": "cell",
+      "name": "«pii:9ece3def…2-51»",
+      "text": "«pii:9ece3def…2-51»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::111",
+      "role": "text",
+      "name": "«pii:9ece3def…2-51»",
+      "text": "«pii:9ece3def…2-51»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::112",
+      "role": "cell",
+      "name": "CERTIFICATE",
+      "text": "CERTIFICATE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::113",
+      "role": "text",
+      "name": "CERTIFICATE",
+      "text": "CERTIFICATE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::114",
+      "role": "cell",
+      "name": "25,000.00",
+      "text": "25,000.00",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::115",
+      "role": "text",
+      "name": "25,000.00",
+      "text": "25,000.00",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::116",
+      "role": "cell",
+      "name": "0.00",
+      "text": "0.00",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::117",
+      "role": "text",
+      "name": "0.00",
+      "text": "0.00",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::118",
+      "role": "cell",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::119",
+      "role": "text",
+      "name": "OPEN",
+      "text": "OPEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::120",
+      "role": "cell",
+      "name": "4.150%",
+      "text": "4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::121",
+      "role": "text",
+      "name": "4.150%",
+      "text": "4.150%",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 4,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "«pii:9ece3def…2-51»",
+          "Type": "CERTIFICATE",
+          "Balance": "25,000.00",
+          "Available": "0.00",
+          "Status": "OPEN",
+          "Rate": "4.150%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::122",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::123",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::124",
+      "role": "row",
+      "name": "",
+      "text": "Servicing Actions",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::125",
+      "role": "cell",
+      "name": "Servicing Actions",
+      "text": "Servicing Actions",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::126",
+      "role": "text",
+      "name": "Servicing Actions",
+      "text": "Servicing Actions",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::127",
+      "role": "button",
+      "name": "Address Maintenance",
+      "value": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::128",
+      "role": "button",
+      "name": "Open Share",
+      "value": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::129",
+      "role": "button",
+      "name": "Stop Payment",
+      "value": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::130",
+      "role": "button",
+      "name": "Fee Reversal",
+      "value": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::131",
+      "role": "table",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::132",
+      "role": "row",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::133",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::134",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::135",
+      "role": "row",
+      "name": "",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::136",
+      "role": "cell",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::137",
+      "role": "text",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER «pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    }
+  ]
+}

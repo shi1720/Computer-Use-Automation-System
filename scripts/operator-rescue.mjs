@@ -53,56 +53,85 @@ const cookie = login.headers.getSetCookie()[0].split(';')[0];
 const as = { cookie };
 console.log('operator: signed in as R. Solis');
 
-let ticket = null;
-for (let i = 0; i < 90 && !ticket; i++) {
-  const r = await fetch(`${C}/api/interventions`, { headers: as }).then((x) => x.json());
-  ticket = r.interventions.find((t) => t.status === 'open') ?? null;
-  if (!ticket) await sleep(1000);
-}
-if (!ticket) { console.log('operator: no ticket appeared'); process.exit(1); }
-console.log(`operator: ${ticket.id} — ${ticket.context.diagnosis.message.slice(0, 90)}…`);
-
-await fetch(`${C}/api/interventions/${ticket.id}/claim`, { method: 'POST', headers: as });
-const full = await fetch(`${C}/api/interventions/${ticket.id}`, { headers: as }).then((x) => x.json());
-const ctl = full.intervention.context.control;
-if (!ctl) { console.log('operator: control was not granted'); process.exit(1); }
-console.log('operator: claimed, control granted');
-
-/*
- * Drive the live session.
+/**
+ * Work the queue, not one ticket.
  *
- * The console's client sends viewport coordinates, because pixels are all a
- * screencast has — and the coordinate a person clicks is a coordinate on the
- * whole page, not inside a frame. These screens are a `cols="180,*"` frameset,
- * so a control the perception layer reports at (16, 188) inside `contentFrame`
- * is at (196, 188) on screen. Getting that axis wrong is silent: the click
- * lands in the nav frame, nothing happens, and the run escalates again — which
- * is at least a failure the system notices.
+ * A real operator watches their queue until the run they are helping is done,
+ * and a run can ask twice — the second time for a different reason. Handling
+ * exactly one ticket and exiting looks fine until the run escalates again and
+ * nobody is there, which is a property of this script rather than of the system
+ * and should not be mistaken for one.
  */
-const NAV_FRAME_WIDTH = 180;
-const BUTTON = { x: 16, y: 188, w: 148, h: 18 };   // "Display Deposit Accounts"
+const MAX_RESCUES = 3;
+let handled = 0;
 
-await new Promise((resolve) => {
-  const ws = new WebSocket(ctl.wsUrl, [`swivel.token.${ctl.token}`]);
-  const x = NAV_FRAME_WIDTH + BUTTON.x + BUTTON.w / 2;
-  const y = BUTTON.y + BUTTON.h / 2;
-  ws.on('open', async () => {
-    const send = (m) => ws.send(JSON.stringify(m));
-    send({ t: 'mouse', type: 'mouseMoved', x, y });
-    await sleep(150);
-    send({ t: 'mouse', type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
-    await sleep(100);
-    send({ t: 'mouse', type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
-    console.log('operator: used the Display control');
-    await sleep(1500);
-    ws.close();
-    resolve();
+for (let i = 0; i < 400 && handled < MAX_RESCUES; i++) {
+  const list = await fetch(`${C}/api/interventions`, { headers: as }).then((x) => x.json());
+  const ticket = list.interventions.find((t) => t.status === 'open');
+  if (!ticket) { await sleep(300); continue; }
+
+  console.log(`operator: ${ticket.id} — ${ticket.context.diagnosis.message.slice(0, 90)}…`);
+  await fetch(`${C}/api/interventions/${ticket.id}/claim`, { method: 'POST', headers: as });
+  const full = await fetch(`${C}/api/interventions/${ticket.id}`, { headers: as }).then((x) => x.json());
+  const ctl = full.intervention.context.control;
+  if (!ctl) { console.log('operator: control was not granted'); break; }
+  console.log('operator: claimed, control granted');
+
+  /*
+   * Find the control the way a person finds it: by looking at the screen.
+   *
+   * The ticket carries the perception snapshot the run was looking at when it
+   * stopped, so the button's position comes from there rather than from a
+   * constant in this file. A hardcoded coordinate is a silent failure — the
+   * click lands somewhere harmless, nothing happens, and the run escalates
+   * again looking exactly as though the system is broken when it is the script.
+   *
+   * One conversion is needed, and it is the whole subtlety of driving a
+   * screencast: perception reports geometry *within a frame*, and the
+   * screencast is the whole page. These screens are a cols="180,*" frameset, so
+   * anything in contentFrame sits 180px further right than the snapshot says.
+   */
+  const FRAME_OFFSET = { navFrame: 0, contentFrame: 180 };
+  const snap = await fetch(
+    `${C}/api/runs/${ticket.context.runId}/file?path=${encodeURIComponent(ticket.context.snapshotRef)}`,
+    { headers: as },
+  ).then((x) => x.json()).catch(() => null);
+
+  const target = snap?.nodes?.find((n) => n.role === 'button' && /^Display /.test(n.name ?? ''));
+  if (!target?.bounds) {
+    console.log('operator: could not find the Display control on the paused screen');
+    break;
+  }
+  const dx = FRAME_OFFSET[target.framePath?.[0]] ?? 0;
+  const x = dx + target.bounds.x + target.bounds.w / 2;
+  const y = target.bounds.y + target.bounds.h / 2;
+  console.log(`operator: "${target.name}" is at (${Math.round(x)}, ${Math.round(y)})`);
+
+  await new Promise((resolve) => {
+    const ws = new WebSocket(ctl.wsUrl, [`swivel.token.${ctl.token}`]);
+    ws.on('open', async () => {
+      const send = (m) => ws.send(JSON.stringify(m));
+      send({ t: 'mouse', type: 'mouseMoved', x, y });
+      await sleep(120);
+      send({ t: 'mouse', type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
+      await sleep(80);
+      send({ t: 'mouse', type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
+      console.log('operator: clicked it');
+      await sleep(1200);
+      ws.close();
+      resolve();
+    });
+    ws.on('error', (e) => { console.log('operator: ws error', e.message); resolve(); });
   });
-  ws.on('error', (e) => { console.log('operator: ws error', e.message); resolve(); });
-});
 
-await fetch(`${C}/api/interventions/${ticket.id}/return`, {
-  method: 'POST', headers: { 'content-type': 'application/json', ...as },
-  body: JSON.stringify({ resolution: RESOLUTION, note: NOTE }),
-});
-console.log(`operator: handed control back — ${RESOLUTION}`);
+  await fetch(`${C}/api/interventions/${ticket.id}/return`, {
+    method: 'POST', headers: { 'content-type': 'application/json', ...as },
+    body: JSON.stringify({ resolution: RESOLUTION, note: NOTE }),
+  });
+  console.log(`operator: handed control back — ${RESOLUTION}`);
+  handled += 1;
+  if (RESOLUTION === 'completed_by_human') break;   // the run is over either way
+  await sleep(800);
+}
+
+if (handled === 0) { console.log('operator: no ticket appeared'); process.exit(1); }

@@ -1,0 +1,44 @@
+{
+  "runId": "rep_21ce687f",
+  "kind": "replay",
+  "startedAt": "2026-09-21T21:18:40.209Z",
+  "principal": {
+    "id": "cli",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.member-savings-balance",
+    "version": "0.1.0",
+    "contentHash": "9a8df99200ac49dca843a48ba418ec3d81192f77296e711a28e8f9024eb84604"
+  },
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "shareType": "SPECIAL SAVINGS"
+  },
+  "counts": {
+    "events": 35,
+    "steps": 9,
+    "screenshots": 0,
+    "signals": 1,
+    "recoveries": 1,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-21T21:18:48.553Z",
+  "outcome": {
+    "status": "success",
+    "outputs": {
+      "balance": 18402.66,
+      "available": 18402.66
+    }
+  },
+  "chainTip": "fc2e6bd4c6686f70969d153b3a00a8d7d56185d7246dd221efdde5b81b1fb527"
+}

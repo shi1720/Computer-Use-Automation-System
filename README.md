@@ -185,9 +185,16 @@ overlay is worth one patch.
 Then it pauses and prints a URL. Open it: the operator console shows a **live
 screencast of the paused browser session**, and clicks and keystrokes are
 forwarded to it. Do the step by hand, hand control back, and the run resumes —
-with everything the human did recorded on the run's evidence chain, and the
-result reported as `escalated` rather than `success`, because a person did the
-work.
+with everything you did on the run's evidence chain.
+
+What it reports afterwards depends on what you actually did. Unblock read-only
+work and hand back `resume`, and the automation genuinely finished the job:
+`success`, with the escalation and your click on the record. Tell it you
+finished the job yourself, and it reports `escalated` with `outputs: null`,
+because the automation will not put a person's work on its own record.
+
+`scripts/operator-rescue.mjs` does all of that through the same API and the same
+websocket, if you would rather watch it than click it.
 
 <div align="center">
 <img src="docs/screens/operator-live-driving.png" width="880" alt="The operator console driving a paused live session over a CDP screencast.">

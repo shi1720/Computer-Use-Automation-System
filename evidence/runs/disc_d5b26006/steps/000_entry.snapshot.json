@@ -1,0 +1,782 @@
+{
+  "id": "4c422c2b-61ac-4d01-b464-ce2b01f248ee",
+  "at": "2026-09-21T21:16:17.621Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14 Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME"
+  },
+  "nodeCount": 69,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14 Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "text": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "text": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "HOME SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "HOME",
+      "text": "HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "HOME",
+      "text": "HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN HOM-0001 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "text": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OF",
+      "text": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "table",
+      "name": "",
+      "text": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "row",
+      "name": "",
+      "text": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "cell",
+      "name": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OF",
+      "text": "Welcome, A. NGUYEN Select a function from the menu on the left. Institution: Pine Ridge Federal Credit Union Core version: MERIDIAN Core 9.2.14 Business date: 09/21/2026 Your role: MSR — 001 - MAIN OFFICE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "text",
+      "name": "Welcome, A. NGUYEN",
+      "text": "Welcome, A. NGUYEN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "text",
+      "name": "Institution:",
+      "text": "Institution:",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "text",
+      "name": "Core version:",
+      "text": "Core version:",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "text",
+      "name": "Business date:",
+      "text": "Business date:",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "text",
+      "name": "Your role:",
+      "text": "Your role:",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "table",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "row",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "row",
+      "name": "",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "cell",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "text",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | HOME",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    }
+  ]
+}

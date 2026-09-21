@@ -1,0 +1,45 @@
+{
+  "runId": "rep_84938152",
+  "kind": "replay",
+  "startedAt": "2026-09-21T19:35:44.144Z",
+  "principal": {
+    "id": "cli",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.member-savings-balance",
+    "version": "0.1.0",
+    "contentHash": "7c15bc9d71577287db67f0fdd136c0a511e112480930912343ef8c5f07800ca2"
+  },
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:e8e1c2bb…0483»",
+    "shareType": "CERTIFICATE"
+  },
+  "counts": {
+    "events": 17,
+    "steps": 5,
+    "screenshots": 1,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-21T19:35:59.407Z",
+  "outcome": {
+    "status": "failed",
+    "class": "TARGET_NOT_FOUND",
+    "message": "Best candidate for \"balance_cell\" scored 37, below the required 60. Matched: [cell.columnHeader, hints.tag]. Missed: [cell.rowWhere(Type={{input.shareType}})].",
+    "stepId": "extract_current_balance",
+    "expected": "balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame }",
+    "observed": "best candidate scored 37 (matched: cell.columnHeader, hints.tag; missed: cell.rowWhere(Type={{input.shareType}}))"
+  },
+  "chainTip": "340cd575c3b66132c51bb106cd5efdccd8cba2d85bb12ada8fc13b445384f66e"
+}

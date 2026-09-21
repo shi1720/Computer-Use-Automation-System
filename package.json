@@ -1,0 +1,36 @@
+{
+  "name": "swivel",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Swivel \u2014 computer-use capabilities for systems that were never meant to be automated.",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.10"
+  },
+  "scripts": {
+    "setup": "npm install && npx tsx packages/cli/src/main.ts init",
+    "meridian": "tsx packages/cli/src/main.ts meridian",
+    "swivel": "tsx packages/cli/src/main.ts",
+    "console": "tsx packages/cli/src/main.ts serve",
+    "demo": "bash scripts/demo.sh",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "node --test --import tsx tests/*.test.ts",
+    "lint": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "@types/ws": "^8.18.1",
+    "express": "^5.2.1",
+    "playwright-core": "^1.63.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "ws": "^8.21.3",
+    "zod": "^4.6.5"
+  }
+}

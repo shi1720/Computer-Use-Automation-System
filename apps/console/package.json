@@ -1,0 +1,8 @@
+{
+  "name": "@swivel/console",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Swivel control plane — capability catalogue, review and approval, run evidence, and the operator takeover console.",
+  "main": "src/index.ts"
+}

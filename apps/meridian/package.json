@@ -1,0 +1,10 @@
+{
+  "name": "@swivel/meridian",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MERIDIAN Core — a deliberately hostile simulation of a legacy core-banking back-office application.",
+  "main": "dist/index.js",
+  "exports": { ".": "./dist/index.js" },
+  "scripts": { "build": "tsc -b", "start": "node dist/bin.js" }
+}

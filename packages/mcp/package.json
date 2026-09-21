@@ -1,0 +1,8 @@
+{
+  "name": "@swivel/mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP server exposing approved Swivel capabilities as agent-callable tools.",
+  "bin": { "swivel-mcp": "src/main.ts" }
+}

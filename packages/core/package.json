@@ -1,0 +1,10 @@
+{
+  "name": "@swivel/core",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Swivel core — perception, capability artifacts, deterministic replay, policy and escalation.",
+  "main": "dist/index.js",
+  "exports": { ".": "./dist/index.js" },
+  "scripts": { "build": "tsc -b" }
+}

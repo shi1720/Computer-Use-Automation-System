@@ -1,0 +1,4468 @@
+{
+  "id": "0cdad429-6e18-4144-8d5f-55b353725c14",
+  "at": "2026-09-21T19:34:30.393Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14 Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14 Share Accounts Account Type Balance Available Status Rate 0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050% 0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010% Servicing Actions F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483"
+  },
+  "nodeCount": 154,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::2",
+        "navFrame::5",
+        "navFrame::9",
+        "navFrame::12",
+        "navFrame::16",
+        "navFrame::19",
+        "navFrame::23",
+        "navFrame::27",
+        "navFrame::31",
+        "navFrame::35",
+        "navFrame::38",
+        "navFrame::42"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 225
+      }
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::3"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "PR MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::4"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "PR MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::2"
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "PR MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 79,
+        "h": 11
+      },
+      "parentRef": "navFrame::3"
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::6"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 17,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::7"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 17,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::5"
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::8"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/home",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 15,
+        "w": 24,
+        "h": 17
+      },
+      "parentRef": "navFrame::6"
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 20,
+        "w": 24,
+        "h": 11
+      },
+      "parentRef": "navFrame::7"
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::10"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 34,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::11"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 34,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::9"
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 37,
+        "w": 44,
+        "h": 11
+      },
+      "parentRef": "navFrame::10"
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::13"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Member Search",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 51,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::14"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Member Search",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 51,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::12"
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::15"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Member Search",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 49,
+        "w": 64,
+        "h": 17
+      },
+      "parentRef": "navFrame::13"
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Member Search",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 54,
+        "w": 64,
+        "h": 11
+      },
+      "parentRef": "navFrame::14"
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::17"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 68,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::18"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 68,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::16"
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 71,
+        "w": 56,
+        "h": 11
+      },
+      "parentRef": "navFrame::17"
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::20"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 85,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::21"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 85,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::19"
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::22"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=address",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 83,
+        "w": 87,
+        "h": 17
+      },
+      "parentRef": "navFrame::20"
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 88,
+        "w": 87,
+        "h": 11
+      },
+      "parentRef": "navFrame::21"
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::24"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Open Share",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 102,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::25"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Open Share",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 102,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::23"
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::26"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=open-share",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Open Share",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 100,
+        "w": 47,
+        "h": 17
+      },
+      "parentRef": "navFrame::24"
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Open Share",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 105,
+        "w": 47,
+        "h": 11
+      },
+      "parentRef": "navFrame::25"
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::28"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 119,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::29"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 119,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::27"
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::30"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=stop-pay",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 117,
+        "w": 56,
+        "h": 17
+      },
+      "parentRef": "navFrame::28"
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 122,
+        "w": 56,
+        "h": 11
+      },
+      "parentRef": "navFrame::29"
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::32"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 136,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::33"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 136,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::31"
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::34"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=fee-reversal",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 134,
+        "w": 52,
+        "h": 17
+      },
+      "parentRef": "navFrame::32"
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 139,
+        "w": 52,
+        "h": 11
+      },
+      "parentRef": "navFrame::33"
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::36"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 153,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::37"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 153,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::35"
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 156,
+        "w": 42,
+        "h": 11
+      },
+      "parentRef": "navFrame::36"
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::39"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 170,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::40"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 170,
+        "w": 180,
+        "h": 17
+      },
+      "parentRef": "navFrame::38"
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::41"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "signoff",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 168,
+        "w": 35,
+        "h": 17
+      },
+      "parentRef": "navFrame::39"
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 173,
+        "w": 35,
+        "h": 11
+      },
+      "parentRef": "navFrame::40"
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::43"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 187,
+        "w": 180,
+        "h": 38
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 187,
+        "w": 180,
+        "h": 38
+      },
+      "parentRef": "navFrame::42"
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::2",
+        "contentFrame::10"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 296
+      }
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::3"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::1"
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::4"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::2"
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::5"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 1087,
+        "h": 11
+      },
+      "parentRef": "contentFrame::3"
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::6",
+        "contentFrame::8"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 1087,
+        "h": 11
+      },
+      "parentRef": "contentFrame::4"
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "MEMBER INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::7"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "MEMBER INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 343,
+        "h": 11
+      },
+      "parentRef": "contentFrame::5"
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "MEMBER INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "MEMBER INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 93,
+        "h": 11
+      },
+      "parentRef": "contentFrame::6"
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::9"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 349,
+        "y": 3,
+        "w": 744,
+        "h": 11
+      },
+      "parentRef": "contentFrame::5"
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 9.2.14",
+      "labelled": false,
+      "bounds": {
+        "x": 892,
+        "y": 3,
+        "w": 201,
+        "h": 11
+      },
+      "parentRef": "contentFrame::8"
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::11"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 17,
+        "w": 1099,
+        "h": 279
+      },
+      "parentRef": "contentFrame::1"
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::12"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 17,
+        "w": 1099,
+        "h": 279
+      },
+      "parentRef": "contentFrame::10"
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::13",
+        "contentFrame::57",
+        "contentFrame::59",
+        "contentFrame::96",
+        "contentFrame::98"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 8,
+        "y": 25,
+        "w": 1083,
+        "h": 263
+      },
+      "parentRef": "contentFrame::11"
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::14"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 26,
+        "w": 1081,
+        "h": 89
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "cell",
+      "name": "Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::15"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 26,
+        "w": 1081,
+        "h": 89
+      },
+      "parentRef": "contentFrame::13"
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::16",
+        "contentFrame::25",
+        "contentFrame::34",
+        "contentFrame::43",
+        "contentFrame::48"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "Member # 0100483 Name Whitfield, Marcus SSN ***-**-8820 Date of Birth 1989-07-30 Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 33,
+        "w": 1067,
+        "h": 75
+      },
+      "parentRef": "contentFrame::14"
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::17",
+        "contentFrame::19",
+        "contentFrame::21",
+        "contentFrame::23"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Member # 0100483 Name Whitfield, Marcus",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 33,
+        "w": 1067,
+        "h": 15
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "cell",
+      "name": "Member #",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::18"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Member #",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 33,
+        "w": 114,
+        "h": 15
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "text",
+      "name": "Member #",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Member #",
+      "labelled": false,
+      "bounds": {
+        "x": 84,
+        "y": 35,
+        "w": 44,
+        "h": 11
+      },
+      "parentRef": "contentFrame::17"
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "cell",
+      "name": "0100483",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::20"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 33,
+        "w": 154,
+        "h": 15
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "text",
+      "name": "0100483",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_Main_lblMemberNo",
+        "attrs": {}
+      },
+      "text": "0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 35,
+        "w": 35,
+        "h": 11
+      },
+      "parentRef": "contentFrame::19"
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "cell",
+      "name": "Name",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::22"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Name",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 33,
+        "w": 94,
+        "h": 15
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "text",
+      "name": "Name",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Name",
+      "labelled": false,
+      "bounds": {
+        "x": 351,
+        "y": 35,
+        "w": 25,
+        "h": 11
+      },
+      "parentRef": "contentFrame::21"
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "cell",
+      "name": "Whitfield, Marcus",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::24"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Whitfield, Marcus",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 33,
+        "w": 705,
+        "h": 15
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "text",
+      "name": "Whitfield, Marcus",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_Main_lblName",
+        "attrs": {}
+      },
+      "text": "Whitfield, Marcus",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 35,
+        "w": 73,
+        "h": 11
+      },
+      "parentRef": "contentFrame::23"
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::26",
+        "contentFrame::28",
+        "contentFrame::30",
+        "contentFrame::32"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SSN ***-**-8820 Date of Birth 1989-07-30",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 48,
+        "w": 1067,
+        "h": 15
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "cell",
+      "name": "SSN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::27"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "SSN",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 48,
+        "w": 114,
+        "h": 15
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "text",
+      "name": "SSN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "SSN",
+      "labelled": false,
+      "bounds": {
+        "x": 110,
+        "y": 50,
+        "w": 18,
+        "h": 11
+      },
+      "parentRef": "contentFrame::26"
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "cell",
+      "name": "***-**-8820",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::29"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "***-**-8820",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 48,
+        "w": 154,
+        "h": 15
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "text",
+      "name": "***-**-8820",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "***-**-8820",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 50,
+        "w": 52,
+        "h": 11
+      },
+      "parentRef": "contentFrame::28"
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "cell",
+      "name": "Date of Birth",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::31"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Date of Birth",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 48,
+        "w": 94,
+        "h": 15
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "text",
+      "name": "Date of Birth",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Date of Birth",
+      "labelled": false,
+      "bounds": {
+        "x": 320,
+        "y": 50,
+        "w": 56,
+        "h": 11
+      },
+      "parentRef": "contentFrame::30"
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "cell",
+      "name": "1989-07-30",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::33"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "1989-07-30",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 48,
+        "w": 705,
+        "h": 15
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "text",
+      "name": "1989-07-30",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "1989-07-30",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 50,
+        "w": 47,
+        "h": 11
+      },
+      "parentRef": "contentFrame::32"
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::35",
+        "contentFrame::37",
+        "contentFrame::39",
+        "contentFrame::41"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Member Since 2011-04-18 Branch 003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 63,
+        "w": 1067,
+        "h": 15
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "cell",
+      "name": "Member Since",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::36"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Member Since",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 63,
+        "w": 114,
+        "h": 15
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::36",
+      "role": "text",
+      "name": "Member Since",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Member Since",
+      "labelled": false,
+      "bounds": {
+        "x": 66,
+        "y": 65,
+        "w": 62,
+        "h": 11
+      },
+      "parentRef": "contentFrame::35"
+    },
+    {
+      "ref": "contentFrame::37",
+      "role": "cell",
+      "name": "2011-04-18",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::38"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "2011-04-18",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 63,
+        "w": 154,
+        "h": 15
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::38",
+      "role": "text",
+      "name": "2011-04-18",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "2011-04-18",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 65,
+        "w": 46,
+        "h": 11
+      },
+      "parentRef": "contentFrame::37"
+    },
+    {
+      "ref": "contentFrame::39",
+      "role": "cell",
+      "name": "Branch",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::40"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Branch",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 63,
+        "w": 94,
+        "h": 15
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::40",
+      "role": "text",
+      "name": "Branch",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Branch",
+      "labelled": false,
+      "bounds": {
+        "x": 344,
+        "y": 65,
+        "w": 32,
+        "h": 11
+      },
+      "parentRef": "contentFrame::39"
+    },
+    {
+      "ref": "contentFrame::41",
+      "role": "cell",
+      "name": "003 - CEDAR HOLLOW",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::42"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 63,
+        "w": 705,
+        "h": 15
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::42",
+      "role": "text",
+      "name": "003 - CEDAR HOLLOW",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 65,
+        "w": 103,
+        "h": 11
+      },
+      "parentRef": "contentFrame::41"
+    },
+    {
+      "ref": "contentFrame::43",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::44",
+        "contentFrame::46"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "w": 1067,
+        "h": 15
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::44",
+      "role": "cell",
+      "name": "Address",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::45"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Address",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "w": 114,
+        "h": 15
+      },
+      "parentRef": "contentFrame::43"
+    },
+    {
+      "ref": "contentFrame::45",
+      "role": "text",
+      "name": "Address",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Address",
+      "labelled": false,
+      "bounds": {
+        "x": 93,
+        "y": 80,
+        "w": 35,
+        "h": 11
+      },
+      "parentRef": "contentFrame::44"
+    },
+    {
+      "ref": "contentFrame::46",
+      "role": "cell",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::47"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 78,
+        "w": 953,
+        "h": 15
+      },
+      "parentRef": "contentFrame::43"
+    },
+    {
+      "ref": "contentFrame::47",
+      "role": "text",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_Main_lblAddress",
+        "attrs": {}
+      },
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 80,
+        "w": 245,
+        "h": 11
+      },
+      "parentRef": "contentFrame::46"
+    },
+    {
+      "ref": "contentFrame::48",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::49",
+        "contentFrame::51",
+        "contentFrame::53",
+        "contentFrame::55"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 93,
+        "w": 1067,
+        "h": 15
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::49",
+      "role": "cell",
+      "name": "Status",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::50"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Status",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 93,
+        "w": 114,
+        "h": 15
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::50",
+      "role": "text",
+      "name": "Status",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Status",
+      "labelled": false,
+      "bounds": {
+        "x": 101,
+        "y": 95,
+        "w": 27,
+        "h": 11
+      },
+      "parentRef": "contentFrame::49"
+    },
+    {
+      "ref": "contentFrame::51",
+      "role": "cell",
+      "name": "ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::52"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "ACTIVE",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 93,
+        "w": 154,
+        "h": 15
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::52",
+      "role": "text",
+      "name": "ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_Main_lblStatus",
+        "attrs": {}
+      },
+      "text": "ACTIVE",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 95,
+        "w": 39,
+        "h": 11
+      },
+      "parentRef": "contentFrame::51"
+    },
+    {
+      "ref": "contentFrame::53",
+      "role": "cell",
+      "name": "Officer",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::54"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Officer",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 93,
+        "w": 94,
+        "h": 15
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::54",
+      "role": "text",
+      "name": "Officer",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Officer",
+      "labelled": false,
+      "bounds": {
+        "x": 345,
+        "y": 95,
+        "w": 31,
+        "h": 11
+      },
+      "parentRef": "contentFrame::53"
+    },
+    {
+      "ref": "contentFrame::55",
+      "role": "cell",
+      "name": "MSR-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::56"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 93,
+        "w": 705,
+        "h": 15
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::56",
+      "role": "text",
+      "name": "MSR-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 95,
+        "w": 34,
+        "h": 11
+      },
+      "parentRef": "contentFrame::55"
+    },
+    {
+      "ref": "contentFrame::57",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::58"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 115,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::58",
+      "role": "cell",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 115,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::57"
+    },
+    {
+      "ref": "contentFrame::59",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::60"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Share Accounts Account Type Balance Available Status Rate 0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050% 0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 123,
+        "w": 1081,
+        "h": 94
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::60",
+      "role": "cell",
+      "name": "Share Accounts Account Type Balance Available Status Rate 0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050% 0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010%",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::61",
+        "contentFrame::62"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Share Accounts Account Type Balance Available Status Rate 0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050% 0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 123,
+        "w": 1081,
+        "h": 94
+      },
+      "parentRef": "contentFrame::59"
+    },
+    {
+      "ref": "contentFrame::61",
+      "role": "text",
+      "name": "Share Accounts",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Share Accounts",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 130,
+        "w": 66,
+        "h": 11
+      },
+      "parentRef": "contentFrame::60"
+    },
+    {
+      "ref": "contentFrame::62",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::63",
+        "contentFrame::70",
+        "contentFrame::83"
+      ],
+      "raw": {
+        "tag": "table",
+        "domId": "ctl00_Main_grdShares",
+        "className": "grid",
+        "attrs": {
+          "class": "grid"
+        }
+      },
+      "text": "Account Type Balance Available Status Rate 0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050% 0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 159,
+        "w": 1067,
+        "h": 51
+      },
+      "parentRef": "contentFrame::60"
+    },
+    {
+      "ref": "contentFrame::63",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::64",
+        "contentFrame::65",
+        "contentFrame::66",
+        "contentFrame::67",
+        "contentFrame::68",
+        "contentFrame::69"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Account Type Balance Available Status Rate",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 160,
+        "w": 1066,
+        "h": 19
+      },
+      "parentRef": "contentFrame::62"
+    },
+    {
+      "ref": "contentFrame::64",
+      "role": "columnheader",
+      "name": "Account",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Account",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 160,
+        "w": 180,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::65",
+      "role": "columnheader",
+      "name": "Type",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Type",
+      "labelled": false,
+      "bounds": {
+        "x": 196,
+        "y": 160,
+        "w": 282,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::66",
+      "role": "columnheader",
+      "name": "Balance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Balance",
+      "labelled": false,
+      "bounds": {
+        "x": 478,
+        "y": 160,
+        "w": 162,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::67",
+      "role": "columnheader",
+      "name": "Available",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Available",
+      "labelled": false,
+      "bounds": {
+        "x": 641,
+        "y": 160,
+        "w": 180,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::68",
+      "role": "columnheader",
+      "name": "Status",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Status",
+      "labelled": false,
+      "bounds": {
+        "x": 820,
+        "y": 160,
+        "w": 136,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::69",
+      "role": "columnheader",
+      "name": "Rate",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "th",
+        "attrs": {}
+      },
+      "text": "Rate",
+      "labelled": false,
+      "bounds": {
+        "x": 956,
+        "y": 160,
+        "w": 126,
+        "h": 19
+      },
+      "parentRef": "contentFrame::63",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 0,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "Account",
+          "Type": "Type",
+          "Balance": "Balance",
+          "Available": "Available",
+          "Status": "Status",
+          "Rate": "Rate"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::70",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::71",
+        "contentFrame::73",
+        "contentFrame::75",
+        "contentFrame::77",
+        "contentFrame::79",
+        "contentFrame::81"
+      ],
+      "raw": {
+        "tag": "tr",
+        "className": "",
+        "attrs": {
+          "class": ""
+        }
+      },
+      "text": "0100483-00 REGULAR SHARE 500.00 500.00 OPEN 0.050%",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 178,
+        "w": 1066,
+        "h": 16
+      },
+      "parentRef": "contentFrame::62"
+    },
+    {
+      "ref": "contentFrame::71",
+      "role": "cell",
+      "name": "0100483-00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::72"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "0100483-00",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 178,
+        "w": 180,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::72",
+      "role": "text",
+      "name": "0100483-00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "0100483-00",
+      "labelled": false,
+      "bounds": {
+        "x": 22,
+        "y": 180,
+        "w": 48,
+        "h": 11
+      },
+      "parentRef": "contentFrame::71",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::73",
+      "role": "cell",
+      "name": "REGULAR SHARE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::74"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "REGULAR SHARE",
+      "labelled": false,
+      "bounds": {
+        "x": 196,
+        "y": 178,
+        "w": 282,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::74",
+      "role": "text",
+      "name": "REGULAR SHARE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "REGULAR SHARE",
+      "labelled": false,
+      "bounds": {
+        "x": 201,
+        "y": 180,
+        "w": 83,
+        "h": 11
+      },
+      "parentRef": "contentFrame::73",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::75",
+      "role": "cell",
+      "name": "500.00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::76"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "500.00",
+      "labelled": false,
+      "bounds": {
+        "x": 478,
+        "y": 178,
+        "w": 162,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::76",
+      "role": "text",
+      "name": "500.00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "500.00",
+      "labelled": false,
+      "bounds": {
+        "x": 608,
+        "y": 180,
+        "w": 28,
+        "h": 11
+      },
+      "parentRef": "contentFrame::75",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::77",
+      "role": "cell",
+      "name": "500.00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::78"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "500.00",
+      "labelled": false,
+      "bounds": {
+        "x": 641,
+        "y": 178,
+        "w": 180,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::78",
+      "role": "text",
+      "name": "500.00",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "500.00",
+      "labelled": false,
+      "bounds": {
+        "x": 788,
+        "y": 180,
+        "w": 28,
+        "h": 11
+      },
+      "parentRef": "contentFrame::77",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::79",
+      "role": "cell",
+      "name": "OPEN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::80"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "OPEN",
+      "labelled": false,
+      "bounds": {
+        "x": 820,
+        "y": 178,
+        "w": 136,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::80",
+      "role": "text",
+      "name": "OPEN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "OPEN",
+      "labelled": false,
+      "bounds": {
+        "x": 825,
+        "y": 180,
+        "w": 26,
+        "h": 11
+      },
+      "parentRef": "contentFrame::79",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::81",
+      "role": "cell",
+      "name": "0.050%",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::82"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "0.050%",
+      "labelled": false,
+      "bounds": {
+        "x": 956,
+        "y": 178,
+        "w": 126,
+        "h": 16
+      },
+      "parentRef": "contentFrame::70",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::82",
+      "role": "text",
+      "name": "0.050%",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "0.050%",
+      "labelled": false,
+      "bounds": {
+        "x": 1046,
+        "y": 180,
+        "w": 31,
+        "h": 11
+      },
+      "parentRef": "contentFrame::81",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "0100483-00",
+          "Type": "REGULAR SHARE",
+          "Balance": "500.00",
+          "Available": "500.00",
+          "Status": "OPEN",
+          "Rate": "0.050%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::83",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::84",
+        "contentFrame::86",
+        "contentFrame::88",
+        "contentFrame::90",
+        "contentFrame::92",
+        "contentFrame::94"
+      ],
+      "raw": {
+        "tag": "tr",
+        "className": "alt",
+        "attrs": {
+          "class": "alt"
+        }
+      },
+      "text": "0100483-70 SHARE DRAFT 47.19 47.19 OPEN 0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 194,
+        "w": 1066,
+        "h": 16
+      },
+      "parentRef": "contentFrame::62"
+    },
+    {
+      "ref": "contentFrame::84",
+      "role": "cell",
+      "name": "0100483-70",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::85"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "0100483-70",
+      "labelled": false,
+      "bounds": {
+        "x": 17,
+        "y": 194,
+        "w": 180,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::85",
+      "role": "text",
+      "name": "0100483-70",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "0100483-70",
+      "labelled": false,
+      "bounds": {
+        "x": 22,
+        "y": 196,
+        "w": 48,
+        "h": 11
+      },
+      "parentRef": "contentFrame::84",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 0,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Account"
+      }
+    },
+    {
+      "ref": "contentFrame::86",
+      "role": "cell",
+      "name": "SHARE DRAFT",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::87"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "SHARE DRAFT",
+      "labelled": false,
+      "bounds": {
+        "x": 196,
+        "y": 194,
+        "w": 282,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::87",
+      "role": "text",
+      "name": "SHARE DRAFT",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SHARE DRAFT",
+      "labelled": false,
+      "bounds": {
+        "x": 201,
+        "y": 196,
+        "w": 68,
+        "h": 11
+      },
+      "parentRef": "contentFrame::86",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 1,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Type"
+      }
+    },
+    {
+      "ref": "contentFrame::88",
+      "role": "cell",
+      "name": "47.19",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::89"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "47.19",
+      "labelled": false,
+      "bounds": {
+        "x": 478,
+        "y": 194,
+        "w": 162,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::89",
+      "role": "text",
+      "name": "47.19",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "47.19",
+      "labelled": false,
+      "bounds": {
+        "x": 613,
+        "y": 196,
+        "w": 23,
+        "h": 11
+      },
+      "parentRef": "contentFrame::88",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 2,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Balance"
+      }
+    },
+    {
+      "ref": "contentFrame::90",
+      "role": "cell",
+      "name": "47.19",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::91"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "47.19",
+      "labelled": false,
+      "bounds": {
+        "x": 641,
+        "y": 194,
+        "w": 180,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::91",
+      "role": "text",
+      "name": "47.19",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "47.19",
+      "labelled": false,
+      "bounds": {
+        "x": 793,
+        "y": 196,
+        "w": 23,
+        "h": 11
+      },
+      "parentRef": "contentFrame::90",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 3,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Available"
+      }
+    },
+    {
+      "ref": "contentFrame::92",
+      "role": "cell",
+      "name": "OPEN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::93"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "OPEN",
+      "labelled": false,
+      "bounds": {
+        "x": 820,
+        "y": 194,
+        "w": 136,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::93",
+      "role": "text",
+      "name": "OPEN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "OPEN",
+      "labelled": false,
+      "bounds": {
+        "x": 825,
+        "y": 196,
+        "w": 26,
+        "h": 11
+      },
+      "parentRef": "contentFrame::92",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 4,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::94",
+      "role": "cell",
+      "name": "0.010%",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::95"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 956,
+        "y": 194,
+        "w": 126,
+        "h": 16
+      },
+      "parentRef": "contentFrame::83",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::95",
+      "role": "text",
+      "name": "0.010%",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "0.010%",
+      "labelled": false,
+      "bounds": {
+        "x": 1046,
+        "y": 196,
+        "w": 31,
+        "h": 11
+      },
+      "parentRef": "contentFrame::94",
+      "table": {
+        "tableRef": "contentFrame::62",
+        "rowIndex": 2,
+        "colIndex": 5,
+        "rowValues": {
+          "Account": "0100483-70",
+          "Type": "SHARE DRAFT",
+          "Balance": "47.19",
+          "Available": "47.19",
+          "Status": "OPEN",
+          "Rate": "0.010%"
+        },
+        "columnHeader": "Rate"
+      }
+    },
+    {
+      "ref": "contentFrame::96",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::97"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 217,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::97",
+      "role": "cell",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 217,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::96"
+    },
+    {
+      "ref": "contentFrame::98",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::99"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 225,
+        "w": 1081,
+        "h": 62
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::99",
+      "role": "cell",
+      "name": "Servicing Actions",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::100",
+        "contentFrame::101",
+        "contentFrame::102",
+        "contentFrame::103",
+        "contentFrame::104"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 225,
+        "w": 1081,
+        "h": 62
+      },
+      "parentRef": "contentFrame::98"
+    },
+    {
+      "ref": "contentFrame::100",
+      "role": "text",
+      "name": "Servicing Actions",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 232,
+        "w": 74,
+        "h": 11
+      },
+      "parentRef": "contentFrame::99"
+    },
+    {
+      "ref": "contentFrame::101",
+      "role": "button",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Address Maintenance",
+          "class": "btn"
+        }
+      },
+      "value": "Address Maintenance",
+      "labelled": true,
+      "bounds": {
+        "x": 16,
+        "y": 262,
+        "w": 130,
+        "h": 18
+      },
+      "parentRef": "contentFrame::99"
+    },
+    {
+      "ref": "contentFrame::102",
+      "role": "button",
+      "name": "Open Share",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Open Share",
+          "class": "btn"
+        }
+      },
+      "value": "Open Share",
+      "labelled": true,
+      "bounds": {
+        "x": 151,
+        "y": 262,
+        "w": 83,
+        "h": 18
+      },
+      "parentRef": "contentFrame::99"
+    },
+    {
+      "ref": "contentFrame::103",
+      "role": "button",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Stop Payment",
+          "class": "btn"
+        }
+      },
+      "value": "Stop Payment",
+      "labelled": true,
+      "bounds": {
+        "x": 239,
+        "y": 262,
+        "w": 93,
+        "h": 18
+      },
+      "parentRef": "contentFrame::99"
+    },
+    {
+      "ref": "contentFrame::104",
+      "role": "button",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Fee Reversal",
+          "class": "btn"
+        }
+      },
+      "value": "Fee Reversal",
+      "labelled": true,
+      "bounds": {
+        "x": 336,
+        "y": 262,
+        "w": 89,
+        "h": 18
+      },
+      "parentRef": "contentFrame::99"
+    },
+    {
+      "ref": "contentFrame::105",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::106",
+        "contentFrame::109"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 296,
+        "w": 1099,
+        "h": 32
+      }
+    },
+    {
+      "ref": "contentFrame::106",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::107"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 297,
+        "w": 1099,
+        "h": 16
+      },
+      "parentRef": "contentFrame::105"
+    },
+    {
+      "ref": "contentFrame::107",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::108"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "stat",
+        "attrs": {
+          "class": "stat"
+        }
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 297,
+        "w": 1099,
+        "h": 16
+      },
+      "parentRef": "contentFrame::106"
+    },
+    {
+      "ref": "contentFrame::108",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 299,
+        "w": 265,
+        "h": 11
+      },
+      "parentRef": "contentFrame::107"
+    },
+    {
+      "ref": "contentFrame::109",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::110"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 313,
+        "w": 1099,
+        "h": 16
+      },
+      "parentRef": "contentFrame::105"
+    },
+    {
+      "ref": "contentFrame::110",
+      "role": "cell",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::111"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "stat",
+        "attrs": {
+          "class": "stat"
+        }
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 313,
+        "w": 1099,
+        "h": 16
+      },
+      "parentRef": "contentFrame::109"
+    },
+    {
+      "ref": "contentFrame::111",
+      "role": "text",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER 0100483",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 315,
+        "w": 605,
+        "h": 11
+      },
+      "parentRef": "contentFrame::110"
+    }
+  ]
+}

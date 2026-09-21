@@ -1,0 +1,65 @@
+{
+  "apiVersion": "swivel.dev/cap-1",
+  "kind": "TenantOverlay",
+  "metadata": {
+    "id": "meridian.member-savings-balance--harborpoint",
+    "tenantId": "harborpoint",
+    "institution": "Harbor Point Savings Bank",
+    "createdAt": "2026-09-21T19:30:00.000Z",
+    "capabilityId": "meridian.member-savings-balance",
+    "capabilityVersions": "*",
+    "notes": [
+      "Harbor Point runs the same vendor product as Pine Ridge Federal Credit Union, two minor versions ahead (10.1.3 vs 9.2.14).",
+      "Almost every difference between the two needs no override at all. The navigation link resolves through {{vocab.member}}; the unlabelled search box resolves by the caption printed beside it, whatever that caption says; and the results row is matched by member number even though this build inserts a Segment column ahead of Name — which is exactly what breaks a column-index locator.",
+      "One genuine structural difference remains, and it is what this overlay exists for: this build ships with the deposit-account balances collapsed behind an explicit Display control.",
+      "Recorded degradation to watch: the base capability's idPattern hints (ctl\\d+_Main_*) do not match this build's generated ids (ctl00_cphMain_*), so steps here resolve at 67-86 rather than 100. The capability works; the console reports that it is working less well here. That is the drift signal, visible before an incident rather than after one."
+    ]
+  },
+  "tenant": {
+    "baseUrl": "http://127.0.0.1:4712",
+    "productVersion": "10.1.3"
+  },
+  "vocabulary": {
+    "member": "Customer",
+    "memberNumber": "Customer ID",
+    "share": "Deposit Account",
+    "shareList": "Deposit Accounts"
+  },
+  "targetOverrides": {},
+  "extraSignals": [],
+  "stepPatches": [
+    {
+      "op": "insert-before",
+      "stepId": "extract_current_balance",
+      "reason": "Meridian 10.1 collapses the balances grid behind a Display control. Marked optional so this same overlay keeps working if the institution later changes that default.",
+      "step": {
+        "id": "display_accounts",
+        "intent": "Reveal the deposit-account balances, which this institution's build hides by default",
+        "kind": "click",
+        "risk": "read_only",
+        "optional": true,
+        "authoredBy": "overlay",
+        "target": {
+          "id": "display_accounts_button",
+          "role": "button",
+          "name": { "value": "Display {{vocab.shareList}}", "match": "exact" },
+          "frame": { "path": ["contentFrame"] },
+          "note": "identified by name, resolved through this institution's vocabulary"
+        },
+        "expect": {
+          "id": "accounts_visible",
+          "description": "The balances grid is on screen",
+          "all": [
+            {
+              "kind": "target_visible",
+              "target": { "id": "balance_column", "role": "columnheader", "name": { "value": "Balance", "match": "normalized" } },
+              "because": "the grid only renders once the Display control has been used on this build"
+            }
+          ],
+          "timeoutMs": 10000,
+          "stableForMs": 0
+        }
+      }
+    }
+  ]
+}

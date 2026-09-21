@@ -1,0 +1,43 @@
+{
+  "runId": "rep_9dcb1a63",
+  "kind": "replay",
+  "startedAt": "2026-09-21T19:32:49.667Z",
+  "principal": {
+    "id": "cli",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.stop-payment",
+    "version": "0.1.0",
+    "contentHash": "32a75c29731894afa8acc14bb72874bd48a285c0313987260bae355f8ff05db5"
+  },
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "checkNumber": "1042",
+    "amount": "«sensitive:0857c417…2.50»"
+  },
+  "counts": {
+    "events": 25,
+    "steps": 8,
+    "screenshots": 0,
+    "signals": 1,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1,
+    "sensitive": 1
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-21T19:32:56.604Z",
+  "outcome": {
+    "status": "business_outcome",
+    "code": "NOT_AUTHORIZED"
+  },
+  "chainTip": "ae54dc1bf0082035ed291d4da83cebe139aabfbf67ce9619ad2532479ad888f2"
+}

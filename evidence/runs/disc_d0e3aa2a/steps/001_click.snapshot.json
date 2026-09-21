@@ -1,0 +1,1074 @@
+{
+  "id": "b3f9d601-46c5-421e-8255-eaedafc3446e",
+  "at": "2026-09-21T19:24:46.884Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14 Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH"
+  },
+  "nodeCount": 96,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14 Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "text": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "text": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER SEARCH SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "MEMBER SEARCH",
+      "text": "MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "MEMBER SEARCH",
+      "text": "MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0410 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "form",
+      "name": "",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "frmSearch"
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "table",
+      "name": "",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "row",
+      "name": "",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "cell",
+      "name": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "table",
+      "name": "",
+      "text": "Member # Last Name SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "row",
+      "name": "",
+      "text": "Member # Last Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "cell",
+      "name": "Member #",
+      "text": "Member #",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "text",
+      "name": "Member #",
+      "text": "Member #",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "textbox",
+      "name": "",
+      "value": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_txtMemberNo"
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "cell",
+      "name": "Last Name",
+      "text": "Last Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "text",
+      "name": "Last Name",
+      "text": "Last Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "textbox",
+      "name": "",
+      "value": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_txtLastName"
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "row",
+      "name": "",
+      "text": "SSN (Last 4) Branch (All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "cell",
+      "name": "SSN (Last 4)",
+      "text": "SSN (Last 4)",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "text",
+      "name": "SSN (Last 4)",
+      "text": "SSN (Last 4)",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "textbox",
+      "name": "",
+      "value": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_txtSsn4"
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::36",
+      "role": "cell",
+      "name": "Branch",
+      "text": "Branch",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::37",
+      "role": "text",
+      "name": "Branch",
+      "text": "Branch",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::38",
+      "role": "cell",
+      "name": "(All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "text": "(All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::39",
+      "role": "combobox",
+      "name": "",
+      "value": "",
+      "text": "(All Branches) 001 - MAIN OFFICE 002 - RIVERBEND 003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_ddlBranch"
+    },
+    {
+      "ref": "contentFrame::44",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::45",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::46",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::47",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::48",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::49",
+      "role": "button",
+      "name": "Search",
+      "value": "Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_btnSearch"
+    },
+    {
+      "ref": "contentFrame::50",
+      "role": "button",
+      "name": "Clear",
+      "value": "Clear",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::51",
+      "role": "text",
+      "name": "Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "text": "Enter a member # for an exact match, or a last name for a list. F3 = Exit F5 = Refresh",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::52",
+      "role": "table",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::53",
+      "role": "row",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::54",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::55",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::56",
+      "role": "row",
+      "name": "",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::57",
+      "role": "cell",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::58",
+      "role": "text",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    }
+  ]
+}

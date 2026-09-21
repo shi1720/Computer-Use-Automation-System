@@ -44,7 +44,14 @@ function scopeFor(t: TargetDescriptor): string {
   return frames.map((f) => `.frameLocator(${q(`frame[name="${f}"]`)})`).join('');
 }
 
-function locatorFor(t: TargetDescriptor, render: (s: string) => string): { expr: string; note?: string } {
+/**
+ * `asyncExpr` marks a locator that has to *look at the page* to build itself —
+ * `cellInRow` resolves a column from its header at runtime, so it returns a
+ * promise. Call sites need to know, because `await f(x).textContent()` and
+ * `(await f(x)).textContent()` are different programs and only one of them
+ * runs.
+ */
+function locatorFor(t: TargetDescriptor, render: (s: string) => string): { expr: string; note?: string; asyncExpr?: boolean } {
   const root = `page${scopeFor(t)}`;
 
   // Grid access: resolve the column by its header at runtime.
@@ -54,6 +61,7 @@ function locatorFor(t: TargetDescriptor, render: (s: string) => string): { expr:
     if (t.role === 'cell' && column) {
       return {
         expr: `cellInRow(${root}, ${lit(rowValue)}, ${lit(column)})`,
+        asyncExpr: true,
         note: `the cell under "${column}" in the row whose values include "${rowValue}"`,
       };
     }
@@ -86,7 +94,11 @@ function locatorFor(t: TargetDescriptor, render: (s: string) => string): { expr:
 
 function stepCode(s: Step, render: (r: string) => string): string {
   const out: string[] = [];
-  out.push(`  // ${s.intent}${s.risk && s.risk !== 'read_only' ? `   [risk: ${s.risk}]` : ''}`);
+  // The intent is templated prose — `{{vocab.member}}`, `{{input.memberNumber}}`
+  // — because it is shared across institutions. A generated file is for one
+  // tenant, so it is rendered here; leaving the braces in produces comments
+  // that read like a bug.
+  out.push(`  // ${render(s.intent)}${s.risk && s.risk !== 'read_only' ? `   [risk: ${s.risk}]` : ''}`);
 
   const loc = s.target ? locatorFor(s.target, render) : null;
   if (loc?.note) out.push(`  //   ${loc.note}`);
@@ -98,7 +110,8 @@ function stepCode(s: Step, render: (r: string) => string): string {
     case 'select': out.push(`  await ${loc?.expr}.selectOption(${lit(render(s.value ?? ''))});`); break;
     case 'press': out.push(`  await ${loc?.expr}.press(${q(s.key ?? 'Enter')});`); break;
     case 'extract':
-      out.push(`  outputs.${s.extract?.into} = normalise((await ${loc?.expr}.textContent()) ?? '', ${q(s.extract?.transform ?? 'none')});`);
+      const read = loc?.asyncExpr ? `(await ${loc.expr}).textContent()` : `${loc?.expr}.textContent()`;
+      out.push(`  outputs.${s.extract?.into} = normalise((await ${read}) ?? '', ${q(s.extract?.transform ?? 'none')});`);
       break;
     case 'dismiss_if_present':
       out.push(`  {`, `    const optional = ${loc?.expr};`, `    if (await optional.count()) await optional.first().click();`, `  }`);
@@ -138,10 +151,22 @@ const PRELUDE = `
  * evaluates assertions across every frame it perceived; this is that, by hand.
  */
 async function screenContains(page: Page, needle: string | RegExp, expected = true) {
+  // Whitespace-flattened and case-insensitive, which is how the engine compares
+  // text. A legacy core renders MEMBER INQUIRY SCREEN in caps and across two
+  // table cells; asserting on the exact bytes of one rendering is how a
+  // translation like this one passes review and then fails on the first run.
+  const flat = (t: string) => t.replace(/\\s+/g, ' ').trim().toLowerCase();
+  // evaluate(), not locator('body').innerText(). The outermost document of a
+  // frameset has no <body> at all, and a locator auto-waits for one — so that
+  // version does not return '' for the top frame, it blocks until the whole
+  // test times out, and never reaches the frame that holds the screen.
+  // expect.poll is already the retry; each read should report what is there now.
+  const textOf = (frame: Frame) =>
+    frame.evaluate(() => document.body?.innerText ?? '').catch(() => '');
   await expect.poll(async () => {
     for (const frame of page.frames()) {
-      const text = await frame.locator('body').innerText().catch(() => '');
-      if (typeof needle === 'string' ? text.includes(needle) : needle.test(text)) return true;
+      const text = await textOf(frame);
+      if (typeof needle === 'string' ? flat(text).includes(flat(needle)) : needle.test(text)) return true;
     }
     return false;
   }, { timeout: 15_000, message: \`screen \${expected ? 'should' : 'should not'} contain \${needle}\` }).toBe(expected);
@@ -164,9 +189,15 @@ function fieldBeside(scope: FrameLocatorOrPage, caption: string, role: 'textbox'
   return scope.locator('tr').filter({ hasText: caption }).last().getByRole(role as never).first();
 }
 
-/** Find the row of a data grid by a value it contains, rather than by index. */
+/**
+ * Find the row of a data grid by a value it contains, rather than by index.
+ *
+ * last() on the table for the same reason as cellInRow: every ancestor layout
+ * table contains the value too, and the innermost one is the grid.
+ */
 function rowContaining(scope: FrameLocatorOrPage, value: string) {
-  return scope.locator('table:has(th)').locator('tr').filter({ hasText: value });
+  const table = scope.locator('table:has(th)').filter({ hasText: value }).last();
+  return table.locator(':scope > tbody > tr, :scope > tr').filter({ hasText: value });
 }
 
 /**
@@ -174,14 +205,33 @@ function rowContaining(scope: FrameLocatorOrPage, value: string) {
  *
  * The column is resolved from its header at runtime. Generating a fixed column
  * index instead would read the wrong balance the day the vendor inserts a
- * column — which is exactly the failure this whole approach exists to avoid.
+ * column — exactly the failure this whole approach exists to avoid.
+ *
+ * Two details are load-bearing, and both come from these screens nesting layout
+ * tables four deep around the real grid:
+ *
+ *   last() picks the **innermost** table containing the value. Every ancestor
+ *   layout table also "contains" it, and the outermost one is the whole page.
+ *
+ *   The header and row lookups use ':scope >' so they see only *this* table's
+ *   own rows and cells. Without that, table.locator('th') collects headers
+ *   from nested tables too and the column index is computed against a header
+ *   list that does not correspond to any row — which does not throw. It returns
+ *   a number from the wrong column, and a test that passes with the wrong
+ *   answer is worse than one that fails.
+ *
+ * The engine does not need any of this: it resolves against a perceived table
+ * structure where a cell already knows its own row and column. This is the cost
+ * of translating that into plain selectors.
  */
 async function cellInRow(scope: FrameLocatorOrPage, rowValue: string, columnHeader: string) {
-  const table = scope.locator('table:has(th)').filter({ hasText: rowValue }).first();
-  const headers = await table.locator('th').allTextContents();
+  const table = scope.locator('table:has(th)').filter({ hasText: rowValue }).last();
+  const ownHeaders = table.locator(':scope > thead > tr > th, :scope > tbody > tr > th, :scope > tr > th');
+  const headers = await ownHeaders.allTextContents();
   const index = headers.findIndex((h) => h.trim().toLowerCase() === columnHeader.trim().toLowerCase());
   if (index < 0) throw new Error(\`No column "\${columnHeader}" in this grid. Columns: \${headers.join(', ')}\`);
-  return table.locator('tr').filter({ hasText: rowValue }).first().locator('td').nth(index);
+  const row = table.locator(':scope > tbody > tr, :scope > tr').filter({ hasText: rowValue }).first();
+  return row.locator(':scope > td').nth(index);
 }
 
 /** Match the artifact's declared output transforms. */
@@ -234,7 +284,7 @@ export function generatePlaywrightTest(cap: Capability, tenantBaseUrl = 'http://
  * Vocabulary has been resolved for one tenant at generation time. Regenerate for
  * another institution rather than editing the strings by hand.
  */
-import { test, expect, type Page, type FrameLocator } from '@playwright/test';
+import { test, expect, type Frame, type Page, type FrameLocator } from '@playwright/test';
 
 type FrameLocatorOrPage = Page | FrameLocator;
 

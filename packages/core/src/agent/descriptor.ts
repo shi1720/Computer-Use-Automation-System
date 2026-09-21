@@ -124,6 +124,49 @@ export function templatise(
   return out;
 }
 
+/**
+ * Strip one invocation's parameter values out of an output's name.
+ *
+ * The model names outputs after what it is looking at, so a run parameterised
+ * on `shareType = "SPECIAL SAVINGS"` produces `specialSavingsBalance`. That is
+ * a perfectly good description of this run and a bad name for the capability:
+ * invoke the same artifact with `REGULAR SHARE` and the caller gets a field
+ * called `specialSavingsBalance` holding a regular share's balance. It is the
+ * same defect as a target pinned to one record, in the part of the artifact a
+ * calling agent actually reads.
+ *
+ * So the parameter's words come out of the name, and what remains is what the
+ * field is: `balance`. If nothing would remain, the model's name is kept —
+ * a confusing name beats an empty one.
+ */
+export function generaliseOutputName(name: string, ctx: SynthesisContext): string {
+  // camelCase / snake_case / PascalCase → lowercase words.
+  const words = name.replace(/([a-z0-9])([A-Z])/g, '$1 $2').split(/[^A-Za-z0-9]+/).filter(Boolean);
+  let kept = words;
+  for (const raw of Object.values(ctx.parameters)) {
+    const value = String(raw ?? '').trim();
+    if (value.length < 3) continue;
+    const needle = value.split(/[^A-Za-z0-9]+/).filter(Boolean).map((w) => w.toLowerCase());
+    if (needle.length === 0) continue;
+    // Only strip when the whole parameter appears as a contiguous run of
+    // words. A partial overlap ("share" from "SHARE DRAFT") is a coincidence
+    // of vocabulary, not the parameter leaking in.
+    const lower = kept.map((w) => w.toLowerCase());
+    for (let i = 0; i + needle.length <= lower.length; i++) {
+      if (needle.every((w, j) => lower[i + j] === w)) {
+        kept = [...kept.slice(0, i), ...kept.slice(i + needle.length)];
+        break;
+      }
+    }
+  }
+  if (kept.length === 0 || kept.length === words.length) return name;
+  const [head, ...rest] = kept;
+  return [
+    (head as string).toLowerCase(),
+    ...rest.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()),
+  ].join('');
+}
+
 /** Rewrite a concrete URL into a portable, parameterised template. */
 export function templatiseUrl(url: string, ctx: SynthesisContext): string {
   let out = url;

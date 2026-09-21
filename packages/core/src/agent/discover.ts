@@ -30,7 +30,7 @@ import { emptyContext, type TemplateContext } from '../artifact/template.js';
 import type { Snapshot, UiNode } from '../surface/types.js';
 import type { WebSurface } from '../surface/web.js';
 import { buildDigest, readableValues, screenMessages } from './digest.js';
-import { looksLikeData, synthesiseTarget, templatise, templatiseUrl, type SynthesisContext } from './descriptor.js';
+import { generaliseOutputName, looksLikeData, synthesiseTarget, templatise, templatiseUrl, type SynthesisContext } from './descriptor.js';
 import { DISCOVERY_TOOLS, discoverySystemPrompt } from './prompt.js';
 import { addUsage, emptyUsage, estimateCostUsd, type LlmMessage, type LlmProvider, type LlmUsage } from './llm.js';
 import { classifyRisk, PolicyEngine, type ExecutionContext } from '../policy/policy.js';
@@ -518,7 +518,7 @@ function buildStep(
   before: Snapshot,
   after: Snapshot,
   synth: SynthesisContext,
-  intent: string,
+  rawIntent: string,
   risk: ReturnType<typeof classifyRisk>,
   outputs: FieldDef[],
 ): Step | null {
@@ -530,10 +530,19 @@ function buildStep(
   const target = node ? synthesiseTarget(node, before, synth, rowMatch ? { rowMatch } : undefined) : undefined;
   // Extract steps are named for what they produce; everything else for what it
   // operates on. Both read better in a change ticket than a control id does.
+  // The model names outputs after what it is looking at, which bakes this run's
+  // parameters into the artifact's public interface — and into the step id,
+  // which a tenant overlay then has to patch by name. See
+  // `generaliseOutputName`.
+  const outputName = call.name === 'extract'
+    ? generaliseOutputName(String(call.input.output_name ?? 'value'), synth)
+    : undefined;
   const stepId = uniqueStepId(
-    call.name === 'extract' ? `extract_${String(call.input.output_name ?? 'value')}` : `${call.name}_${target?.id ?? 'screen'}`,
+    outputName ? `extract_${outputName}` : `${call.name}_${target?.id ?? 'screen'}`,
     synth.usedIds,
   );
+
+  const intent = safeIntent(rawIntent, call, target, before, synth);
 
   if (call.name === 'navigate') {
     return {
@@ -553,7 +562,7 @@ function buildStep(
   if (!node || !target) return null;
 
   if (call.name === 'extract') {
-    const name = String(call.input.output_name ?? 'value');
+    const name = outputName as string;
     const transform = String(call.input.transform ?? 'none') as never;
     if (!outputs.some((o) => o.name === name)) {
       outputs.push({
@@ -617,6 +626,62 @@ function uniqueStepId(rawBase: string, used: Set<string>): string {
  * and the screen says ACCOUNT OPENED SUCCESSFULLY" and knows exactly what was
  * checked.
  */
+/**
+ * A step's intent, fit to ship.
+ *
+ * The intent is prose in a shared artifact: it is what a reviewer reads in a
+ * change ticket, what the console shows, and what an operator sees on an
+ * escalation ticket at every institution that adopts this capability. The
+ * model writes it as a description of what it just did — "Enter the member
+ * number 0100482", "View the full record for Dolores Whitfield" — which is
+ * accurate about this run and wrong for the artifact twice over: it carries a
+ * member's data, and it describes one invocation rather than the step.
+ *
+ * Templatising fixes most of it: parameters and vocabulary become placeholders,
+ * so "enter 0100482" becomes "enter {{input.memberNumber}}", which is both
+ * safer and more useful to anyone reading the capability.
+ *
+ * What templatising cannot fix is a value the model read off the screen — a
+ * member's name is nobody's parameter. So the result is held to the same test
+ * as the summary, and an intent that still describes this run is replaced with
+ * one derived from the step itself. A blander sentence is a small price.
+ */
+function safeIntent(
+  raw: string,
+  call: { name: string; input: Record<string, unknown> },
+  target: Step['target'] | undefined,
+  screen: Snapshot,
+  synth: SynthesisContext,
+): string {
+  const templated = templatise(raw, synth, { vocabWords: true });
+  const forbidden = readableValues(screen, 250).map((n) => (n.text ?? '').trim()).filter((t) => t.length >= 3);
+  if (!sentenceLeaksRunData(templated, forbidden)) return templated;
+
+  // The descriptor already says, precisely and portably, what this step acts
+  // on — that is its whole job. Reusing it is how the fallback stays useful
+  // prose rather than "Activate View."
+  const named = target?.name?.value ? `the "${target.name.value}" ${target.role ?? 'control'}` : null;
+  const where = target?.cell?.rowWhere
+    ? ` in the row where ${target.cell.rowWhere.columnHeader.value} is ${target.cell.rowWhere.equals}`
+    : '';
+  const column = target?.cell?.columnHeader?.value;
+  const what = named ? `${named}${where}` : `${target?.id ?? 'the screen'}${where}`;
+
+  switch (call.name) {
+    case 'extract':
+      return column
+        ? `Capture the ${column} value${where}.`
+        : `Capture "${String(call.input.output_name ?? 'value')}" from ${what}.`;
+    case 'fill':
+    case 'select':
+      return `Enter ${templatise(String(call.input.value ?? ''), synth, { vocabWholeString: false })} into ${what}.`;
+    case 'navigate':
+      return 'Navigate to the recorded screen.';
+    default:
+      return `Activate ${what}.`;
+  }
+}
+
 function successAssertions(snap: Snapshot, proposed: string | undefined, synth: SynthesisContext): Assertion[] {
   const out: Assertion[] = [];
   const text = Object.values(snap.frameTexts).join('\n');

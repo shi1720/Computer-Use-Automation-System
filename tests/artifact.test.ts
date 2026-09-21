@@ -8,7 +8,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   validateCapability, validateOverlay, resolveCapability, computeContentHash,
-  render, referencesOf, TemplateError, API_VERSION,
+  render, referencesOf, TemplateError, API_VERSION, generaliseOutputName,
   type Capability, type TenantOverlay,
 } from '@swivel/core';
 
@@ -279,5 +279,34 @@ describe('run-varying data never becomes a target identity', () => {
     ]) {
       assert.equal(looksLikeData(v), false, `expected "${v}" to be usable as identity`);
     }
+  });
+});
+
+describe('an output name describes the field, not the invocation', () => {
+  const ctx = (params: Record<string, string>) =>
+    ({ parameters: params, vocabulary: {}, baseUrl: 'http://x', usedIds: new Set<string>() }) as never;
+
+  test('strips a parameter value the model folded into the name', () => {
+    // Invoke the same artifact with REGULAR SHARE and the caller gets a field
+    // called `specialSavingsBalance` holding a regular share's balance. It is
+    // the same defect as a target pinned to one record, in the part of the
+    // artifact a calling agent reads.
+    assert.equal(generaliseOutputName('specialSavingsBalance', ctx({ shareType: 'SPECIAL SAVINGS' })), 'balance');
+    assert.equal(generaliseOutputName('specialSavingsAvailable', ctx({ shareType: 'SPECIAL SAVINGS' })), 'available');
+  });
+
+  test('leaves a name that describes the field alone', () => {
+    assert.equal(generaliseOutputName('confirmationNumber', ctx({ checkNumber: '1042' })), 'confirmationNumber');
+    assert.equal(generaliseOutputName('currentBalance', ctx({ shareType: 'SPECIAL SAVINGS' })), 'currentBalance');
+  });
+
+  test('a partial word overlap is a coincidence of vocabulary, not a leak', () => {
+    // "share" appears in both "SHARE DRAFT" and "shareBalance" without the
+    // parameter having leaked anywhere.
+    assert.equal(generaliseOutputName('shareBalance', ctx({ shareType: 'SHARE DRAFT' })), 'shareBalance');
+  });
+
+  test('keeps the model\'s name rather than returning an empty one', () => {
+    assert.equal(generaliseOutputName('specialSavings', ctx({ shareType: 'SPECIAL SAVINGS' })), 'specialSavings');
   });
 });

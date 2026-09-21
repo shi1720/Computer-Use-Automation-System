@@ -103,6 +103,7 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
     startedAt,
     finishedAt: new Date().toISOString(),
     durationMs: now() - t0,
+    humanWaitMs: execCtx.pausedMs ?? 0,
     steps,
     recoveries,
     escalations,
@@ -220,9 +221,13 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
     });
     await o.evidence.log('escalation.raised', `${reason}: ${diagnosis.message}`, { interventionId: i.id, stepId: step?.id });
 
+    // The automation's wall-clock budget stops here and starts again when the
+    // operator hands back. What they spend is theirs, not the run's.
+    const pausedFrom = now();
     await o.escalation.grantControl(i);
     const resolved = await o.escalation.broker.waitForResolution(i.id);
     await o.escalation.reclaim();
+    execCtx.pausedMs = (execCtx.pausedMs ?? 0) + (now() - pausedFrom);
 
     await o.evidence.log('escalation.control_returned', `Operator resolution: ${resolved.resolution ?? 'none'} — ${resolved.resolutionNote ?? ''}`, {
       interventionId: i.id,

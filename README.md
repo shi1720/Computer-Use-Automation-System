@@ -106,7 +106,8 @@ npx swivel discover \
   --tenant pineridge \
   --param memberNumber=0100482 \
   --param "shareType=SPECIAL SAVINGS" \
-  --param-spec "memberNumber=string|The credit union member number, 7 digits|pii|^[0-9]{7}$"
+  --param-spec "memberNumber=string|The credit union member number, 7 digits|pii|^[0-9]{7}$" \
+  --param-spec "shareType=string|The share product to read, exactly as the core displays it|internal"
 ```
 
 The model picks controls; Swivel decides how they are described, what proves each
@@ -127,8 +128,8 @@ npx swivel replay meridian.member-savings-balance --tenant pineridge \
 ```
 
 ```
- SUCCESS   4692ms · 6 steps · quality 100/100
-   outputs: {"specialSavingsBalance":18402.66,"specialSavingsAvailable":18402.66}
+ SUCCESS   4624ms · 6 steps · quality 100/100
+   outputs: {"balance":18402.66,"available":18402.66}
 ```
 
 ### 3 · Exceptional states, on demand
@@ -165,18 +166,28 @@ SWIVEL_CRED_MERIDIAN_OPERATOR_ID=sup02 npx swivel replay meridian.stop-payment \
 ### 5 · Escalation — a human takes over the live session
 
 With the console running, replay the Pine Ridge capability against the *other*
-institution with its overlay removed:
+institution with its overlay suppressed:
 
 ```bash
 npx swivel replay meridian.member-savings-balance --tenant harborpoint \
+  --no-overlay --console-url http://127.0.0.1:4700 \
   --input memberNumber=0100482 --input "shareType=SPECIAL SAVINGS"
 ```
 
-The engine refuses to guess past a control it cannot identify with confidence,
-pauses, and prints a URL. Open it: the operator console shows a **live
+`--no-overlay` is the control experiment for the multi-tenant claim, not a
+debugging switch. This build of the same vendor product ships the deposit-account
+balances collapsed behind a Display control, and the base artifact has no step
+for it. The engine gets four steps in, finds no cell it can identify with
+confidence, and **refuses rather than reading whichever cell is nearest** —
+which is the behaviour the whole targeting model exists for, and the reason the
+overlay is worth one patch.
+
+Then it pauses and prints a URL. Open it: the operator console shows a **live
 screencast of the paused browser session**, and clicks and keystrokes are
-forwarded to it. Do the step by hand, hand control back, and the run resumes and
-finishes — with everything the human did recorded on the run's evidence chain.
+forwarded to it. Do the step by hand, hand control back, and the run resumes —
+with everything the human did recorded on the run's evidence chain, and the
+result reported as `escalated` rather than `success`, because a person did the
+work.
 
 <div align="center">
 <img src="docs/screens/operator-live-driving.png" width="880" alt="The operator console driving a paused live session over a CDP screencast.">

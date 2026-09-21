@@ -89,6 +89,15 @@ export interface ReplayCommon {
   finishedAt: string;
   durationMs: number;
   steps: StepTrace[];
+  /**
+   * How much of `durationMs` was spent waiting for a person.
+   *
+   * Without this, an escalated run's duration says nothing useful: a rescue
+   * that took an operator two minutes looks like an automation that ground for
+   * two minutes, and every latency dashboard built on `durationMs` is wrong in
+   * the one case anybody investigates.
+   */
+  humanWaitMs: number;
   recoveries: RecoveryTrace[];
   /**
    * Every time a human was brought into this run.

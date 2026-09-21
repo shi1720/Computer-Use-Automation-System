@@ -5,8 +5,8 @@
     "id": "meridian.member-savings-balance",
     "version": "0.1.0",
     "title": "Read a member's savings balance",
-    "summary": "Look up {{vocab.member}} {{input.memberNumber}} and report the current balance and the available balance of their {{input.shareType}} {{vocab.share}} account.",
-    "createdAt": "2026-09-21T19:25:17.952Z",
+    "summary": "Looks up a member by member number in Pine Ridge Federal Credit Union's MERIDIAN Core system and returns the current balance and available balance of a specified share account (e.g.",
+    "createdAt": "2026-09-21T20:38:34.632Z",
     "labels": {},
     "owner": "shivam"
   },
@@ -31,15 +31,16 @@
       {
         "name": "memberNumber",
         "type": "string",
-        "description": "The credit union member number to look up, 7 digits",
+        "description": "The credit union member number, 7 digits",
         "required": true,
         "example": "0100482",
-        "sensitivity": "pii"
+        "sensitivity": "pii",
+        "pattern": "^[0-9]{7}$"
       },
       {
         "name": "shareType",
         "type": "string",
-        "description": "The share product to read, exactly as the core displays it (e.g. REGULAR SHARE, SPECIAL SAVINGS, SHARE DRAFT, MONEY MARKET, CERTIFICATE)",
+        "description": "The share product to read, exactly as the core displays it",
         "required": true,
         "example": "SPECIAL SAVINGS",
         "sensitivity": "internal"
@@ -47,16 +48,16 @@
     ],
     "outputs": [
       {
-        "name": "currentBalance",
+        "name": "balance",
         "type": "money",
-        "description": "Current balance of the member's SPECIAL SAVINGS share account",
+        "description": "Current balance of the member's SPECIAL SAVINGS share account.",
         "sensitivity": "sensitive",
         "required": false
       },
       {
-        "name": "availableBalance",
+        "name": "available",
         "type": "money",
-        "description": "Available balance of the member's SPECIAL SAVINGS share account",
+        "description": "Available balance of the member's SPECIAL SAVINGS share account.",
         "sensitivity": "sensitive",
         "required": false
       }
@@ -100,7 +101,7 @@
       "dualControl": false,
       "financialImpact": false,
       "idempotent": true,
-      "summary": "Read-only inquiry; no changes were made. Balances reflect the business date shown on screen (09/21/2026) and may change with subsequent activity."
+      "summary": "This is a read-only inquiry; no changes were made to the member's record."
     },
     "preconditions": []
   },
@@ -300,7 +301,7 @@
     "steps": [
       {
         "id": "click_member_search",
-        "intent": "Open Member Search to look up member by member number.",
+        "intent": "Open {{vocab.member}} Search so the {{vocab.member}} can be looked up by {{vocab.member}} number.",
         "kind": "click",
         "target": {
           "id": "member_search",
@@ -345,7 +346,7 @@
       },
       {
         "id": "fill_member",
-        "intent": "Enter the member number to search for the member record.",
+        "intent": "Type the {{vocab.member}} number into the {{vocab.member}} # field to find this specific {{vocab.member}}.",
         "kind": "fill",
         "target": {
           "id": "member",
@@ -386,7 +387,7 @@
       },
       {
         "id": "click_search",
-        "intent": "Execute the search for member number 0100482 to locate the member record.",
+        "intent": "Submit the search for {{vocab.member}} number {{input.memberNumber}} to locate their record.",
         "kind": "click",
         "target": {
           "id": "search",
@@ -433,7 +434,7 @@
       },
       {
         "id": "click_action_cell",
-        "intent": "Open the member record for member 0100482 to view their share account details.",
+        "intent": "Activate the \"View\" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.",
         "kind": "click",
         "target": {
           "id": "action_cell",
@@ -478,12 +479,12 @@
         "risk": "read_only",
         "expect": {
           "id": "click_action_cell_ok",
-          "description": "Reached screen INQ-0420",
+          "description": "Screen shows \"Share Accounts\"",
           "all": [
             {
               "kind": "text_present",
-              "regex": "SCREEN\\s+INQ-0420",
-              "because": "the core stamps a screen identifier on every page; it is stable across runs and carries no member data"
+              "text": "{{vocab.shareList}}",
+              "because": "the model nominated this as proof the step worked, and it was verified present during discovery"
             }
           ],
           "timeoutMs": 15000,
@@ -492,8 +493,8 @@
         "authoredBy": "model"
       },
       {
-        "id": "extract_current_balance",
-        "intent": "Capture the current balance for the SPECIAL SAVINGS share account.",
+        "id": "extract_balance",
+        "intent": "Capture the current balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).",
         "kind": "extract",
         "target": {
           "id": "balance_cell",
@@ -532,15 +533,15 @@
         },
         "risk": "read_only",
         "extract": {
-          "into": "currentBalance",
+          "into": "balance",
           "source": "text",
           "transform": "money_to_number"
         },
         "authoredBy": "model"
       },
       {
-        "id": "extract_available_balance",
-        "intent": "Capture the available balance for the SPECIAL SAVINGS share account.",
+        "id": "extract_available",
+        "intent": "Capture the available balance for the {{input.shareType}} {{vocab.share}} account ({{input.memberNumber}}-01).",
         "kind": "extract",
         "target": {
           "id": "available_cell",
@@ -579,7 +580,7 @@
         },
         "risk": "read_only",
         "extract": {
-          "into": "availableBalance",
+          "into": "available",
           "source": "text",
           "transform": "money_to_number"
         },
@@ -588,7 +589,7 @@
     ],
     "successCheckpoint": {
       "id": "capability_complete",
-      "description": "MEMBER INQUIRY SCREEN",
+      "description": "MEMBER INQUIRY SCREEN INQ-0420",
       "all": [
         {
           "kind": "text_present",
@@ -597,7 +598,7 @@
         },
         {
           "kind": "text_present",
-          "text": "{{vocab.member}} INQUIRY SCREEN",
+          "text": "{{vocab.member}} INQUIRY SCREEN INQ-0420",
           "because": "the discovery run verified this phrase was present on the final screen and that it is not run-varying data"
         }
       ],
@@ -606,7 +607,7 @@
     }
   },
   "provenance": {
-    "discoveredAt": "2026-09-21T19:25:17.952Z",
+    "discoveredAt": "2026-09-21T20:38:34.632Z",
     "discoveredBy": {
       "kind": "llm_discovery",
       "provider": "claude-cli",
@@ -616,7 +617,7 @@
     "swivelVersion": "1.0.0",
     "history": [
       {
-        "at": "2026-09-21T19:25:17.952Z",
+        "at": "2026-09-21T20:38:34.632Z",
         "actor": "shivam",
         "action": "discovered",
         "note": "via claude-cli/claude-code-cli"
@@ -636,8 +637,8 @@
     },
     "stabilityScore": 0,
     "notes": [
-      "Read-only inquiry; no changes were made. Balances reflect the business date shown on screen (09/21/2026) and may change with subsequent activity."
+      "This is a read-only inquiry; no changes were made to the member's record."
     ]
   },
-  "contentHash": "f69c08f7f6078326d9d47daa208e126ae01d592397fe7d196dfc4fc21f7b44aa"
+  "contentHash": "8498fc83690316b3fcafdb9dc57861d4f5277ab3410dc193f0196aec22ba2db1"
 }

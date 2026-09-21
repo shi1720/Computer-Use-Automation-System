@@ -38,6 +38,17 @@ export interface ExecutionContext {
   unattended: boolean;
   startedAt: number;
   stepsTaken: number;
+  /**
+   * Milliseconds this run spent paused with a human holding the wheel.
+   *
+   * The wall-clock budget exists to stop an automation grinding against a core
+   * that has stopped answering. An operator reading a screen and deciding what
+   * to do is not that — and a budget that counts their thinking time makes the
+   * escalation path unusable, because every real rescue takes longer than any
+   * sane automation timeout. The clock stops while a person has control and
+   * starts again when they hand it back.
+   */
+  pausedMs?: number;
 }
 
 export interface PolicyEvent {
@@ -127,7 +138,7 @@ export class PolicyEngine {
     if (this.ctx.stepsTaken >= p.maxSteps) {
       return this.deny('STEP_BUDGET_EXCEEDED', step.id, `Step budget of ${p.maxSteps} exhausted.`);
     }
-    const elapsed = Date.now() - this.ctx.startedAt;
+    const elapsed = Date.now() - this.ctx.startedAt - (this.ctx.pausedMs ?? 0);
     if (elapsed > p.maxDurationMs) {
       return this.deny('TIME_BUDGET_EXCEEDED', step.id, `Wall-clock budget of ${p.maxDurationMs}ms exceeded (${elapsed}ms).`);
     }

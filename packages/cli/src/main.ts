@@ -26,6 +26,9 @@ const HELP = `
   ${c.bold('DISCOVER AND REPLAY')}
     discover                 Drive a live application with a model and record a capability
     replay <id>[@version]    Execute a saved capability. No model in the loop.
+      --no-overlay           Run the base artifact with nothing adapted for
+                             this tenant — the control experiment for the
+                             multi-tenant claim
     stability <id>[@version] Replay N times and report a flakiness signal
 
   ${c.bold('GOVERN')}
@@ -201,8 +204,17 @@ async function cmdDiscover(argv: string[], cfg: SwivelConfig, store: SwivelStore
   const specs = parseKv(values['param-spec']);
   // Format: --param-spec "name=type|description|sensitivity|pattern"
   const parameters: DiscoveryParameter[] = Object.entries(paramValues).map(([name, value]) => {
-    const [type = 'string', description = `${name} supplied by the calling agent`, sensitivity = 'internal', pattern] =
-      (specs[name] ?? '').split('|');
+    // `''.split('|')` is `['']`, not `[]`, so a parameter declared without a
+    // spec used to get an empty string as its type rather than the default —
+    // and the artifact then failed schema validation *after* the whole
+    // discovery run had completed, which is the most expensive place to
+    // discover a defaulting bug. Empty segments are treated as absent.
+    const parts = (specs[name] ?? '').split('|').map((x) => x.trim());
+    const at = (i: number): string | undefined => (parts[i] ? parts[i] : undefined);
+    const type = at(0) ?? 'string';
+    const description = at(1) ?? `${name} supplied by the calling agent`;
+    const sensitivity = at(2) ?? 'internal';
+    const pattern = at(3);
     return {
       name, value, type: type as DiscoveryParameter['type'],
       description, required: true, example: value,
@@ -313,7 +325,7 @@ async function cmdReplay(argv: string[], cfg: SwivelConfig, store: SwivelStore):
       inject: { type: 'string', multiple: true },
       as: { type: 'string' }, headed: { type: 'boolean' }, quiet: { type: 'boolean' },
       json: { type: 'boolean' }, 'no-escalate': { type: 'boolean' },
-      'console-url': { type: 'string' },
+      'console-url': { type: 'string' }, 'no-overlay': { type: 'boolean' },
     },
   });
   const ref = positionals[0];
@@ -321,7 +333,20 @@ async function cmdReplay(argv: string[], cfg: SwivelConfig, store: SwivelStore):
 
   const cap = await mustGet(store, ref);
   const tenant = requireTenant(cfg, values.tenant);
-  const overlay = await store.getOverlay(tenant.id, cap.metadata.id);
+  /**
+   * `--no-overlay` runs the base capability at this tenant with nothing
+   * adapted for it.
+   *
+   * This is not a debugging switch, it is the control experiment. "One
+   * artifact, two institutions, one small overlay" is a claim, and a claim is
+   * only worth as much as the run that shows what happens without it. Here
+   * that is an escalation: the base capability looks for a "Member Search"
+   * link at an institution whose build of the same vendor product calls it
+   * "Customer Search", the resolver refuses rather than guessing, and a person
+   * is asked. That refusal is the evidence that the overlay is doing real work
+   * and that the targeting is not quietly matching whatever is nearest.
+   */
+  const overlay = values['no-overlay'] ? null : await store.getOverlay(tenant.id, cap.metadata.id);
   const inputs = parseKv(values.input);
 
   // Scenario injection: the simulator exposes a control surface so every
@@ -332,7 +357,9 @@ async function cmdReplay(argv: string[], cfg: SwivelConfig, store: SwivelStore):
     console.log(banner('replay', `${cap.metadata.title}`));
     console.log(kv([
       ['capability', `${cap.metadata.id}@${cap.metadata.version} ${statusChip(cap.quality.approvalState)}`],
-      ['tenant', `${tenant.institution} (${tenant.id})${overlay ? c.cyan(`  + overlay ${overlay.metadata.id}`) : ''}`],
+      ['tenant', `${tenant.institution} (${tenant.id})${overlay
+        ? c.cyan(`  + overlay ${overlay.metadata.id}`)
+        : values['no-overlay'] ? c.yellow('  — overlay suppressed (--no-overlay)') : ''}`],
       ['inputs', JSON.stringify(inputs)],
       ['mode', values.unattended ? 'unattended (agent-invoked)' : 'attended'],
       ['injected', values.inject?.join(', ') ?? '(none)'],

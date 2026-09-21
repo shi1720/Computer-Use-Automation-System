@@ -173,14 +173,32 @@ export async function startLiveControl(
 
   wss.on('connection', async (ws: WebSocket) => {
     sockets.add(ws);
-    ws.send(JSON.stringify({ t: 'hello', viewport, url: await surface.currentUrl(), control: leases.holder }));
+    /*
+     * Everything in here is guarded, because a console can connect at the exact
+     * moment the run it belongs to is finishing.
+     *
+     * This is an async event handler, so a rejection inside it is an unhandled
+     * promise rejection — and an unhandled rejection takes down the Node
+     * process. That process is the *runner*: a reviewer opening a stale
+     * takeover tab could kill a live automation mid-flow. The right answer to
+     * "the session you asked for has ended" is to say so and close the socket.
+     */
+    try {
+      ws.send(JSON.stringify({ t: 'hello', viewport, url: await surface.currentUrl(), control: leases.holder }));
 
-    if (!screencasting) {
-      screencasting = true;
-      await cdp.send('Page.startScreencast', {
-        format: 'jpeg', quality: opts.quality ?? 55,
-        maxWidth: viewport.width, maxHeight: viewport.height, everyNthFrame: 1,
-      });
+      if (!screencasting) {
+        screencasting = true;
+        await cdp.send('Page.startScreencast', {
+          format: 'jpeg', quality: opts.quality ?? 55,
+          maxWidth: viewport.width, maxHeight: viewport.height, everyNthFrame: 1,
+        });
+      }
+    } catch (e) {
+      screencasting = false;
+      try { ws.send(JSON.stringify({ t: 'error', message: `This session has ended: ${(e as Error).message}` })); } catch { /* already gone */ }
+      try { ws.close(); } catch { /* already gone */ }
+      sockets.delete(ws);
+      return;
     }
 
     ws.on('message', async (buf) => {

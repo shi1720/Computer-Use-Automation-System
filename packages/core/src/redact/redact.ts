@@ -72,7 +72,7 @@ const BUILT_IN: Array<{ name: string; re: RegExp; kind: Sensitivity }> = [
    * is hiding. Digits adjacent to a decimal point, a comma, a currency symbol
    * or more digits are part of something else.
    */
-  { name: 'member_number', re: /(?<![\d.,$-])\d{6,10}(?:-\d{2})?(?!\d)(?!\.\d)(?!,\d{3})/g, kind: 'pii' },
+  { name: 'member_number', re: /(?<![\d.,$-])\d{6,10}(?:-\d{2})?(?!\d)(?!\.\d)(?!,\d{3})(?![A-Za-z])/g, kind: 'pii' },
 ];
 
 /** Luhn check, so a 16-digit reference number is not mistaken for a card. */

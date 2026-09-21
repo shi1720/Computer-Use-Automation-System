@@ -99,6 +99,15 @@ export interface EscalationSink {
  * In-process broker. The console embeds one; a distributed deployment would
  * swap the sink for a queue without changing the protocol above.
  */
+/** Union two accounts of what an operator did, keeping chronological order. */
+function mergeHumanActions(a: HumanAction[], b: HumanAction[]): HumanAction[] {
+  const key = (h: HumanAction) => `${h.at}|${h.kind}|${h.detail}`;
+  const seen = new Set(a.map(key));
+  const merged = [...a];
+  for (const h of b) if (!seen.has(key(h))) { seen.add(key(h)); merged.push(h); }
+  return merged.sort((x, y) => x.at.localeCompare(y.at));
+}
+
 export class EscalationBroker extends EventEmitter {
   private readonly items = new Map<string, Intervention>();
 
@@ -148,10 +157,15 @@ export class EscalationBroker extends EventEmitter {
           ...(existing.resolution ? { resolution: existing.resolution } : {}),
           ...(existing.resolutionNote !== undefined ? { resolutionNote: existing.resolutionNote } : {}),
           timeline: existing.timeline,
-          // Operator keystrokes are recorded *here*, by the console. An upstream
-          // mirror has no authority to rewrite them, and the mirror's copy is
-          // always the staler one.
-          humanActions: existing.humanActions,
+          // Human actions are unioned, never replaced in either direction.
+          //
+          // Which side records them depends on where the session lives: a run
+          // hosted in another process records the operator's clicks locally and
+          // mirrors them up, while a run the console hosts records them here.
+          // Letting either side's copy win erases the other's account of what a
+          // person did to a live teller session, and that record is the whole
+          // point of recording it.
+          humanActions: mergeHumanActions(existing.humanActions, i.humanActions),
         }
       : i;
     this.items.set(i.id, merged);

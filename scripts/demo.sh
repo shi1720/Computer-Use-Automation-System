@@ -81,12 +81,17 @@ curl -s http://127.0.0.1:4711/__sim/audit | head -c 600; echo
 step "10 · Determinism" "Five consecutive replays. Same inputs, same outcome, same outputs."
 swivel stability "$BAL" --tenant pineridge --runs 5 --input memberNumber=0100482 --input "shareType=SPECIAL SAVINGS"
 
-step "11 · A second institution on the same vendor product" \
+step "11 · The control experiment: the same artifact, no overlay" \
+     "Before claiming the overlay does the work, show what happens without it. The engine refuses rather than reading the wrong column."
+swivel replay "$BAL" --tenant harborpoint --no-overlay --no-escalate \
+  --input memberNumber=0100482 --input "shareType=SPECIAL SAVINGS" || true
+
+step "12 · A second institution on the same vendor product" \
      "Different words, different control ids, an inserted column, and a screen this build collapses. One overlay."
 swivel overlay check "$BAL" --tenant harborpoint
 swivel replay "$BAL" --tenant harborpoint --input memberNumber=0100482 --input "shareType=SPECIAL SAVINGS" --no-escalate
 
-step "12 · Evidence" "Every run leaves a hash-chained bundle. Any edit to it is detectable."
+step "13 · Evidence" "Every run leaves a hash-chained bundle. Any edit to it is detectable."
 LAST=$(ls -t evidence/runs | head -1)
 swivel verify "evidence/runs/$LAST"
 

@@ -82,6 +82,9 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
   /** Set when an operator declares they finished the work by hand. */
   let completedByHuman: EscalationTrace | null = null;
   const targetingScores: number[] = [];
+  const corroborationScores: number[] = [];
+  /** Incremented by anything that consults a model. Nothing here does. */
+  const modelCalls = 0;
 
   const tenant = {
     id: o.tenant?.id ?? cap.resolvedFor?.tenantId ?? 'default',
@@ -107,7 +110,13 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
     runQuality: targetingScores.length
       ? Math.round(targetingScores.reduce((a, b) => a + b, 0) / targetingScores.length)
       : 100,
-    llmCalls: 0,
+    driftSignal: corroborationScores.length
+      ? Math.round(corroborationScores.reduce((a, b) => a + b, 0) / corroborationScores.length)
+      : 100,
+    // Counted, not asserted. The engine has no model client at all, so this is
+    // structurally zero — but a claim worth making is a claim worth measuring,
+    // and a future bounded-repair step would have to increment it.
+    llmCalls: modelCalls,
   });
 
   await o.evidence.log('run.started', `Replaying ${cap.metadata.id}@${cap.metadata.version} for tenant ${tenant.id}`, {
@@ -335,18 +344,26 @@ export async function replay(o: ReplayOptions): Promise<ReplayResult> {
         };
       } else {
         targetingScores.push(Math.min(100, resolution.score));
+        corroborationScores.push(resolution.corroboration);
         trace.targeting = {
-          score: resolution.score, margin: resolution.margin,
+          score: resolution.score, corroboration: resolution.corroboration, margin: resolution.margin,
           matched: resolution.matched, missed: resolution.missed,
           candidates: resolution.candidatesConsidered,
         };
-        await o.evidence.log('step.resolved', `Resolved ${describeTarget(step.target)} → score ${resolution.score}, margin ${resolution.margin}`, {
-          stepId: step.id, matched: resolution.matched, missed: resolution.missed, candidates: resolution.candidatesConsidered,
-        });
-        // A target that still resolves but has lost its strong evidence is the
-        // earliest warning of drift available. Recorded, not fatal.
+        await o.evidence.log('step.resolved',
+          `Resolved ${describeTarget(step.target)} → score ${resolution.score}, corroboration ${resolution.corroboration}, margin ${resolution.margin}`, {
+            stepId: step.id, matched: resolution.matched, missed: resolution.missed, candidates: resolution.candidatesConsidered,
+          });
+        // Two different warnings, and the difference matters.
         if (resolution.missed.some((m) => m.startsWith('name') || m.startsWith('anchor') || m.startsWith('cell.rowWhere'))) {
-          await o.evidence.log('note', `Degraded targeting on "${step.id}": semantic evidence missing (${resolution.missed.join(', ')}). The capability still ran, but this is how drift starts.`, { stepId: step.id });
+          await o.evidence.log('note',
+            `Weakened identification on "${step.id}": semantic evidence missing (${resolution.missed.join(', ')}). It still resolved, but on less than it was recorded with.`,
+            { stepId: step.id });
+        } else if (resolution.corroboration < 60) {
+          await o.evidence.log('note',
+            `Drift signal on "${step.id}": identified confidently (${resolution.score}) but corroborating evidence agrees only ${resolution.corroboration}%. ` +
+            `Typically a vendor version change or a different tenant build. Not a failure; worth watching across the fleet.`,
+            { stepId: step.id, missed: resolution.missed });
         }
 
         try {

@@ -333,6 +333,16 @@ export const QualitySchema = z.object({
   approvalState: z.enum(['draft', 'candidate', 'approved', 'deprecated']).default('draft'),
   approvedBy: z.string().optional(),
   approvedAt: z.string().optional(),
+  /**
+   * The content hash that was approved.
+   *
+   * Approval is approval *of a specific document*. Without pinning the hash,
+   * editing an approved artifact's steps by hand — which is a documented
+   * authoring path — leaves it approved, and the reviewer's sign-off silently
+   * transfers to a flow they never read. The policy engine refuses to run
+   * unattended when this does not match the current hash.
+   */
+  approvedContentHash: z.string().optional(),
   replays: z.object({
     total: z.number().int().nonnegative().default(0),
     success: z.number().int().nonnegative().default(0),
@@ -483,6 +493,17 @@ export const TenantOverlaySchema = z.object({
   }).strict()).default([]),
 
   policyOverrides: PolicySchema.partial().optional(),
+  /**
+   * An overlay that only supplies a base URL and vocabulary changes no
+   * behaviour and rides the base capability's approval. One that patches steps
+   * does change behaviour, and needs its own reviewer — otherwise the cheapest
+   * document in the system could insert a click into an approved flow.
+   */
+  approval: z.object({
+    approvedBy: z.string(),
+    approvedAt: z.string(),
+    note: z.string().optional(),
+  }).strict().optional(),
   quality: QualitySchema.default({} as never).optional(),
 }).strict();
 

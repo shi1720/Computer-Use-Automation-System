@@ -124,8 +124,35 @@ export class EscalationBroker extends EventEmitter {
     // Never let an upstream mirror walk a ticket backwards over a decision an
     // operator has already made here.
     if (existing && ['returned', 'resolved', 'expired'].includes(existing.status)) return existing;
+
+    // A ticket belongs to the run that raised it, for its whole life. Without
+    // this, anyone able to POST a mirror update for a known ticket id could
+    // replace its context wholesale — including `context.control`, which is the
+    // websocket the operator's takeover UI connects to. Repointing that at a
+    // socket of your choosing would hand you an operator driving a live teller
+    // session on your behalf, which is about the worst outcome this system has.
+    // The run id is carried in the ticket and never changes, so it is the
+    // natural key to bind to.
+    if (existing && existing.context.runId !== i.context.runId) {
+      throw new Error(
+        `Intervention ${i.id} belongs to run ${existing.context.runId}; ` +
+        `run ${i.context.runId} may not update it.`,
+      );
+    }
+
     const merged: Intervention = existing
-      ? { ...i, status: existing.status, assignee: existing.assignee, resolution: existing.resolution, resolutionNote: existing.resolutionNote, timeline: existing.timeline }
+      ? {
+          ...i,
+          status: existing.status,
+          ...(existing.assignee ? { assignee: existing.assignee } : {}),
+          ...(existing.resolution ? { resolution: existing.resolution } : {}),
+          ...(existing.resolutionNote !== undefined ? { resolutionNote: existing.resolutionNote } : {}),
+          timeline: existing.timeline,
+          // Operator keystrokes are recorded *here*, by the console. An upstream
+          // mirror has no authority to rewrite them, and the mirror's copy is
+          // always the staler one.
+          humanActions: existing.humanActions,
+        }
       : i;
     this.items.set(i.id, merged);
     this.emit(existing ? 'updated' : 'raised', merged);
@@ -192,8 +219,29 @@ export class EscalationBroker extends EventEmitter {
     void this.sink?.update(i);
   }
 
-  returnControl(id: string, resolution: InterventionResolution, note: string, delta?: Intervention['sessionDelta']): Intervention {
+  /**
+   * Hand the wheel back.
+   *
+   * `by` is the operator making the call. It is optional only because the run
+   * that raised the ticket also applies its own resolution locally, where there
+   * is no operator identity to check; every console-facing path passes it, and
+   * when it is passed it must match the assignee. Claiming a ticket has to mean
+   * something, and it only does if nobody else can resolve it.
+   */
+  returnControl(
+    id: string,
+    resolution: InterventionResolution,
+    note: string,
+    delta?: Intervention['sessionDelta'],
+    by?: { id: string; name: string },
+  ): Intervention {
     const i = this.require(id);
+    if (by && i.assignee && i.assignee.id !== by.id) {
+      throw new Error(`Intervention ${id} is held by ${i.assignee.name}; only they can return it.`);
+    }
+    if (by && !i.assignee) {
+      throw new Error(`Intervention ${id} has not been claimed; claim it before returning control.`);
+    }
     i.status = 'returned';
     i.resolution = resolution;
     i.resolutionNote = note;
@@ -231,9 +279,23 @@ export class EscalationBroker extends EventEmitter {
     if (['returned', 'resolved', 'expired'].includes(i.status)) return Promise.resolve(i);
     const budget = timeoutMs ?? Math.max(1_000, Date.parse(i.expiresAt) - Date.now());
     return new Promise((resolve) => {
-      const done = (x: Intervention) => { clearTimeout(timer); resolve(x); };
-      const timer = setTimeout(() => { this.expire(id); resolve(this.require(id)); }, budget);
-      this.once(`resolved:${id}`, done);
+      let settled = false;
+      const done = (x: Intervention) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        this.off(`resolved:${id}`, done);
+        resolve(x);
+      };
+      const timer = setTimeout(() => {
+        // `expire` emits `resolved:id`, which re-enters `done` — the guard above
+        // is what keeps that from double-settling. Removing the listener here as
+        // well matters because a long-lived console accumulates one leaked
+        // listener per timed-out ticket otherwise.
+        this.expire(id);
+        done(this.require(id));
+      }, budget);
+      this.on(`resolved:${id}`, done);
     });
   }
 

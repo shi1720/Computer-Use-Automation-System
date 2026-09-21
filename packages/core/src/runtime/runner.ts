@@ -72,10 +72,11 @@ export class Runner {
     );
   }
 
-  private async launchSurface(allowedOrigins: string[], evidence: EvidenceRecorder): Promise<WebSurface> {
+  private async launchSurface(allowedOrigins: string[], evidence: EvidenceRecorder, allowedPathPatterns: string[] = []): Promise<WebSurface> {
     return WebSurface.launch({
       headless: this.opts.headless ?? true,
       allowedOrigins,
+      allowedPathPatterns,
       ...(this.opts.chromiumPath ? { executablePath: this.opts.chromiumPath } : {}),
       onBlocked: (url, reason) => { void evidence.log('network.blocked', `Blocked request to ${url}: ${reason}`); },
     });
@@ -139,7 +140,7 @@ export class Runner {
       startedAt: new Date().toISOString(), evidenceDir: evidence.dir, summary: req.goal,
     });
 
-    const surface = await this.launchSurface(req.policy.allowedOrigins, evidence);
+    const surface = await this.launchSurface(req.policy.allowedOrigins, evidence, req.policy.allowedPathPatterns);
     const leases = new ControlLeaseManager();
     const lease = leases.acquire('automation', 'swivel', `discovery ${runId}`);
     const leased = new LeasedSurface(surface, leases, () => leases.lease?.id ?? lease.id);
@@ -226,7 +227,7 @@ export class Runner {
     args.onStart?.({ runId, evidenceDir: evidence.dir });
 
     const origins = [...new Set([...resolved.policy.allowedOrigins, new URL(args.tenant.baseUrl).origin])];
-    const surface = await this.launchSurface(origins, evidence);
+    const surface = await this.launchSurface(origins, evidence, resolved.policy.allowedPathPatterns);
     const leases = new ControlLeaseManager();
     const lease = leases.acquire('automation', 'swivel', `replay ${runId}`);
     const leased = new LeasedSurface(surface, leases, () => (leases.holder === 'automation' ? leases.lease?.id ?? null : null));
@@ -314,11 +315,11 @@ export class Runner {
 /**
  * Confidence in a capability.
  *
- * Deliberately blends outcome history with *targeting margin*, because a
- * capability whose controls resolve at a score of 58 is fragile even if it has
- * never failed — and saying so before the first incident is the entire point of
- * measuring it. Business outcomes count as successes: "no such member" is the
- * automation working correctly.
+ * Blends outcome history with the last run's mean resolution score, because a
+ * capability whose controls resolve at 58 is fragile even if it has never
+ * failed, and saying so before the first incident is the point of measuring it.
+ * Business outcomes count as successes: "no such member" is the automation
+ * working correctly.
  */
 export function stabilityScore(
   replays: Capability['quality']['replays'], lastRunQuality: number,

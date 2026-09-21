@@ -31,6 +31,14 @@ export interface WebSurfaceOptions {
   viewport?: { width: number; height: number };
   /** Origins this session may talk to. Everything else is aborted at the wire. */
   allowedOrigins?: string[];
+  /**
+   * Path patterns permitted within those origins.
+   *
+   * Enforced here as well as in the policy engine. Policy checked only at the
+   * point of decision is policy a server-side redirect can walk around — and it
+   * does not constrain a human operator clicking links during a takeover.
+   */
+  allowedPathPatterns?: string[];
   /** Called whenever a request is blocked, so it lands in the evidence log. */
   onBlocked?: (url: string, reason: string) => void;
   /** Extra latency tolerance for slow legacy servers. */
@@ -78,15 +86,29 @@ export class WebSurface implements Surface {
     const page = await context.newPage();
 
     const allow = opts.allowedOrigins?.map((o) => o.replace(/\/$/, ''));
+    const paths = (opts.allowedPathPatterns ?? [])
+      .map((p) => { try { return new RegExp(p); } catch { return null; } })
+      .filter((r): r is RegExp => r !== null);
+
     if (allow?.length) {
       await context.route('**/*', async (route) => {
         const url = route.request().url();
         if (url.startsWith('data:') || url.startsWith('about:') || url.startsWith('blob:')) { await route.continue(); return; }
-        let origin: string;
-        try { origin = new URL(url).origin; } catch { await route.abort('blockedbyclient'); return; }
-        if (allow.includes(origin)) { await route.continue(); return; }
-        opts.onBlocked?.(url, `origin ${origin} is not in the capability allowlist`);
-        await route.abort('blockedbyclient');
+        let parsed: URL;
+        try { parsed = new URL(url); } catch { await route.abort('blockedbyclient'); return; }
+        if (!allow.includes(parsed.origin)) {
+          opts.onBlocked?.(url, `origin ${parsed.origin} is not in the capability allowlist`);
+          await route.abort('blockedbyclient');
+          return;
+        }
+        // Documents only: an allowlist of *routes* is about where the session
+        // may go, not about which stylesheet a permitted page pulls in.
+        if (paths.length && route.request().resourceType() === 'document' && !paths.some((re) => re.test(parsed.pathname))) {
+          opts.onBlocked?.(url, `path ${parsed.pathname} does not match any allowed route pattern`);
+          await route.abort('blockedbyclient');
+          return;
+        }
+        await route.continue();
       });
     }
     return new WebSurface(browser, context, page, opts);

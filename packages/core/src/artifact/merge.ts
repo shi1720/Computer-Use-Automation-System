@@ -22,7 +22,11 @@ export interface ResolvedCapability extends Capability {
     institution: string;
     overlayId: string;
     baseContentHash: string;
+    /** Step patches only — vocabulary and base URL change no behaviour. */
     patchCount: number;
+    /** Whether this overlay carries its own reviewer sign-off. */
+    overlayApproved: boolean;
+    approvedBy?: string;
   };
 }
 
@@ -60,6 +64,42 @@ function patchSteps(steps: Step[], patches: TenantOverlay['stepPatches']): Step[
   return out;
 }
 
+/**
+ * Apply a tenant's policy overrides, in the narrowing direction only.
+ *
+ * An overlay is written per institution and reviewed with less ceremony than a
+ * base capability. If it could set `requiresApproval: false`, widen
+ * `allowedPathPatterns` or raise `maxSteps`, then the cheap document would
+ * govern the expensive one's safety envelope — and the approval on the base
+ * capability would mean nothing. So a tenant may make its own instance
+ * *stricter* and never looser, and `allowedOrigins` gains only its own
+ * instance's origin.
+ */
+export function narrowPolicy(base: Capability['policy'], overlay: TenantOverlay): Capability['policy'] {
+  const o = overlay.policyOverrides ?? {};
+  const tenantOrigin = new URL(overlay.tenant.baseUrl).origin;
+  return {
+    ...base,
+    allowedOrigins: [...new Set([...base.allowedOrigins, tenantOrigin])],
+    // Action and path allowlists may only shrink.
+    allowedActions: o.allowedActions
+      ? base.allowedActions.filter((a) => o.allowedActions?.includes(a))
+      : base.allowedActions,
+    allowedPathPatterns: o.allowedPathPatterns
+      ? base.allowedPathPatterns.filter((p) => o.allowedPathPatterns?.includes(p))
+      : base.allowedPathPatterns,
+    // Requirements may only be turned on.
+    requiresApproval: base.requiresApproval || (o.requiresApproval ?? false),
+    requiresPerInvocationConfirmation:
+      base.requiresPerInvocationConfirmation || (o.requiresPerInvocationConfirmation ?? false),
+    // Budgets may only be reduced.
+    maxDurationMs: Math.min(base.maxDurationMs, o.maxDurationMs ?? base.maxDurationMs),
+    maxSteps: Math.min(base.maxSteps, o.maxSteps ?? base.maxSteps),
+    // Extra redaction is always additive.
+    redactPatterns: [...new Set([...base.redactPatterns, ...(o.redactPatterns ?? [])])],
+  };
+}
+
 export function resolveCapability(cap: Capability, overlay?: TenantOverlay): ResolvedCapability {
   if (!overlay) return { ...cap };
 
@@ -82,14 +122,7 @@ export function resolveCapability(cap: Capability, overlay?: TenantOverlay): Res
     // Tenant signals are appended, not merged: a local interstitial is additive
     // and must not be able to silently disable a base safety signal.
     signals: [...cap.signals, ...overlay.extraSignals],
-    policy: {
-      ...cap.policy,
-      ...(overlay.policyOverrides ?? {}),
-      // Origin allowlist is the union of the product default and the tenant's
-      // own instance. A tenant cannot widen the *action* allowlist this way.
-      allowedOrigins: [...new Set([...cap.policy.allowedOrigins, new URL(overlay.tenant.baseUrl).origin])],
-      allowedActions: cap.policy.allowedActions,
-    },
+    policy: narrowPolicy(cap.policy, overlay),
     flow: {
       ...cap.flow,
       steps,
@@ -104,6 +137,8 @@ export function resolveCapability(cap: Capability, overlay?: TenantOverlay): Res
       overlayId: overlay.metadata.id,
       baseContentHash: computeContentHash(cap),
       patchCount: overlay.stepPatches.length + Object.keys(overlay.targetOverrides).length,
+      overlayApproved: Boolean(overlay.approval),
+      ...(overlay.approval ? { approvedBy: overlay.approval.approvedBy } : {}),
     },
   };
   return resolved;

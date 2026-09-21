@@ -143,8 +143,47 @@ describe('refusal', () => {
     if (r.ok) {
       assert.ok(r.matched.includes('name'));
       assert.ok(r.missed.includes('hints.idPattern'));
-      // Degraded but usable: this is the early warning, before an outage.
-      assert.ok(r.score < 100);
+    }
+  });
+
+  test('a stale id pattern does not weaken an unambiguous identification', () => {
+    // This is a different build of the same vendor product: the name still
+    // matches exactly, the generated id prefix has changed. Letting the id
+    // drag the score down would refuse a control that was identified perfectly
+    // — which is the most volatile evidence in the system vetoing the most
+    // stable.
+    const snap = snapshot([node({ role: 'button', name: 'Search', raw: { tag: 'input', domId: 'ctl00_cphMain_btnSearch' } })]);
+    const t: TargetDescriptor = {
+      id: 'search', role: 'button', name: { value: 'Search', match: 'exact' },
+      hints: { idPattern: 'ctl\\d+_Main_btnSearch', tag: 'input' },
+      require: { minScore: 60, unique: true, timeoutMs: 1000 },
+    };
+    const r = resolveTarget(t, snap, { ctx });
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.score, 100, 'identified on the name alone');
+      assert.ok(r.corroboration < 100, 'and the drift is still reported');
+      assert.ok(r.missed.includes('hints.idPattern'));
+    }
+  });
+
+  test('refuses a target identified by nothing but implementation detail', () => {
+    // Every corroborating probe matches perfectly — the tag is right, the
+    // generated id matches the recorded pattern exactly. None of that says
+    // *this is the control a person would have clicked*, so the score caps at
+    // 50 and the default threshold refuses it. An id pattern is not an
+    // identification; it is a fingerprint of one build of one vendor's markup,
+    // and acting on it alone is precisely the guess this resolver exists to
+    // not make.
+    const snap = snapshot([node({ role: 'textbox', raw: { tag: 'input', domId: 'ctl00_Main_txt1' } })]);
+    const t: TargetDescriptor = { id: 'weak', role: 'textbox', hints: { idPattern: 'ctl\\d+_Main_txt\\d+', tag: 'input' } };
+    const r = resolveTarget(t, snap, { ctx });
+    assert.equal(r.ok, false, 'corroborating evidence alone must never carry a resolution');
+    if (!r.ok) {
+      assert.equal(r.reason, 'below_min_score');
+      const best = r.best[0]!;
+      assert.equal(best.score, 50, 'capped at half, because half the evidence is missing entirely');
+      assert.ok(best.matched.includes('hints.idPattern'));
     }
   });
 });

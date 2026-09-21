@@ -156,9 +156,9 @@ async function cmdInit(store: SwivelStore): Promise<void> {
   console.log(banner('init', 'Creating local configuration and seeding the console'));
   await writeDefaultConfig();
   const seed = [
-    { id: 'shivam', name: 'Shivam Gupta', email: 'shivam@swivel.local', role: 'admin' as const, roles: ['capability.author', 'capability.approve', 'capability.invoke', 'capability.invoke.financial', 'operator.takeover'], password: 'swivel' },
-    { id: 'reviewer', name: 'K. Brannigan', email: 'reviewer@swivel.local', role: 'reviewer' as const, roles: ['capability.approve', 'capability.invoke'], password: 'swivel' },
-    { id: 'operator', name: 'R. Solis', email: 'operator@swivel.local', role: 'operator' as const, roles: ['operator.takeover'], password: 'swivel' },
+    { id: 'shivam', name: 'Shivam Gupta', email: 'shivam@swivel.local', role: 'admin' as const, roles: ['capability.author', 'capability.approve', 'capability.invoke', 'capability.invoke.financial', 'operator.takeover', 'evidence.read'], password: 'swivel' },
+    { id: 'reviewer', name: 'K. Brannigan', email: 'reviewer@swivel.local', role: 'reviewer' as const, roles: ['capability.approve', 'capability.invoke', 'evidence.read'], password: 'swivel' },
+    { id: 'operator', name: 'R. Solis', email: 'operator@swivel.local', role: 'operator' as const, roles: ['operator.takeover', 'evidence.read'], password: 'swivel' },
   ];
   for (const u of seed) {
     const { hash, salt } = hashPassword(u.password);
@@ -548,8 +548,12 @@ async function cmdApprove(argv: string[], store: SwivelStore): Promise<void> {
     fail('Refusing to approve a capability that has never been replayed. Run it at least once first.');
   }
 
+  const approvedHash = computeContentHash(cap);
   const updated = await store.updateQuality(id, version, cap.contentHash, (q) => ({
     ...q, approvalState: 'approved', approvedBy: approver, approvedAt: new Date().toISOString(),
+    // Pin what was approved. Any later edit to the steps, targets or policy
+    // changes this hash and the policy engine refuses to run it unattended.
+    approvedContentHash: approvedHash,
     notes: values.note ? [...q.notes, values.note] : q.notes,
   }), { actor: approver, action: 'approved', ...(values.note ? { note: values.note } : {}) });
 
@@ -560,7 +564,8 @@ async function cmdApprove(argv: string[], store: SwivelStore): Promise<void> {
     ['content hash', updated.contentHash?.slice(0, 16)],
     ['effect', 'AI agents may now invoke this capability unattended'],
   ]));
-  console.log(`\n  ${c.grey('Approval is bound to this content hash. Any change to the steps, targets or policy drops it back to draft.')}\n`);
+  console.log(`\n  ${c.grey('Approval is pinned to this content hash. Edit the steps, targets or policy and unattended')}`);
+  console.log(`  ${c.grey('invocation is refused with APPROVAL_STALE until a reviewer signs off again.')}\n`);
 }
 
 // ── agent-facing catalogue ───────────────────────────────────────────────────

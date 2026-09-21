@@ -565,7 +565,9 @@ function operatorView(id) {
     const connect = () => {
       const ctl = i.context.control;
       if (!ctl) { toast('This ticket has no live-control channel — the run may have ended.', 'err'); return; }
-      ws = new WebSocket(`${ctl.wsUrl}?token=${encodeURIComponent(ctl.token)}`);
+      // The token rides in the subprotocol rather than the query string: a URL
+      // that can drive a live teller session should not land in an access log.
+      ws = new WebSocket(ctl.wsUrl, [`swivel.token.${ctl.token}`]);
       ws.onopen = () => { statusDot.className = 'dot live'; statusText.textContent = 'connected — you are driving the live session'; frame.style.display = 'block'; off.style.display = 'none'; };
       ws.onclose = () => { statusDot.className = 'dot idle'; statusText.textContent = 'disconnected'; };
       ws.onerror = () => { statusDot.className = 'dot err'; statusText.textContent = 'connection error'; };

@@ -18,12 +18,12 @@
  */
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, realpath } from 'node:fs/promises';
 import { join, normalize, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   SwivelStore, Runner, EscalationBroker, verifyChain, validateCapability,
-  verifyPassword, resolveCapability, computeContentHash,
+  verifyPassword, resolveCapability, computeContentHash, isRunnerToken, bearerFrom,
   type Capability, type Intervention, type User,
 } from '@swivel/core';
 import { loadConfig, requireTenant, type SwivelConfig } from '../../../packages/cli/src/config.js';
@@ -71,14 +71,41 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   app.disable('x-powered-by');
   app.use(express.json({ limit: '2mb' }));
 
+  /**
+   * The live-control channel is a websocket that can drive a teller session.
+   * It is withheld from every response except to the operator who has actually
+   * claimed the ticket — which is what makes "claim" a control rather than a
+   * label.
+   */
+  const visible = (i: Intervention, user: User): Intervention => {
+    const mayDrive = user.roles.includes('operator.takeover') && i.assignee?.id === user.id;
+    if (mayDrive) return i;
+    const { control, ...rest } = i.context;
+    void control;
+    return { ...i, context: rest };
+  };
+
   // ── server-sent events, for live run and intervention updates ─────────────
-  const sseClients = new Set<Response>();
+  //
+  // Each subscriber is remembered with the user it authenticated as, because a
+  // ticket is not the same object to every reader: the one who claimed it gets
+  // the control channel, everybody else gets the ticket without it. Serialising
+  // once and fanning the same bytes out to every socket would hand the live
+  // session's bearer token to every signed-in account the instant control was
+  // granted — including read-only reviewers and agent principals — which would
+  // make `visible()` above decorative.
+  const sseClients = new Set<{ res: Response; user: User }>();
   const push = (event: string, data: unknown) => {
     const payload = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
-    for (const res of sseClients) res.write(payload);
+    for (const { res } of sseClients) res.write(payload);
   };
-  broker.on('raised', (i: Intervention) => push('intervention', i));
-  broker.on('updated', (i: Intervention) => push('intervention', i));
+  const pushIntervention = (i: Intervention) => {
+    for (const { res, user } of sseClients) {
+      res.write(`event: intervention\ndata: ${JSON.stringify(visible(i, user))}\n\n`);
+    }
+  };
+  broker.on('raised', pushIntervention);
+  broker.on('updated', pushIntervention);
 
   // ── auth ──────────────────────────────────────────────────────────────────
   const currentUser = async (req: Request): Promise<User | null> => {
@@ -99,6 +126,22 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   };
   const userOf = (req: Request): User => (req as Request & { user: User }).user;
 
+  /**
+   * The machine-to-machine gate.
+   *
+   * A run hosted in another process has no browser session, so it presents the
+   * shared runner credential instead. These are not public routes: one writes
+   * into the operator queue and the other reads back everything a human typed
+   * into a live teller session.
+   */
+  const requireRunner = (req: Request, res: Response, next: NextFunction) => {
+    if (!isRunnerToken(bearerFrom(req.headers.authorization))) {
+      res.status(401).json({ error: 'This route is for Swivel runners. Present the runner credential.' });
+      return;
+    }
+    next();
+  };
+
   app.post('/api/auth/login', async (req, res) => {
     const { id, password } = req.body as { id?: string; password?: string };
     const user = id ? await store.findUser(id) : null;
@@ -109,7 +152,12 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
       return;
     }
     const token = mintToken({ userId: user.id, issuedAt: Date.now() });
-    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${8 * 3600}`);
+    // `Secure` is set whenever the console is reached over TLS. It is omitted on
+    // a plain-HTTP localhost demo because a browser silently drops a Secure
+    // cookie there, which would make the console appear broken rather than
+    // secure.
+    const secure = req.secure || req.headers['x-forwarded-proto'] === 'https' ? ' Secure;' : '';
+    res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${token}; Path=/; HttpOnly;${secure} SameSite=Lax; Max-Age=${8 * 3600}`);
     res.json({ user: publicUser(user) });
   });
 
@@ -166,9 +214,14 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
       return;
     }
     try {
+      const approvedHash = computeContentHash(cap);
       const updated = await store.updateQuality(
         cap.metadata.id, version, contentHash ?? cap.contentHash,
-        (q) => ({ ...q, approvalState: 'approved', approvedBy: userOf(req).id, approvedAt: new Date().toISOString(), notes: note ? [...q.notes, note] : q.notes }),
+        (q) => ({
+          ...q, approvalState: 'approved', approvedBy: userOf(req).id, approvedAt: new Date().toISOString(),
+          approvedContentHash: approvedHash,
+          notes: note ? [...q.notes, note] : q.notes,
+        }),
         { actor: userOf(req).id, action: 'approved', ...(note ? { note } : {}) },
       );
       res.json({ capability: updated });
@@ -180,7 +233,7 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
     const cap = await store.getCapability(req.params.id as string, version);
     if (!cap) { res.status(404).json({ error: 'No such capability' }); return; }
     const updated = await store.updateQuality(cap.metadata.id, version, cap.contentHash,
-      (q) => ({ ...q, approvalState: 'candidate', notes: note ? [...q.notes, `revoked: ${note}`] : q.notes }),
+      (q) => ({ ...q, approvalState: 'candidate', approvedContentHash: undefined, notes: note ? [...q.notes, `revoked: ${note}`] : q.notes }),
       { actor: userOf(req).id, action: 'approval revoked', ...(note ? { note } : {}) });
     res.json({ capability: updated });
   });
@@ -205,7 +258,7 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
     res.json({ runs: await store.listRuns(80) });
   });
 
-  app.get('/api/runs/:runId', requireAuth(), async (req, res) => {
+  app.get('/api/runs/:runId', requireAuth('evidence.read'), async (req, res) => {
     const run = await store.getRun(req.params.runId as string);
     if (!run) { res.status(404).json({ error: 'No such run' }); return; }
     const manifest = await readJsonFile(join(run.evidenceDir, 'run.json'));
@@ -222,30 +275,28 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
    * screenshots of screens containing member data, and a traversal here reads
    * arbitrary files off the host.
    */
-  app.get('/api/runs/:runId/file', requireAuth(), async (req, res) => {
+  app.get('/api/runs/:runId/file', requireAuth('evidence.read'), async (req, res) => {
     const run = await store.getRun(req.params.runId as string);
     if (!run) { res.status(404).end(); return; }
     const root = resolvePath(run.evidenceDir);
     const target = resolvePath(join(root, normalize(String(req.query.path ?? ''))));
     if (!target.startsWith(`${root}/`)) { res.status(400).json({ error: 'Path escapes the evidence bundle.' }); return; }
-    res.sendFile(target, (err) => { if (err) res.status(404).end(); });
+    // Containment is re-checked after symlinks are followed. The lexical check
+    // above stops `../` and absolute paths; it does not stop a symlink *inside*
+    // a bundle pointing at /etc, and bundles are written by runners that may not
+    // be this host.
+    let real: string;
+    try { real = await realpath(target); }
+    catch { res.status(404).end(); return; }
+    const realRoot = await realpath(root).catch(() => root);
+    if (real !== realRoot && !real.startsWith(`${realRoot}/`)) {
+      res.status(400).json({ error: 'Path escapes the evidence bundle.' });
+      return;
+    }
+    res.sendFile(real, (err) => { if (err) res.status(404).end(); });
   });
 
   // ── interventions and live takeover ───────────────────────────────────────
-
-  /**
-   * The live-control channel is a websocket that can drive a teller session.
-   * It is withheld from every response except to the operator who has actually
-   * claimed the ticket — which is what makes "claim" a control rather than a
-   * label.
-   */
-  const visible = (i: Intervention, user: User): Intervention => {
-    const mayDrive = user.roles.includes('operator.takeover') && i.assignee?.id === user.id;
-    if (mayDrive) return i;
-    const { control, ...rest } = i.context;
-    void control;
-    return { ...i, context: { ...rest, ...(i.context.control ? { control: undefined as never } : {}) } };
-  };
 
   app.get('/api/interventions', requireAuth(), (req, res) => {
     const user = userOf(req);
@@ -253,12 +304,14 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   });
 
   /** Runs hosted elsewhere mirror their tickets here, with their control URL. */
-  app.post('/api/interventions/ingest', (req, res) => {
+  app.post('/api/interventions/ingest', requireRunner, (req, res) => {
     const i = req.body as Intervention;
     if (!i?.id || !i?.context?.runId) { res.status(400).json({ error: 'Malformed intervention.' }); return; }
-    const stored = broker.ingest(i);
-    push('intervention', stored);
-    res.json({ id: stored.id, status: stored.status });
+    try {
+      const stored = broker.ingest(i);
+      pushIntervention(stored);
+      res.json({ id: stored.id, status: stored.status });
+    } catch (e) { res.status(409).json({ error: (e as Error).message }); }
   });
 
   app.get('/api/interventions/:id', requireAuth(), (req, res) => {
@@ -268,7 +321,7 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   });
 
   /** Polled by the run that raised the ticket, to learn the operator's decision. */
-  app.get('/api/interventions/:id/resolution', (req, res) => {
+  app.get('/api/interventions/:id/resolution', requireRunner, (req, res) => {
     const i = broker.get(req.params.id as string);
     if (!i) { res.status(404).json({ error: 'No such intervention' }); return; }
     res.json({
@@ -288,12 +341,17 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   app.post('/api/interventions/:id/return', requireAuth('operator.takeover'), (req, res) => {
     const { resolution, note, sessionDelta } = req.body as { resolution: 'resume' | 'completed_by_human' | 'abort'; note: string; sessionDelta?: Intervention['sessionDelta'] };
     try {
-      const i = broker.returnControl(req.params.id as string, resolution, note, sessionDelta);
-      res.json({ intervention: i });
+      const user = userOf(req);
+      const i = broker.returnControl(req.params.id as string, resolution, note, sessionDelta, { id: user.id, name: user.name });
+      res.json({ intervention: visible(i, user) });
     } catch (e) { res.status(409).json({ error: (e as Error).message }); }
   });
 
   app.post('/api/interventions/:id/note', requireAuth('operator.takeover'), (req, res) => {
+    const user = userOf(req);
+    const i = broker.get(req.params.id as string);
+    if (!i) { res.status(404).json({ error: 'No such intervention' }); return; }
+    if (i.assignee?.id !== user.id) { res.status(403).json({ error: 'Only the operator holding this ticket can annotate it.' }); return; }
     broker.recordHumanAction(req.params.id as string, { at: new Date().toISOString(), kind: 'note', detail: String((req.body as { note: string }).note) });
     res.json({ ok: true });
   });
@@ -347,9 +405,12 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
   app.get('/api/events', requireAuth(), (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' });
     res.write(': connected\n\n');
-    sseClients.add(res);
+    // The subscription is bound to the authenticated user for its whole life, so
+    // that what this socket is allowed to see cannot drift from who opened it.
+    const client = { res, user: userOf(req) };
+    sseClients.add(client);
     const keepalive = setInterval(() => res.write(': ping\n\n'), 25_000);
-    req.on('close', () => { clearInterval(keepalive); sseClients.delete(res); });
+    req.on('close', () => { clearInterval(keepalive); sseClients.delete(client); });
   });
 
   // ── static ────────────────────────────────────────────────────────────────

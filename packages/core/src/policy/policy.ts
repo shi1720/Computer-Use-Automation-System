@@ -25,6 +25,7 @@
  * of the audit record as what it did.
  */
 import type { Capability, RiskClass, Step } from '../artifact/schema.js';
+import { computeContentHash } from '../artifact/hash.js';
 
 export type Decision = { allow: true } | { allow: false; code: string; reason: string };
 
@@ -55,10 +56,15 @@ export interface PolicyEvent {
 const RISK_ORDER: RiskClass[] = ['read_only', 'low', 'medium', 'high', 'irreversible'];
 export const riskAtLeast = (a: RiskClass, b: RiskClass): boolean => RISK_ORDER.indexOf(a) >= RISK_ORDER.indexOf(b);
 
+/** A capability plus, when one was applied, what it was resolved from. */
+type Governed = Capability & {
+  resolvedFor?: { overlayId: string; patchCount: number; overlayApproved: boolean; tenantId: string };
+};
+
 export class PolicyEngine {
   readonly events: PolicyEvent[] = [];
 
-  constructor(private readonly cap: Capability, private readonly ctx: ExecutionContext) {}
+  constructor(private readonly cap: Governed, private readonly ctx: ExecutionContext) {}
 
   private record(decision: 'allow' | 'deny', code: string, subject: string, detail: string): void {
     this.events.push({ at: new Date().toISOString(), decision, code, subject, detail });
@@ -78,10 +84,28 @@ export class PolicyEngine {
       return this.deny('CAPABILITY_DEPRECATED', this.cap.metadata.id,
         `Capability ${this.cap.metadata.id}@${this.cap.metadata.version} is deprecated.`);
     }
+    // Approval is of a document, not of a name. If the behaviour-determining
+    // content has changed since a reviewer signed off, the approval is void.
+    if (q.approvalState === 'approved' && q.approvedContentHash) {
+      const current = computeContentHash(this.cap);
+      if (current !== q.approvedContentHash) {
+        return this.deny('APPROVAL_STALE', this.cap.metadata.id,
+          `${this.cap.metadata.id}@${this.cap.metadata.version} was approved as ${q.approvedContentHash.slice(0, 12)} but its content is now ${current.slice(0, 12)}. ` +
+          `The steps, targets or policy have changed since ${q.approvedBy ?? 'a reviewer'} signed off. It must be reviewed again.`);
+      }
+    }
     if (this.ctx.unattended && p.requiresApproval && q.approvalState !== 'approved') {
       return this.deny('APPROVAL_REQUIRED', this.cap.metadata.id,
         `Capability is in state "${q.approvalState}". Unattended invocation requires "approved". ` +
         `Run it attended (a human watching) or have an authorised reviewer approve it in the console.`);
+    }
+    // A tenant overlay that inserts or replaces steps changes what the
+    // approved flow does. The base reviewer never saw those steps.
+    const r = this.cap.resolvedFor;
+    if (this.ctx.unattended && r && r.patchCount > 0 && !r.overlayApproved) {
+      return this.deny('OVERLAY_APPROVAL_REQUIRED', r.overlayId,
+        `Overlay "${r.overlayId}" modifies the approved flow (${r.patchCount} patch(es)) but carries no reviewer sign-off of its own. ` +
+        `The base capability's approval does not extend to steps its reviewer never saw.`);
     }
     if (p.requiresPerInvocationConfirmation && !this.ctx.confirmationToken) {
       return this.deny('CONFIRMATION_REQUIRED', this.cap.metadata.id,
@@ -203,6 +227,8 @@ export interface RiskSignals {
   formMethod?: string;
   /** input type, which distinguishes a submit from a scripted navigation. */
   inputType?: string;
+  /** For `press`: the key. Enter inside a form submits it. */
+  key?: string;
   /** Visible text of the screen, for warnings the application itself prints. */
   pageText?: string;
 }
@@ -221,6 +247,22 @@ export function classifyRisk(kind: string, targetName: string | undefined, pageT
   if (kind === 'navigate' || kind === 'wait_for' || kind === 'extract' || kind === 'assert') return 'read_only';
   if (kind === 'fill' || kind === 'select') return 'read_only';
 
+  /**
+   * Enter inside a form submits it.
+   *
+   * These applications are keyboard-driven and operators submit with Enter
+   * constantly. Treating `press` as read-only would route a POST around the
+   * irreversible-action gate *and* around the validator's rule that a
+   * state-changing step must carry a checkpoint — the two controls that exist
+   * precisely to catch this.
+   */
+  if (kind === 'press') {
+    const key = (signals.key ?? '').toLowerCase();
+    const submitsOnKey = key === 'enter' || key === 'numpadenter';
+    if (!submitsOnKey) return 'read_only';
+    // fall through and classify it as activating this form's submit control
+  }
+
   const name = (targetName ?? signals.name ?? '').toLowerCase();
   const page = (pageText ?? signals.pageText ?? '').toLowerCase();
   const method = (signals.formMethod ?? '').toLowerCase();
@@ -232,7 +274,7 @@ export function classifyRisk(kind: string, targetName: string | undefined, pageT
   // open a form — which trains people to supply tokens reflexively.
   if (role === 'link') return 'read_only';
 
-  const submits = signals.inputType === 'submit' || signals.inputType === 'image' || method === 'post';
+  const submits = kind === 'press' || signals.inputType === 'submit' || signals.inputType === 'image' || method === 'post';
   if (!submits) return 'read_only';
 
   const irreversibleByWord = IRREVERSIBLE_WORDS.some((w) => name.includes(w));

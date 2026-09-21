@@ -157,6 +157,11 @@ SWIVEL_CRED_MERIDIAN_OPERATOR_ID=sup02 npx swivel replay meridian.stop-payment \
   --input amount=412.50 --confirm "change-ticket-CHG-4471"
 ```
 
+<div align="center">
+<img src="docs/screens/run-detail.png" width="880" alt="A failed run: the full diagnosis, the redacted member number, the verified hash chain, and the screen as it was when the run stopped.">
+<br><sub>A failure, fully diagnosed — which step, which evidence matched, which went missing. The member number appears only as a salted hash.</sub>
+</div>
+
 ### 5 · Escalation — a human takes over the live session
 
 With the console running, replay the Pine Ridge capability against the *other*
@@ -172,6 +177,11 @@ pauses, and prints a URL. Open it: the operator console shows a **live
 screencast of the paused browser session**, and clicks and keystrokes are
 forwarded to it. Do the step by hand, hand control back, and the run resumes and
 finishes — with everything the human did recorded on the run's evidence chain.
+
+<div align="center">
+<img src="docs/screens/operator-live-driving.png" width="880" alt="The operator console driving a paused live session over a CDP screencast.">
+<br><sub>Not a screenshot of a ticket: the operator's click has just navigated the paused session to this institution's Customer Search screen.</sub>
+</div>
 
 ### 6 · The agent interface
 
@@ -203,6 +213,10 @@ Only **approved** capabilities are listed. Irreversible ones require a
 as normal results so the agent branches instead of retrying.
 
 ---
+
+<div align="center">
+<img src="docs/screens/capabilities.png" width="880" alt="The capability catalogue: approval state, risk class, replay history and stability per capability.">
+</div>
 
 ## How it works
 
@@ -272,7 +286,7 @@ packages/mcp/           MCP server exposing approved capabilities as tools
 apps/meridian/          the simulated legacy core (two institutions)
 apps/console/           control plane + operator takeover console
 evidence/               discovery and replay bundles, artifacts, transcripts
-tests/                  105 tests, no browser required
+tests/                  110 tests, no browser required
 ```
 
 ---
@@ -280,7 +294,7 @@ tests/                  105 tests, no browser required
 ## Testing
 
 ```bash
-npm test          # 105 tests
+npm test          # 110 tests
 npm run typecheck # strict TypeScript, no errors
 ```
 

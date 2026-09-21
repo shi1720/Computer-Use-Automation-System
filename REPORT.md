@@ -537,7 +537,7 @@ Every number here came out of this repository; the evidence bundles are in
 
 | | |
 |---|---|
-| Discovery, real LLM against a live UI | 2 capabilities, 6 and 10 steps |
+| Discovery, real LLM against a live UI | 2 capabilities, in 7 and 10 model turns (6 and 9 steps) |
 | Replay | ~4.7s, **0 model calls**, all targets resolving at 100 |
 | Determinism | 5/5 identical outcomes and outputs |
 | Business outcomes exercised | `RECORD_NOT_FOUND`, `VALIDATION_FAILED`, `NOT_AUTHORIZED` |

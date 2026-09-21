@@ -4,115 +4,262 @@
  * Not how Swivel executes anything — the engine replays the artifact directly.
  * This exists because of how these systems get adopted: a bank's QA or
  * integration team will want the flow as code they own, in a framework they
- * already run in CI, before they will let an agent drive it unattended. Being
- * able to hand them that file, generated from the same artifact the engine
- * runs, turns "trust our black box" into "here is the same thing, in your
- * repo, that you can read and run".
+ * already run in CI, before they will let an agent drive it unattended. Handing
+ * them that file, generated from the same artifact the engine runs, turns
+ * "trust our black box" into "here is the same thing, in your repo".
  *
- * The generated test is intentionally plain Playwright: it uses the same
- * semantic locators the artifact records, so a reviewer can see that the
- * targeting strategy is legible rather than magic.
+ * Two rules for the output:
+ *
+ *   It must be *correct*. A generated test that silently reads the wrong grid
+ *   cell is worse than no generated test, because someone will trust it. Grid
+ *   access therefore goes through a small emitted helper that resolves a column
+ *   by its header at runtime, the way the artifact describes it — not by an
+ *   index guessed at generation time.
+ *
+ *   It must be *honest about what it loses*. Plain Playwright has no scored
+ *   targeting, no runtime signal handling, no evidence chain. The header says
+ *   so rather than letting the reader assume parity.
  */
-import type { Capability, Step } from '@swivel/core';
-import type { TargetDescriptor } from '@swivel/core';
+import type { Capability, Step, TargetDescriptor } from '@swivel/core';
 
 const q = (s: string) => JSON.stringify(s);
 
-/** Render a TargetDescriptor as the nearest honest Playwright locator. */
-function locatorFor(t: TargetDescriptor): string {
-  const scope = t.frame?.path.length
-    ? t.frame.path.map((f) => `.frameLocator(${q(`frame[name="${f}"]`)})`).join('')
-    : '';
-  const root = `page${scope}`;
-
-  if (t.cell?.rowWhere) {
-    // The one that matters: address the row by a value, never by an index.
-    return `${root}.locator('table:has(th)')` +
-      `.locator('tr', { has: ${root}.locator('td', { hasText: ${q(t.cell.rowWhere.equals)} }) })` +
-      `.getByRole(${q(t.role)}${t.name ? `, { name: ${q(t.name.value)} }` : ''})`;
-  }
-  if (t.name) return `${root}.getByRole(${q(t.role)}, { name: ${q(t.name.value)}${t.name.match === 'exact' ? ', exact: true' : ''} })`;
-  if (t.anchors?.length) {
-    const a = t.anchors[0] as NonNullable<TargetDescriptor['anchors']>[number];
-    return `${root}.locator('tr', { hasText: ${q(a.text.value)} }).getByRole(${q(t.role)})` +
-      `  /* caption "${a.text.value}" sits ${a.relation === 'right-of' ? 'to the left of' : a.relation} the control; the app never used a <label> */`;
-  }
-  if (t.hints?.idPattern) return `${root}.locator(${q(`[id^="${t.hints.idPattern.split('\\d')[0]}"]`)})`;
-  return `${root}.getByRole(${q(t.role)})`;
+/** Resolve artifact templates for one concrete tenant at generation time. */
+function makeRenderer(cap: Capability) {
+  const vocab = cap.target.vocabulary;
+  return (raw: string): string =>
+    raw
+      .replace(/\{\{vocab\.(\w+)\}\}/g, (_m, k: string) => vocab[k] ?? k)
+      .replace(/\{\{tenant\.baseUrl\}\}/g, '${baseUrl}')
+      .replace(/\{\{input\.(\w+)\}\}/g, '${inputs.$1}')
+      .replace(/\{\{run\.(\w+)\}\}/g, '${run.$1}');
 }
 
-function stepCode(s: Step, cap: Capability): string {
-  const lines: string[] = [`    // ${s.intent}${s.risk && s.risk !== 'read_only' ? `   [risk: ${s.risk}]` : ''}`];
-  const tmpl = (v: string) => `\`${v.replace(/\{\{input\.(\w+)\}\}/g, '${inputs.$1}').replace(/\{\{tenant\.baseUrl\}\}/g, '${baseUrl}').replace(/\{\{vocab\.(\w+)\}\}/g, (_m, k) => String(cap.target.vocabulary[k] ?? ''))}\``;
+const hasInterpolation = (s: string) => s.includes('${');
+/** A plain string literal where possible; a template literal where needed. */
+const lit = (s: string) => (hasInterpolation(s) ? `\`${s}\`` : q(s));
+
+function scopeFor(t: TargetDescriptor): string {
+  const frames = t.frame?.path ?? [];
+  return frames.map((f) => `.frameLocator(${q(`frame[name="${f}"]`)})`).join('');
+}
+
+function locatorFor(t: TargetDescriptor, render: (s: string) => string): { expr: string; note?: string } {
+  const root = `page${scopeFor(t)}`;
+
+  // Grid access: resolve the column by its header at runtime.
+  if (t.cell?.rowWhere) {
+    const rowValue = render(t.cell.rowWhere.equals);
+    const column = t.cell.columnHeader ? render(t.cell.columnHeader.value) : null;
+    if (t.role === 'cell' && column) {
+      return {
+        expr: `cellInRow(${root}, ${lit(rowValue)}, ${lit(column)})`,
+        note: `the cell under "${column}" in the row whose values include "${rowValue}"`,
+      };
+    }
+    const name = t.name ? `, { name: ${lit(render(t.name.value))} }` : '';
+    return {
+      expr: `rowContaining(${root}, ${lit(rowValue)}).getByRole(${q(t.role)}${name}).first()`,
+      note: `addressed by row value, never by row index — this survives a tenant inserting a column`,
+    };
+  }
+
+  if (t.name) {
+    const exact = (t.name.match ?? 'normalized') === 'exact' ? ', exact: true' : '';
+    return { expr: `${root}.getByRole(${q(t.role)}, { name: ${lit(render(t.name.value))}${exact} })` };
+  }
+
+  if (t.anchors?.length) {
+    const a = t.anchors[0] as NonNullable<TargetDescriptor['anchors']>[number];
+    return {
+      expr: `fieldBeside(${root}, ${lit(render(a.text.value))}, ${q(t.role)})`,
+      note: `this control has no label; the caption "${render(a.text.value)}" beside it is how a person finds it`,
+    };
+  }
+
+  if (t.hints?.idPattern) {
+    const prefix = t.hints.idPattern.split('\\d')[0] ?? '';
+    return { expr: `${root}.locator(${q(`[id^="${prefix}"]`)})`, note: 'weak: selector-level fallback only' };
+  }
+  return { expr: `${root}.getByRole(${q(t.role)})`, note: 'weak: role alone does not identify a control' };
+}
+
+function stepCode(s: Step, render: (r: string) => string): string {
+  const out: string[] = [];
+  out.push(`  // ${s.intent}${s.risk && s.risk !== 'read_only' ? `   [risk: ${s.risk}]` : ''}`);
+
+  const loc = s.target ? locatorFor(s.target, render) : null;
+  if (loc?.note) out.push(`  //   ${loc.note}`);
 
   switch (s.kind) {
-    case 'navigate': lines.push(`    await page.goto(${tmpl(s.url ?? '')});`); break;
-    case 'click': lines.push(`    await ${locatorFor(s.target as TargetDescriptor)}.click();`); break;
-    case 'fill': lines.push(`    await ${locatorFor(s.target as TargetDescriptor)}.fill(${tmpl(s.value ?? '')});`); break;
-    case 'select': lines.push(`    await ${locatorFor(s.target as TargetDescriptor)}.selectOption(${tmpl(s.value ?? '')});`); break;
-    case 'press': lines.push(`    await ${locatorFor(s.target as TargetDescriptor)}.press(${q(s.key ?? 'Enter')});`); break;
+    case 'navigate': out.push(`  await page.goto(${lit(render(s.url ?? ''))});`); break;
+    case 'click': out.push(`  await ${loc?.expr}.click();`); break;
+    case 'fill': out.push(`  await ${loc?.expr}.fill(${lit(render(s.value ?? ''))});`); break;
+    case 'select': out.push(`  await ${loc?.expr}.selectOption(${lit(render(s.value ?? ''))});`); break;
+    case 'press': out.push(`  await ${loc?.expr}.press(${q(s.key ?? 'Enter')});`); break;
     case 'extract':
-      lines.push(`    outputs.${s.extract?.into} = (await ${locatorFor(s.target as TargetDescriptor)}.textContent())?.trim();`);
+      out.push(`  outputs.${s.extract?.into} = normalise((await ${loc?.expr}.textContent()) ?? '', ${q(s.extract?.transform ?? 'none')});`);
       break;
     case 'dismiss_if_present':
-      lines.push(`    const maybe = ${locatorFor(s.target as TargetDescriptor)};`);
-      lines.push(`    if (await maybe.count()) await maybe.click();`);
+      out.push(`  {`, `    const optional = ${loc?.expr};`, `    if (await optional.count()) await optional.first().click();`, `  }`);
       break;
-    default: lines.push(`    // (${s.kind} — handled by the Swivel engine, no direct Playwright equivalent)`);
+    case 'wait_for': case 'assert': break;
+    default: out.push(`  // (${s.kind} is handled by the Swivel engine; there is no direct Playwright equivalent)`);
   }
 
   if (s.expect) {
-    const a = s.expect.all[0];
-    if (a?.kind === 'text_present' && a.regex) lines.push(`    await expect(page.locator('body')).toContainText(${`/${a.regex}/i`});   // ${s.expect.description}`);
-    else if (a?.kind === 'text_present' && a.text) lines.push(`    await expect(page.locator('body')).toContainText(${q(a.text)});   // ${s.expect.description}`);
+    out.push(`  // ${s.expect.description}`);
+    for (const a of s.expect.all) out.push(...assertionCode(a, render));
   }
-  return lines.join('\n');
+  return out.join('\n');
 }
 
-export function generatePlaywrightTest(cap: Capability): string {
-  const inputs = cap.contract.inputs.map((i) => `  ${i.name}: ${q(i.example ?? '')},   // ${i.description}`).join('\n');
+function assertionCode(a: { kind: string; text?: string; regex?: string; target?: TargetDescriptor }, render: (s: string) => string): string[] {
+  // Text assertions go through a frame-aware helper. The capability asserts
+  // "the screen says X", and on a frameset the screen is several documents.
+  if (a.kind === 'text_present' && a.regex) return [`  await screenContains(page, /${a.regex}/i);`];
+  if (a.kind === 'text_present' && a.text) return [`  await screenContains(page, ${lit(render(a.text))});`];
+  if (a.kind === 'text_absent' && a.regex) return [`  await screenContains(page, /${a.regex}/i, false);`];
+  if (a.kind === 'target_visible' && a.target) {
+    const { expr } = locatorFor(a.target, render);
+    return [`  await expect(${expr}).toBeVisible();`];
+  }
+  if (a.kind === 'url_matches' && a.regex) return [`  await expect(page).toHaveURL(/${a.regex}/);`];
+  return [];
+}
+
+const PRELUDE = `
+/**
+ * Assert that the *screen* contains something.
+ *
+ * A capability asserts against the screen; on a frameset the screen is several
+ * documents, and \`page.locator('body')\` is only the outermost one — which on
+ * these applications contains nothing but the frameset itself. The engine
+ * evaluates assertions across every frame it perceived; this is that, by hand.
+ */
+async function screenContains(page: Page, needle: string | RegExp, expected = true) {
+  await expect.poll(async () => {
+    for (const frame of page.frames()) {
+      const text = await frame.locator('body').innerText().catch(() => '');
+      if (typeof needle === 'string' ? text.includes(needle) : needle.test(text)) return true;
+    }
+    return false;
+  }, { timeout: 15_000, message: \`screen \${expected ? 'should' : 'should not'} contain \${needle}\` }).toBe(expected);
+}
+
+/**
+ * The control beside a caption.
+ *
+ * Using .last() here is doing real work. These screens nest layout tables four
+ * deep, so several ancestor rows contain the same caption text and a bare
+ * locator('tr', { hasText }) is ambiguous — Playwright refuses to act on it.
+ * The innermost matching row is the one that actually holds the field, and in
+ * document order that is the last match.
+ *
+ * The Swivel engine does not need this trick: it scores candidates and picks
+ * the one the evidence actually supports. This is the cost of translating to
+ * plain selectors.
+ */
+function fieldBeside(scope: FrameLocatorOrPage, caption: string, role: 'textbox' | 'combobox' | 'checkbox' | 'radio' | 'button' | 'link' | 'cell' | 'text' = 'textbox') {
+  return scope.locator('tr').filter({ hasText: caption }).last().getByRole(role as never).first();
+}
+
+/** Find the row of a data grid by a value it contains, rather than by index. */
+function rowContaining(scope: FrameLocatorOrPage, value: string) {
+  return scope.locator('table:has(th)').locator('tr').filter({ hasText: value });
+}
+
+/**
+ * The cell under a named column, in the row containing a given value.
+ *
+ * The column is resolved from its header at runtime. Generating a fixed column
+ * index instead would read the wrong balance the day the vendor inserts a
+ * column — which is exactly the failure this whole approach exists to avoid.
+ */
+async function cellInRow(scope: FrameLocatorOrPage, rowValue: string, columnHeader: string) {
+  const table = scope.locator('table:has(th)').filter({ hasText: rowValue }).first();
+  const headers = await table.locator('th').allTextContents();
+  const index = headers.findIndex((h) => h.trim().toLowerCase() === columnHeader.trim().toLowerCase());
+  if (index < 0) throw new Error(\`No column "\${columnHeader}" in this grid. Columns: \${headers.join(', ')}\`);
+  return table.locator('tr').filter({ hasText: rowValue }).first().locator('td').nth(index);
+}
+
+/** Match the artifact's declared output transforms. */
+function normalise(raw: string, transform: string): string | number | null {
+  const t = raw.trim();
+  if (transform === 'money_to_number') {
+    const negative = /^\\(.*\\)$/.test(t) || t.endsWith('-');
+    const n = Number(t.replace(/[(),$\\s-]/g, ''));
+    return Number.isFinite(n) ? (negative ? -n : n) : null;
+  }
+  if (transform === 'digits_only') return t.replace(/\\D/g, '');
+  if (transform === 'upper') return t.toUpperCase();
+  return t;
+}
+`;
+
+export function generatePlaywrightTest(cap: Capability, tenantBaseUrl = 'http://127.0.0.1:4711'): string {
+  const render = makeRenderer(cap);
+  const inputs = cap.contract.inputs
+    .map((i) => `  ${i.name}: ${q(i.example ?? '')},${i.description ? `   // ${i.description}` : ''}`)
+    .join('\n');
+
+  const warnings = [
+    cap.contract.effects.mutating ? 'This flow CHANGES RECORDS.' : 'This flow is read-only.',
+    cap.contract.effects.reversible ? null : 'Its effects are IRREVERSIBLE.',
+    cap.contract.effects.dualControl ? 'It is subject to dual control: completing it means "submitted for approval", not "applied".' : null,
+  ].filter(Boolean).join(' ');
+
   return `/**
  * ${cap.metadata.title}
  *
- * GENERATED from Swivel capability ${cap.metadata.id}@${cap.metadata.version}
+ * GENERATED by \`swivel codegen\` from capability ${cap.metadata.id}@${cap.metadata.version}
  * content hash ${cap.contentHash}
  *
- * ${cap.metadata.summary.replace(/\n/g, '\n * ')}
+ * ${render(cap.metadata.summary).replace(/\$\{inputs\.(\w+)\}/g, '<$1>').replace(/\n/g, '\n * ')}
  *
- * This file is a faithful translation of the artifact into Playwright, for teams
- * that want the flow as code in their own CI. The Swivel engine does not use it:
- * it replays the artifact directly, which is what gives it the scored targeting,
- * the runtime signal handling and the evidence chain that this file does not have.
+ * ${warnings}
  *
- * ${cap.contract.effects.mutating ? 'WARNING: this flow CHANGES RECORDS.' : 'This flow is read-only.'}
- * ${cap.contract.effects.reversible ? '' : 'WARNING: its effects are IRREVERSIBLE.'}
+ * WHAT THIS FILE IS
+ *   A faithful translation of the capability into Playwright, for teams that
+ *   want the flow as code in their own CI, reviewable in their own repository.
+ *
+ * WHAT IT IS NOT
+ *   The Swivel engine does not run this. Replaying the artifact directly is what
+ *   provides scored target resolution that refuses rather than guesses, the
+ *   runtime signal handling (session expiry, interstitials, record locks,
+ *   end-of-day lockout), the business-outcome result contract, and the
+ *   hash-chained evidence bundle. None of that survives into this file.
+ *
+ * Vocabulary has been resolved for one tenant at generation time. Regenerate for
+ * another institution rather than editing the strings by hand.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page, type FrameLocator } from '@playwright/test';
 
-const baseUrl = process.env.MERIDIAN_BASE_URL ?? 'http://127.0.0.1:4711';
+type FrameLocatorOrPage = Page | FrameLocator;
+
+const baseUrl = process.env.MERIDIAN_BASE_URL ?? ${q(tenantBaseUrl)};
 
 const inputs = {
-${inputs || '  // (no inputs)'}
+${inputs || '  // (this capability takes no inputs)'}
 };
-
+${PRELUDE}
 test(${q(cap.metadata.title)}, async ({ page }) => {
   const outputs: Record<string, unknown> = {};
 
   // Sign-on is deliberately outside the capability artifact: credentials belong
-  // to the session provider and a secret store, never to a shared flow.
+  // to the session provider and a secret store, never to a flow shared between
+  // institutions.
   await page.goto(\`\${baseUrl}/\`);
-  await page.locator('tr', { hasText: 'Operator ID' }).getByRole('textbox').fill(process.env.MERIDIAN_OPERATOR_ID ?? 'msr01');
-  await page.locator('tr', { hasText: 'Password' }).getByRole('textbox').fill(process.env.MERIDIAN_PASSWORD ?? 'meridian');
+  await fieldBeside(page, 'Operator ID').fill(process.env.MERIDIAN_OPERATOR_ID ?? 'msr01');
+  await fieldBeside(page, 'Password').fill(process.env.MERIDIAN_PASSWORD ?? 'meridian');
   await page.getByRole('button', { name: 'Sign On', exact: true }).click();
   await expect(page).toHaveURL(/\\/main$/);
 
-${cap.flow.steps.map((s) => stepCode(s, cap)).join('\n\n')}
+${cap.flow.steps.map((s) => stepCode(s, render)).join('\n\n')}
 
   // ${cap.flow.successCheckpoint.description}
-${cap.flow.successCheckpoint.all
-  .filter((a) => a.kind === 'text_present')
-  .map((a) => `  await expect(page.locator('body')).toContainText(${a.regex ? `/${a.regex}/i` : q(a.text ?? '')});`)
-  .join('\n')}
+${cap.flow.successCheckpoint.all.flatMap((a) => assertionCode(a, render)).join('\n')}
 
   console.log('outputs', outputs);
 });

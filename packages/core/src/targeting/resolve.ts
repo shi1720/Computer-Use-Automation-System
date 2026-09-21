@@ -39,12 +39,20 @@ export interface ProbeResult {
   probe: string;
   weight: number;
   matched: boolean;
+  /**
+   * Semantic probes answer "which control is this?"; corroborating probes only
+   * agree or disagree with an answer already reached. They are scored
+   * separately because mixing them lets the weakest evidence in the system veto
+   * the strongest.
+   */
+  kind: 'semantic' | 'corroborating';
   detail?: string;
 }
 
 export interface Candidate {
   node: UiNode;
   score: number;
+  corroboration: number;
   probes: ProbeResult[];
 }
 
@@ -52,7 +60,17 @@ export type Resolution =
   | {
       ok: true;
       node: UiNode;
+      /** 0-100 over semantic evidence only. This is what the thresholds gate on. */
       score: number;
+      /**
+       * 0-100 over corroborating evidence — id patterns, tags, attributes.
+       *
+       * Deliberately *not* part of the decision. A recorded id pattern that no
+       * longer matches does not mean the control is wrong; it means the vendor
+       * shipped a new build, or this is a different tenant. That is worth
+       * knowing and worth alerting on, and it is not worth refusing over.
+       */
+      corroboration: number;
       /** Points between the winner and the runner-up. High margin = unambiguous. */
       margin: number;
       matched: string[];
@@ -190,14 +208,14 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
   // ── 3. score ─────────────────────────────────────────────────────────────
   const candidates: Candidate[] = pool.map((node) => {
     const probes: ProbeResult[] = [];
-    const add = (probe: string, weight: number, matched: boolean, detail?: string) =>
-      probes.push(detail === undefined ? { probe, weight, matched } : { probe, weight, matched, detail });
+    const add = (probe: string, weight: number, matched: boolean, kind: ProbeResult['kind'], detail?: string) =>
+      probes.push(detail === undefined ? { probe, weight, matched, kind } : { probe, weight, matched, kind, detail });
 
     // accessible name
     if (target.name) {
       const isExact = (target.name.match ?? 'normalized') === 'exact';
       const w = isExact ? PROBE_WEIGHTS.name_exact : PROBE_WEIGHTS.name_fuzzy;
-      add('name', w, textMatches(target.name, node.name, opts.ctx), `"${node.name}"`);
+      add('name', w, textMatches(target.name, node.name, opts.ctx), 'semantic', `"${node.name}"`);
     }
 
     // relational anchors
@@ -207,7 +225,7 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
       for (const a of target.anchors) {
         const hit = anchorHolds(a, node, snap, opts.ctx, orderIndex, byRef);
         if (hit) anchorScore += per;
-        add(`anchor:${a.relation}("${a.text.value}")`, per, hit);
+        add(`anchor:${a.relation}("${a.text.value}")`, per, hit, 'semantic');
       }
       void anchorScore;
     }
@@ -217,7 +235,7 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
       if (target.cell.columnHeader) {
         add('cell.columnHeader', PROBE_WEIGHTS.cell_column,
           Boolean(node.table?.columnHeader && textMatches(target.cell.columnHeader, node.table.columnHeader, opts.ctx)),
-          node.table?.columnHeader);
+          'semantic', node.table?.columnHeader);
       }
       if (target.cell.rowWhere) {
         const rw = target.cell.rowWhere;
@@ -231,55 +249,81 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
             break;
           }
         }
-        add(`cell.rowWhere(${rw.columnHeader.value}=${rw.equals})`, PROBE_WEIGHTS.cell_row_match, hit, seen);
+        add(`cell.rowWhere(${rw.columnHeader.value}=${rw.equals})`, PROBE_WEIGHTS.cell_row_match, hit, 'semantic', seen);
       }
       if (target.cell.rowIndex !== undefined) {
-        add('cell.rowIndex', PROBE_WEIGHTS.cell_row_index, node.table?.rowIndex === target.cell.rowIndex);
+        add('cell.rowIndex', PROBE_WEIGHTS.cell_row_index, node.table?.rowIndex === target.cell.rowIndex, 'semantic');
       }
     }
 
-    if (containerRef) add('within', PROBE_WEIGHTS.within_container, true);
+    if (containerRef) add('within', PROBE_WEIGHTS.within_container, true, 'semantic');
 
     // corroborating hints
     const h = target.hints;
     if (h) {
-      if (h.domId !== undefined) add('hints.domId', PROBE_WEIGHTS.dom_id, node.raw?.domId === h.domId, node.raw?.domId);
+      if (h.domId !== undefined) add('hints.domId', PROBE_WEIGHTS.dom_id, node.raw?.domId === h.domId, 'corroborating', node.raw?.domId);
       if (h.idPattern !== undefined) {
         let ok = false;
         try { ok = Boolean(node.raw?.domId && new RegExp(`^${h.idPattern}$`).test(node.raw.domId)); } catch { ok = false; }
-        add('hints.idPattern', PROBE_WEIGHTS.id_pattern, ok, node.raw?.domId);
+        add('hints.idPattern', PROBE_WEIGHTS.id_pattern, ok, 'corroborating', node.raw?.domId);
       }
-      if (h.tag !== undefined) add('hints.tag', PROBE_WEIGHTS.tag, node.raw?.tag === h.tag);
-      if (h.inputType !== undefined) add('hints.inputType', PROBE_WEIGHTS.tag, node.raw?.inputType === h.inputType);
+      if (h.tag !== undefined) add('hints.tag', PROBE_WEIGHTS.tag, node.raw?.tag === h.tag, 'corroborating');
+      if (h.inputType !== undefined) add('hints.inputType', PROBE_WEIGHTS.tag, node.raw?.inputType === h.inputType, 'corroborating');
       if (h.attrs && Object.keys(h.attrs).length) {
         const all = Object.entries(h.attrs).every(([k, v]) => node.raw?.attrs?.[k] === v);
-        add('hints.attrs', PROBE_WEIGHTS.attrs, all);
+        add('hints.attrs', PROBE_WEIGHTS.attrs, all, 'corroborating');
       }
       if (h.nearText?.length) {
         const frameText = snap.frameTexts[node.framePath.join('/') || '(top)'] ?? '';
         const near = h.nearText.every((t) => fold(frameText).includes(fold(t)));
-        add('hints.nearText', PROBE_WEIGHTS.near_text, near);
+        add('hints.nearText', PROBE_WEIGHTS.near_text, near, 'corroborating');
       }
       if (h.ordinal !== undefined) {
         const peers = pool.filter((p) => p.name === node.name && p.role === node.role);
-        add('hints.ordinal', PROBE_WEIGHTS.ordinal, peers.indexOf(node) + 1 === h.ordinal);
+        add('hints.ordinal', PROBE_WEIGHTS.ordinal, peers.indexOf(node) + 1 === h.ordinal, 'corroborating');
       }
     }
 
-    // visual evidence (unused by the web surface; scored so the model is shared)
-    if (target.visual?.bboxRatio && node.bounds) {
-      const [rx, ry] = target.visual.bboxRatio;
-      const vw = 1280, vh = 860; // frame-local reference; surfaces normalise
-      const dx = Math.abs(node.bounds.x / vw - rx), dy = Math.abs(node.bounds.y / vh - ry);
-      add('visual.bbox', PROBE_WEIGHTS.visual_bbox, dx < 0.08 && dy < 0.08);
-    }
+    // `target.visual` is reserved for surfaces that perceive pixels rather than
+    // a tree (a Citrix-published thick client, a terminal emulator). The web
+    // surface never emits it and this resolver deliberately does not score it:
+    // a probe scored against a guessed reference viewport is worse than no probe.
 
-    const available = probes.reduce((a, p) => a + p.weight, 0);
-    const earned = probes.reduce((a, p) => a + (p.matched ? p.weight : 0), 0);
-    // A descriptor with no probes at all (role only) scores 0: role is a gate,
-    // not evidence, and "the only button on the page" is not an identification.
-    const score = available === 0 ? 0 : Math.round((earned / available) * 100);
-    return { node, score, probes };
+    /**
+     * Two numbers, deliberately.
+     *
+     * `score` is agreement among the probes that *identify* a control, and it
+     * is what the thresholds gate on. `corroboration` is agreement among the
+     * probes that merely *recognise* one — an id pattern, a tag — and it gates
+     * nothing.
+     *
+     * Mixing them was a bug worth naming: a link whose accessible name matched
+     * exactly, at a tenant whose build emits different generated ids, scored
+     * 40/(40+18+6) = 62 and sat one point above its own threshold. The most
+     * volatile evidence in the system was one weight away from vetoing an
+     * unambiguous identification. Corroboration now feeds the drift signal
+     * instead, which is the job it was always doing.
+     */
+    const sum = (ps: ProbeResult[], f: (p: ProbeResult) => boolean) => ps.filter(f).reduce((a, p) => a + p.weight, 0);
+    const semantic = probes.filter((p) => p.kind === 'semantic');
+    const corroborating = probes.filter((p) => p.kind === 'corroborating');
+
+    const semAvailable = sum(semantic, () => true);
+    const semEarned = sum(semantic, (p) => p.matched);
+    const corAvailable = sum(corroborating, () => true);
+    const corEarned = sum(corroborating, (p) => p.matched);
+
+    const corroboration = corAvailable === 0 ? 100 : Math.round((corEarned / corAvailable) * 100);
+
+    // A descriptor with no semantic probes at all is identified by nothing but
+    // implementation detail. It can still resolve — some legacy controls really
+    // do offer nothing else — but it is capped well below a semantic match so
+    // that it fails any threshold an author would set for real evidence.
+    const score = semAvailable > 0
+      ? Math.round((semEarned / semAvailable) * 100)
+      : Math.round(corroboration * 0.5);
+
+    return { node, score, corroboration, probes };
   });
 
   candidates.sort((a, b) => b.score - a.score || (a.node.bounds?.y ?? 0) - (b.node.bounds?.y ?? 0));
@@ -317,6 +361,7 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
     ok: true,
     node: top.node,
     score: top.score,
+    corroboration: top.corroboration,
     margin: runnerUp ? margin : 100,
     matched: describe(top).matched,
     missed: describe(top).missed,

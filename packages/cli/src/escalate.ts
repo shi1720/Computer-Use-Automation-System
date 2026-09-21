@@ -17,7 +17,7 @@
  * jump host, a container beside the mainframe gateway — while there is one
  * console and one operator queue.
  */
-import { EscalationBroker, type EscalationSink, type Intervention } from '@swivel/core';
+import { EscalationBroker, runnerToken, type EscalationSink, type Intervention } from '@swivel/core';
 import { c } from './ui.js';
 
 export interface BridgeOptions {
@@ -45,7 +45,9 @@ export class ConsoleEscalationBridge implements EscalationSink {
   private async send(i: Intervention): Promise<void> {
     try {
       await fetch(`${this.opts.consoleUrl.replace(/\/$/, '')}/api/interventions/ingest`, {
-        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(i),
+        method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${runnerToken()}` },
+        body: JSON.stringify(i),
       });
     } catch (e) {
       this.opts.onNotice?.(`Could not reach the console to publish this intervention: ${(e as Error).message}`);
@@ -76,7 +78,10 @@ export class ConsoleEscalationBridge implements EscalationSink {
       const local = this.broker.get(id);
       if (!local || ['returned', 'resolved', 'expired'].includes(local.status)) return;
       try {
-        const res = await fetch(url, { signal: AbortSignal.timeout(4000) });
+        const res = await fetch(url, {
+          headers: { authorization: `Bearer ${runnerToken()}` },
+          signal: AbortSignal.timeout(4000),
+        });
         if (!res.ok) continue;
         const body = await res.json() as { status: string; resolution?: 'resume' | 'completed_by_human' | 'abort'; note?: string; assignee?: { id: string; name: string }; humanActions?: Intervention['humanActions'] };
         if (body.assignee && !local.assignee) {

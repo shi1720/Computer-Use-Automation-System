@@ -35,7 +35,7 @@
  * changes the protocol.
  */
 import { createServer, type Server } from 'node:http';
-import { randomBytes } from 'node:crypto';
+import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { WebSocketServer, type WebSocket } from 'ws';
 import type { CDPSession } from 'playwright-core';
 import type { WebSurface } from '../surface/web.js';
@@ -95,16 +95,36 @@ export async function startLiveControl(
   const http: Server = createServer((_req, res) => { res.writeHead(404); res.end(); });
   const wss = new WebSocketServer({ noServer: true });
 
+  /** Constant-time, and tolerant of a length mismatch (which `timingSafeEqual` is not). */
+  const tokenMatches = (presented: string | null | undefined): boolean => {
+    if (!presented) return false;
+    const a = Buffer.from(presented);
+    const b = Buffer.from(token);
+    return a.length === b.length && timingSafeEqual(a, b);
+  };
+
   http.on('upgrade', (req, socket, head) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
     // The token is the only thing between an operator console and a live
     // teller session. It is single-use per escalation and dies with the run.
-    if (url.searchParams.get('token') !== token) {
+    //
+    // Preferred carriage is the websocket subprotocol header, because a query
+    // string ends up in access logs, in proxy logs and in `Referer`. Browsers
+    // cannot set arbitrary headers on a WebSocket, and the subprotocol field is
+    // the one channel they do control — so that is what the console uses. The
+    // query parameter stays supported for non-browser clients, and is the worse
+    // of the two.
+    const offered = (req.headers['sec-websocket-protocol'] ?? '')
+      .split(',').map((x) => x.trim()).filter(Boolean);
+    const viaProtocol = offered.find((p) => p.startsWith('swivel.token.'))?.slice('swivel.token.'.length);
+    if (!tokenMatches(viaProtocol) && !tokenMatches(url.searchParams.get('token'))) {
       socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
       socket.destroy();
       return;
     }
-    wss.handleUpgrade(req, socket, head, (ws) => wss.emit('connection', ws, req));
+    // Echo the subprotocol back, or the browser closes the connection itself.
+    const accept = viaProtocol ? { protocol: offered.find((p) => p.startsWith('swivel.token.')) } : {};
+    wss.handleUpgrade(req, socket, head, (ws) => wss.emit('connection', ws, req, accept));
   });
 
   const port: number = await new Promise((resolve) => {
@@ -121,8 +141,33 @@ export async function startLiveControl(
   };
   cdp.on('Page.screencastFrame', onFrame as never);
 
-  /** Only the lease holder's input reaches the page. */
-  const operatorMayAct = (): boolean => leases.holder === 'operator';
+  /**
+   * The one socket currently allowed to drive.
+   *
+   * The lease already says *which role* may act, but a lease is held by a
+   * person, and a person can have two tabs open — or a token can have leaked.
+   * Every connected socket may watch the screencast, which is useful (a
+   * supervisor looking over a shoulder is a feature). Exactly one may act.
+   *
+   * The first socket to send an action while the operator holds the lease
+   * becomes the driver, and keeps it until it disconnects or the lease leaves
+   * the operator. Without this, two sockets presenting the same token both pass
+   * `leases.holder === 'operator'` and interleave `Input.dispatchMouseEvent`
+   * calls into the same page — a half-typed member number in one tab and a
+   * click in the other, on a live teller session.
+   */
+  let driver: WebSocket | null = null;
+
+  const mayDrive = (ws: WebSocket): { ok: true } | { ok: false; reason: string } => {
+    if (leases.holder !== 'operator') {
+      return { ok: false, reason: `Control is held by ${leases.holder}. Claim the session to act.` };
+    }
+    if (driver && driver !== ws && driver.readyState === driver.OPEN) {
+      return { ok: false, reason: 'Another console is already driving this session. Only one can.' };
+    }
+    driver = ws;
+    return { ok: true };
+  };
 
   const record = (a: Omit<HumanAction, 'at'>) => opts.onHumanAction?.({ ...a, at: new Date().toISOString() });
 
@@ -143,8 +188,9 @@ export async function startLiveControl(
       try { m = JSON.parse(String(buf)) as ClientMessage; } catch { return; }
       if (m.t === 'ping') { ws.send(JSON.stringify({ t: 'pong', control: leases.holder })); return; }
 
-      if (!operatorMayAct()) {
-        ws.send(JSON.stringify({ t: 'denied', reason: `Control is held by ${leases.holder}. Claim the session to act.` }));
+      const gate = mayDrive(ws);
+      if (!gate.ok) {
+        ws.send(JSON.stringify({ t: 'denied', reason: gate.reason }));
         return;
       }
 
@@ -199,7 +245,10 @@ export async function startLiveControl(
       }
     });
 
-    ws.on('close', () => sockets.delete(ws));
+    ws.on('close', () => {
+      sockets.delete(ws);
+      if (driver === ws) driver = null;
+    });
   });
 
   return {

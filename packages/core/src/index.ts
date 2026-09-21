@@ -13,6 +13,7 @@ export * from './evidence/recorder.js';
 export * from './escalation/lease.js';
 export * from './escalation/broker.js';
 export * from './escalation/live-control.js';
+export * from './escalation/runner-auth.js';
 export * from './session/provider.js';
 export * from './signals/profiles.js';
 export * from './agent/llm.js';

@@ -51,7 +51,7 @@ export interface StepTrace {
   status: 'ok' | 'skipped' | 'recovered' | 'failed';
   durationMs: number;
   /** Resolution quality — the early-warning signal for drift. */
-  targeting?: { score: number; margin: number; matched: string[]; missed: string[]; candidates: number };
+  targeting?: { score: number; corroboration: number; margin: number; matched: string[]; missed: string[]; candidates: number };
   checkpoint?: { held: boolean; description: string; observed?: string };
   note?: string;
 }
@@ -93,9 +93,24 @@ export interface ReplayCommon {
    */
   escalations: EscalationTrace[];
   evidenceDir: string;
-  /** 0-100. Blends targeting margins with checkpoint results for this run. */
+  /**
+   * 0-100: the mean target-resolution score across this run.
+   *
+   * A run where every control resolved on strong semantic evidence scores 100.
+   * One that only just cleared its thresholds scores in the 60s — working, but
+   * visibly closer to the edge than it was when the capability was recorded.
+   */
   runQuality: number;
-  /** Zero, always, for a deterministic replay. Present to make that visible. */
+  /**
+   * 0-100: how well this run's *corroborating* evidence still agrees.
+   *
+   * Separate from `runQuality` on purpose. A capability can identify every
+   * control perfectly while its recorded id patterns stop matching — which is
+   * what a vendor version rollout looks like from the inside, days before it
+   * breaks anything. This is the number to alert on across a fleet.
+   */
+  driftSignal: number;
+  /** Model calls made during this run. Structurally zero; counted rather than asserted. */
   llmCalls: number;
 }
 
@@ -128,7 +143,8 @@ export type ReplayResult =
 
 /** Compact, human-first rendering for CLI output and console cards. */
 export function formatResult(r: ReplayResult): string {
-  const head = `${r.capability.id}@${r.capability.version} · ${r.tenant.id} · ${r.durationMs}ms · ${r.steps.length} steps · ${r.llmCalls} model calls`;
+  const head = `${r.capability.id}@${r.capability.version} · ${r.tenant.id} · ${r.durationMs}ms · ${r.steps.length} steps · ${r.llmCalls} model calls` +
+    (r.driftSignal < 80 ? ` · drift ${r.driftSignal}` : '');
   switch (r.status) {
     case 'success':
       return `SUCCESS  ${head}\n  outputs: ${JSON.stringify(r.outputs)}` +

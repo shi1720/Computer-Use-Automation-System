@@ -48,7 +48,13 @@ export interface StepTrace {
   intent: string;
   kind: string;
   risk: RiskClass;
-  status: 'ok' | 'skipped' | 'recovered' | 'failed';
+  /**
+   * `done_by_human` is its own status deliberately. A step an operator
+   * completed during an escalation did happen, so it is not `failed`; but the
+   * automation did not do it, so calling it `ok` would put work on the
+   * automation's record that belongs on a person's.
+   */
+  status: 'ok' | 'skipped' | 'recovered' | 'failed' | 'done_by_human';
   durationMs: number;
   /** Resolution quality — the early-warning signal for drift. */
   targeting?: { score: number; corroboration: number; margin: number; matched: string[]; missed: string[]; candidates: number };

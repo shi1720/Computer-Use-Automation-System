@@ -34,7 +34,7 @@ import type { Snapshot } from '../surface/types.js';
 export type EvidenceEventKind =
   | 'run.started' | 'run.finished'
   | 'policy.decision'
-  | 'step.started' | 'step.resolved' | 'step.acted' | 'step.checkpoint' | 'step.skipped' | 'step.failed'
+  | 'step.started' | 'step.resolved' | 'step.acted' | 'step.checkpoint' | 'step.skipped' | 'step.done_by_human' | 'step.failed'
   | 'signal.fired' | 'recovery.attempted' | 'recovery.succeeded' | 'recovery.failed'
   | 'extract'
   | 'escalation.raised' | 'escalation.control_granted' | 'escalation.human_action' | 'escalation.control_returned' | 'escalation.resumed'

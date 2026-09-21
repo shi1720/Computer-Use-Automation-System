@@ -79,3 +79,78 @@ export function captionedInput(caption: string, opts: { y?: number; domId?: stri
     }),
   ];
 }
+
+/**
+ * A surface that is a script rather than a browser.
+ *
+ * The replay engine's job is to decide what to do next from what it perceives,
+ * and the decisions that matter most are the ones it makes when the screen does
+ * *not* become what was expected — a recovery that fires mid-commit, a
+ * checkpoint that holds only on the third poll, an operator who hands the wheel
+ * back having already done the work. None of those are reachable by driving a
+ * real application; you cannot ask a core to be slow on cue.
+ *
+ * So the screen is a list of screens, and `act()` advances it. Every action is
+ * recorded, which is how a test asserts the thing that actually matters: that
+ * Submit was pressed exactly once.
+ */
+import type { Surface, SurfaceAction, Snapshot as Snap } from '@swivel/core';
+
+export interface ScriptedScreen {
+  nodes: UiNode[];
+  url?: string;
+  title?: string;
+}
+
+export class FakeSurface implements Surface {
+  readonly id = 'fake';
+  readonly kind = 'web' as const;
+  readonly actions: SurfaceAction[] = [];
+  /** Snapshots served so far, for asserting on polling behaviour. */
+  snapshots = 0;
+  private index = 0;
+
+  constructor(
+    private readonly screens: ScriptedScreen[],
+    /** Called after each action; returns the index of the screen to show next. */
+    private readonly onAct?: (a: SurfaceAction, current: number, self: FakeSurface) => number | void,
+    /**
+     * Called before each snapshot is served, so a screen can change after N
+     * *perceptions* rather than after N milliseconds. Tests about whether the
+     * engine polls or checks once are exactly the tests a wall-clock timer
+     * makes flaky, and a poll count is what they actually mean.
+     */
+    private readonly onSnapshot?: (self: FakeSurface) => void,
+  ) {}
+
+  /** Move to a screen without an action, the way an operator or a timer would. */
+  goTo(index: number): void { this.index = index; }
+  get current(): number { return this.index; }
+
+  async snapshot(): Promise<Snap> {
+    this.snapshots += 1;
+    this.onSnapshot?.(this);
+    const s = this.screens[this.index] as ScriptedScreen;
+    return snapshot(s.nodes, {
+      ...(s.url ? { url: s.url } : {}),
+      ...(s.title ? { title: s.title } : {}),
+    });
+  }
+
+  async act(a: SurfaceAction): Promise<void> {
+    this.actions.push(a);
+    const next = this.onAct?.(a, this.index, this);
+    if (typeof next === 'number') this.index = next;
+  }
+
+  async currentUrl(): Promise<string> {
+    return (this.screens[this.index] as ScriptedScreen).url ?? 'http://127.0.0.1:4711/main';
+  }
+  async screenshot(): Promise<Buffer> { return Buffer.from('not-a-png'); }
+  async close(): Promise<void> { /* nothing to tear down */ }
+
+  /** How many times a given control was acted on. The double-commit assertion. */
+  countActions(kind: SurfaceAction['kind'], ref?: string): number {
+    return this.actions.filter((a) => a.kind === kind && (!ref || (a as { ref?: string }).ref === ref)).length;
+  }
+}

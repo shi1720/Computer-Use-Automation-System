@@ -81,10 +81,16 @@ export function validateCapability(cap: Capability): Finding[] {
     // ── the checkpoint rule ─────────────────────────────────────────────────
     // A step that changes state and does not verify the result is the single
     // most common way automation reports success while having done nothing.
+    // `optional` is not an excuse here, and used to be. It means "this control
+    // may not be on screen", not "it is fine not to know whether this posted" —
+    // and replay leans on the checkpoint to decide whether a step interrupted
+    // mid-flight may be repeated. A mutating step without one cannot be
+    // verified, so it can neither be safely retried nor honestly reported.
     const mutates = (s.risk ?? 'read_only') !== 'read_only';
-    if (mutates && !s.expect && !s.optional) {
+    if (mutates && !s.expect) {
       add('error', 'MUTATING_STEP_WITHOUT_CHECKPOINT', `flow.steps[${i}]`,
-        `Step "${s.id}" is risk=${s.risk} but has no expect{} checkpoint. A state-changing step must prove it worked.`);
+        `Step "${s.id}" is risk=${s.risk} but has no expect{} checkpoint. A state-changing step must prove it worked` +
+        `${s.optional ? ' — being optional does not change that' : ''}.`);
     }
     if (!mutates && MUTATING_KINDS.has(s.kind) && !s.expect && !s.optional) {
       add('warning', 'NAVIGATION_STEP_WITHOUT_CHECKPOINT', `flow.steps[${i}]`,

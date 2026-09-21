@@ -125,6 +125,32 @@ export function canonicaliseId(domId: string): string {
 const sameFrame = (a: string[], b: string[]): boolean => a.length === b.length && a.every((v, i) => v === b[i]);
 
 /**
+ * How far from a control a caption can be and still count as "near it".
+ *
+ * Wide enough to cover a label in the cell beside a box on these dense legacy
+ * layouts; narrow enough that the next field's caption does not qualify.
+ */
+const NEAR_TEXT_RADIUS_PX = 220;
+
+/** Folded text of every node within `radius` of this one, in the same frame. */
+function nearbyText(node: UiNode, snap: Snapshot, radius: number): string {
+  const b = node.bounds;
+  if (!b) return '';
+  const cx = b.x + b.w / 2;
+  const cy = b.y + b.h / 2;
+  const parts: string[] = [];
+  for (const n of snap.nodes) {
+    if (n.ref === node.ref || !n.bounds || !sameFrame(n.framePath, node.framePath)) continue;
+    const nx = n.bounds.x + n.bounds.w / 2;
+    const ny = n.bounds.y + n.bounds.h / 2;
+    if (Math.abs(nx - cx) > radius || Math.abs(ny - cy) > radius) continue;
+    const t = n.text ?? n.name ?? '';
+    if (t) parts.push(t);
+  }
+  return fold(parts.join(' '));
+}
+
+/**
  * Do these two boxes share a visual row?
  *
  * Tested by actual vertical overlap rather than centre proximity. Legacy forms
@@ -220,14 +246,15 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
 
     // relational anchors
     if (target.anchors?.length) {
-      let anchorScore = 0;
       const per = Math.min(PROBE_WEIGHTS.anchor, ANCHOR_WEIGHT_CAP / target.anchors.length);
       for (const a of target.anchors) {
-        const hit = anchorHolds(a, node, snap, opts.ctx, orderIndex, byRef);
-        if (hit) anchorScore += per;
-        add(`anchor:${a.relation}("${a.text.value}")`, per, hit, 'semantic');
+        // `labelled-by` re-tests the accessible name, which the `name` probe
+        // already scored. Counting it twice would let one piece of evidence
+        // carry a resolution on its own while looking like two agreed.
+        if (a.relation === 'labelled-by' && target.name) continue;
+        add(`anchor:${a.relation}("${a.text.value}")`, per,
+          anchorHolds(a, node, snap, opts.ctx, orderIndex, byRef), 'semantic');
       }
-      void anchorScore;
     }
 
     // table semantics
@@ -256,7 +283,13 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
       }
     }
 
-    if (containerRef) add('within', PROBE_WEIGHTS.within_container, true, 'semantic');
+    // `target.within` is deliberately NOT scored. The pool was already filtered
+    // to descendants of the container, so every surviving candidate satisfies
+    // it identically — it is a constraint that has already been enforced, not
+    // evidence that distinguishes one candidate from another. Scoring it added
+    // a fixed number of points to `earned` and `available` alike for everyone,
+    // which quietly raised every candidate's percentage toward the threshold
+    // and made a control identified by nothing pass as though it were.
 
     // corroborating hints
     const h = target.hints;
@@ -274,12 +307,25 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
         add('hints.attrs', PROBE_WEIGHTS.attrs, all, 'corroborating');
       }
       if (h.nearText?.length) {
-        const frameText = snap.frameTexts[node.framePath.join('/') || '(top)'] ?? '';
-        const near = h.nearText.every((t) => fold(frameText).includes(fold(t)));
-        add('hints.nearText', PROBE_WEIGHTS.near_text, near, 'corroborating');
+        // "Near" has to mean near *this node*. Matching against the whole
+        // frame's text made the probe identical for every candidate in the
+        // frame — free points for all of them, which is the opposite of what a
+        // probe is for. Without geometry there is no way to say what is near,
+        // so the probe is simply not asked rather than answered "yes".
+        if (node.bounds) {
+          const text = nearbyText(node, snap, NEAR_TEXT_RADIUS_PX);
+          const near = h.nearText.every((t) => text.includes(fold(t)));
+          add('hints.nearText', PROBE_WEIGHTS.near_text, near, 'corroborating');
+        }
       }
       if (h.ordinal !== undefined) {
-        const peers = pool.filter((p) => p.name === node.name && p.role === node.role);
+        // Counted over the same basis the descriptor recorded it on — role,
+        // name, frame, visibility — and not over the container-filtered pool.
+        // Two different definitions of "the third one" is a probe that misfires
+        // precisely when a `within` scope is in play.
+        const peers = snap.nodes.filter((p) =>
+          p.role === node.role && p.name === node.name && p.visible !== false &&
+          sameFrame(p.framePath, node.framePath));
         add('hints.ordinal', PROBE_WEIGHTS.ordinal, peers.indexOf(node) + 1 === h.ordinal, 'corroborating');
       }
     }
@@ -362,7 +408,12 @@ export function resolveTarget(target: TargetDescriptor, snap: Snapshot, opts: Re
     node: top.node,
     score: top.score,
     corroboration: top.corroboration,
-    margin: runnerUp ? margin : 100,
+    // The real distance to the next-best candidate. When there is no other
+    // candidate of this role on the screen, that distance is the winner's own
+    // score — not the 100 this used to report, which made "nothing else was
+    // even close" indistinguishable from "nothing else was there", and wrote
+    // the more reassuring of the two into the evidence log.
+    margin,
     matched: describe(top).matched,
     missed: describe(top).missed,
     candidatesConsidered: candidates.length,

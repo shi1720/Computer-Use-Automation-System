@@ -249,17 +249,30 @@ export const PROBE_WEIGHTS = {
   cell_row_match: 45,
   cell_column: 20,
   cell_row_index: 8,
-  within_container: 15,
   id_pattern: 18,
   dom_id: 12,
   css: 10,
   near_text: 10,
   attrs: 8,
   tag: 6,
-  visual_bbox: 10,
-  visual_ocr: 12,
   ordinal: 5,
 } as const;
+
+/**
+ * Two things that deliberately have no weight.
+ *
+ * `within` is a *constraint*, not evidence. The resolver filters the candidate
+ * pool to the container's descendants before scoring, so every candidate that
+ * survives satisfies it identically. Giving it points added the same number to
+ * every candidate's earned and available totals, which quietly lifted a control
+ * identified by nothing at all toward the threshold.
+ *
+ * `visual` is reserved for surfaces that perceive pixels rather than a tree — a
+ * Citrix-published thick client, a terminal emulator. The web surface never
+ * emits it, and a probe scored against a guessed reference viewport is worse
+ * than no probe at all, so it is not scored until a surface exists that can
+ * supply a real one.
+ */
 
 /** Anchors are strong but correlated; cap their combined contribution. */
 export const ANCHOR_WEIGHT_CAP = 50;

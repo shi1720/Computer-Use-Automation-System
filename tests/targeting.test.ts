@@ -220,3 +220,59 @@ describe('frame scoping', () => {
     assert.equal(r.ok, false);
   });
 });
+
+describe('probes that cannot discriminate are not scored', () => {
+  /**
+   * The reproduction that motivated all of this.
+   *
+   * A hand-authored descriptor for the Member # box: scoped to a panel, with a
+   * tag hint, an input-type hint and a `nearText` hint. On a screen where the
+   * Member # box is gone and only the SSN box remains inside that panel, three
+   * separate always-true probes — the container the pool was *already* filtered
+   * by, the whole-frame text search called "nearText", and a tag every input
+   * shares — carried the SSN box over the threshold. The name probe was listed
+   * as `missed` in the very same result.
+   *
+   * The engine would then type a member number into the SSN field and record it
+   * as a maximally unambiguous resolution. On a banking UI.
+   */
+  test('a control whose accessible name does not match is refused, however much else agrees', () => {
+    const panel = node({ ref: 'panel', role: 'form', name: 'Member Search', bounds: { x: 0, y: 0, w: 600, h: 200 } });
+    const ssn = node({
+      ref: 'ssn', role: 'textbox', name: '', parentRef: 'panel',
+      raw: { tag: 'input', inputType: 'text', domId: 'ctl00_Main_txtSSN' },
+      bounds: { x: 120, y: 60, w: 160, h: 20 },
+    });
+    // The caption is on screen, because the *screen* is a search form — which
+    // is exactly why searching the whole frame for it proves nothing.
+    const caption = node({ ref: 'cap', role: 'text', text: 'Member #', parentRef: 'panel', bounds: { x: 20, y: 140, w: 60, h: 16 } });
+    (panel as { childRefs: string[] }).childRefs = ['ssn', 'cap'];
+
+    const snap = snapshot([panel, ssn, caption]);
+    const t: TargetDescriptor = {
+      id: 'member_number', role: 'textbox',
+      within: { id: 'panel', role: 'form', name: { value: 'Member Search', match: 'exact' } },
+      name: { value: 'Member #', match: 'normalized' },
+      hints: { tag: 'input', inputType: 'text', nearText: ['Member #'] },
+      require: { minScore: 55, unique: true, timeoutMs: 1000 },
+    };
+
+    const r = resolveTarget(t, snap, { ctx });
+    assert.equal(r.ok, false, 'the name is the only thing that identifies this box, and it did not match');
+    if (!r.ok) assert.equal(r.reason, 'below_min_score');
+  });
+
+  test('the reported margin is a real distance, not a flattering one', () => {
+    // One candidate of the role on the whole screen. That is not "beat the
+    // runner-up by 100 points"; there was no runner-up. Writing 100 into the
+    // evidence log made an unverifiable claim look like a measurement.
+    const snap = snapshot([node({ role: 'button', name: 'Search' })]);
+    const t: TargetDescriptor = { id: 'search', role: 'button', name: { value: 'Search', match: 'exact' } };
+    const r = resolveTarget(t, snap, { ctx });
+    assert.equal(r.ok, true);
+    if (r.ok) {
+      assert.equal(r.candidatesConsidered, 1);
+      assert.equal(r.margin, r.score, 'the distance to nothing is the score itself');
+    }
+  });
+});

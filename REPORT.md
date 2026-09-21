@@ -24,9 +24,10 @@ of this repository; the bundles are in [`/evidence`](evidence/).
 | Determinism | 5/5 identical outcomes and outputs |
 | Business outcomes exercised | `RECORD_NOT_FOUND`, `NOT_AUTHORIZED`, `SYSTEM_UNAVAILABLE_EOD` |
 | Recoveries exercised | session expiry, transient 503, compliance interstitial |
-| Refusals exercised | irreversible without a token, off-allowlist origin, unapproved capability unattended |
-| Escalation | live CDP takeover, operator drove the session, run resumed and finished |
+| Refusals exercised | irreversible without a token *(evidence bundle)*; off-allowlist origin, unapproved capability unattended, stale approval *(tests)* |
+| Escalation | live CDP takeover, operator drove the session; both hand-back outcomes on the record |
 | Cross-tenant | same artifact, second institution, one overlay — and the run without it |
+| Test suite | 173 tests, almost all with no browser at all |
 
 ---
 

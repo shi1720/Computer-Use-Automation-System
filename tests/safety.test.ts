@@ -13,7 +13,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   PolicyEngine, classifyRisk, ControlLeaseManager, LeasedSurface, LeaseViolation,
-  EscalationBroker, EvidenceRecorder, verifyChain, Redactor, stabilityScore, scrubProse,
+  EscalationBroker, EvidenceRecorder, verifyChain, Redactor, stabilityScore, scrubProse, computeContentHash,
   type Capability, type ExecutionContext, type Surface,
 } from '@swivel/core';
 
@@ -90,6 +90,37 @@ describe('approval and confirmation gating', () => {
     const c = cap();
     c.quality.approvalState = 'draft';
     assert.equal(new PolicyEngine(c, ctx({ unattended: false })).admit().allow, true);
+  });
+
+  test('an approval is of a document, not of a name', () => {
+    // A reviewer signs off on specific steps, targets and policy. Editing any
+    // of them afterwards and keeping the approval would make the review a
+    // formality — the thing running unattended would be a document nobody read.
+    // Binding approval to the content hash is what stops that, and it has to
+    // hold in both directions: the unchanged capability still runs.
+    const approved = cap();
+    approved.quality.approvalState = 'approved';
+    approved.quality.approvedBy = 'reviewer';
+    approved.quality.approvedContentHash = computeContentHash(approved);
+    assert.equal(new PolicyEngine(approved, ctx()).admit().allow, true);
+
+    const edited = JSON.parse(JSON.stringify(approved)) as Capability;
+    edited.policy.allowedOrigins = [...edited.policy.allowedOrigins, 'http://somewhere-else.invalid'];
+    const d = new PolicyEngine(edited, ctx()).admit();
+    assert.equal(d.allow, false, 'widening the origin allowlist after sign-off must void it');
+    if (!d.allow) assert.equal(d.code, 'APPROVAL_STALE');
+  });
+
+  test('replay statistics do not void an approval', () => {
+    // The content hash deliberately covers the behaviour-determining subset
+    // only. If every completed run invalidated the approval, the gate would
+    // fire constantly and be routed around within a week.
+    const approved = cap();
+    approved.quality.approvalState = 'approved';
+    approved.quality.approvedContentHash = computeContentHash(approved);
+    approved.quality.replays = { total: 9, success: 9, businessOutcome: 0, recovered: 0, escalated: 0, failed: 0 };
+    approved.quality.stabilityScore = 93;
+    assert.equal(new PolicyEngine(approved, ctx()).admit().allow, true);
   });
 
   test('an irreversible capability refuses to start without a confirmation token', () => {

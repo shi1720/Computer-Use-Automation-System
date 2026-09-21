@@ -148,7 +148,7 @@ npx swivel replay meridian.member-savings-balance --tenant pineridge \
 
 ```bash
 # An irreversible capability refuses to start without an explicit token —
-# in 3ms, before a browser is opened.
+# in 4ms, before a browser is opened.
 npx swivel replay meridian.stop-payment --tenant pineridge \
   --input memberNumber=0100482 --input checkNumber=1042 --input amount=412.50
 

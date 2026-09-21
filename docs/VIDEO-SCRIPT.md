@@ -108,7 +108,7 @@ refuses to restart and asks a human, because replaying would post it twice."**
 
 > *[Run the stop-payment with no `--confirm`.]*
 
-**"And a stop payment — irreversible, fee-bearing. Refused in three
+**"And a stop payment — irreversible, fee-bearing. Refused in four
 milliseconds, before a browser even opened, because the caller didn't supply a
 confirmation token. A model can't talk its way past that; the token has to come
 from a human or a policy decision upstream."**
@@ -118,15 +118,27 @@ from a human or a policy decision upstream."**
 ## 3:10 — Escalation (60s)
 
 **"Now the interesting failure. Same artifact, different institution — same
-vendor product, two versions apart."**
+vendor product, two versions apart — and I'm deliberately running it with
+nothing adapted for that institution at all."**
 
-> *[Run the Harbor Point replay with the overlay removed. It stops.]*
+> *[Run the Harbor Point replay with `--no-overlay`. Let it get several steps in.]*
 
-**"It refuses to guess. And it tells you exactly what went missing: it expected
-a link with a particular name, the best candidate scored thirteen out of a
-hundred, and the name probe didn't match.**
+**"Watch how far it gets on meaning alone. The navigation link, the unlabelled
+search box, the right row of the results grid — even though this build inserts
+an extra column in the middle of that grid, which is exactly what breaks a
+locator that counts columns."**
 
-**Then it pauses — and the browser session is still alive."**
+> *[It stops.]*
+
+**"And then it refuses. This build hides the balances behind a button, so the
+cell the artifact describes isn't on the screen. The best candidate scored zero
+out of a required sixty, and it tells you precisely which evidence went missing.**
+
+**That refusal is the whole product. There were other cells on that screen. A
+locator that grabbed the nearest one would have handed the caller a number —
+and the caller would have had no way to know it was the wrong number.**
+
+**Then it pauses. And the browser session is still alive."**
 
 > *[Switch to the console, operator queue, open the ticket, claim it.]*
 
@@ -134,25 +146,28 @@ hundred, and the name probe didn't match.**
 of that paused session — not a new one. The same browser, mid-flow, with
 whatever the application has built up server-side."**
 
-> *[Click inside the live view. The remote screen navigates.]*
+> *[Click the Display control inside the live view. The remote screen updates.]*
 
-**"That click went to the real session. This bank calls the link 'Customer
-Search'. I'll do that one step by hand — and hand control back."**
+**"That click went to the real session. I'll do the one thing it couldn't — and
+hand control back."**
 
 > *[Hand back with "resume". Switch to the terminal.]*
 
-**"And it picks up where it stopped — and finishes. The search box resolved
-against 'Customer ID'. The results row matched by member number even though
-this build inserts an extra column in the middle of the grid. Everything I did
-is on the run's evidence chain."**
+**"And it picks up where it stopped, and finishes. Both balances, extracted by
+the automation. Everything I did is on the run's evidence chain — my account,
+my click, my note.**
+
+**One more thing worth seeing: if I'd told it *I* finished the job instead, it
+reports `escalated`, not `success` — with null outputs. The screen looks the
+same either way. The automation just won't claim work a person did."**
 
 ---
 
 ## 4:10 — Multi-tenant and the agent interface (35s)
 
-**"One artifact, hundreds of institutions. Most of the differences needed no
-override at all. This one needed a single overlay entry, because this build
-hides balances behind a button."**
+**"Now the same command with the overlay. Most of the differences needed no
+override at all — that's what you just watched. This institution needed exactly
+one entry: a step to press that Display button."**
 
 > *[Run the Harbor Point replay with the overlay. It succeeds.]*
 

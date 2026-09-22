@@ -30,7 +30,7 @@
   "stepPatches": [
     {
       "op": "insert-before",
-      "stepId": "extract_balance",
+      "stepId": "extract_current_balance",
       "reason": "Meridian 10.1 collapses the balances grid behind a Display control. Marked optional so this same overlay keeps working if the institution later changes that default.",
       "step": {
         "id": "display_accounts",

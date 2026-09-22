@@ -2,7 +2,7 @@
   "name": "swivel",
   "private": true,
   "version": "1.0.0",
-  "description": "Swivel \u2014 computer-use capabilities for systems that were never meant to be automated.",
+  "description": "Swivel — computer-use capabilities for systems that were never meant to be automated.",
   "type": "module",
   "workspaces": [
     "packages/*",
@@ -27,6 +27,7 @@
     "@types/node": "^26.6.2",
     "@types/ws": "^8.18.1",
     "express": "^5.2.1",
+    "openai": "^7.21.0",
     "playwright-core": "^1.63.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",

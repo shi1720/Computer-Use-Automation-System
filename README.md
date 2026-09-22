@@ -97,7 +97,7 @@ export SWIVEL_CHROMIUM_PATH=/path/to/chrome
 ```bash
 export SWIVEL_CRED_MERIDIAN_OPERATOR_ID=msr01     # credentials resolve from a secret
 export SWIVEL_CRED_MERIDIAN_PASSWORD=meridian     # store; they never enter an artifact
-export ANTHROPIC_API_KEY=sk-ant-...               # or: SWIVEL_LLM_PROVIDER=claude-cli
+export OPENAI_API_KEY=sk-...                      # or ANTHROPIC_API_KEY, or --llm claude-cli
 
 npx swivel discover \
   --goal "Look up member 0100482 and report the current balance and the available balance of their SPECIAL SAVINGS share account." \
@@ -115,10 +115,28 @@ step worked, and how risky it was. Values matching a declared parameter are
 turned into `{{input.*}}` automatically, and words matching the institution's
 vocabulary into `{{vocab.*}}` — which is what lets one artifact serve many banks.
 
-> **No API key?** `SWIVEL_LLM_PROVIDER=claude-cli` routes through a locally
-> signed-in Claude Code CLI. Slower, no schema enforcement on tool calls, and
-> it reports no token usage — but it is a genuine model driving a genuine UI,
-> and it is how the evidence in this repository was produced.
+**Three providers, one interface.** `--llm openai` (GPT-5.1 by default),
+`--llm anthropic` (Claude Opus 5), or `--llm claude-cli`, which routes through a
+locally signed-in Claude Code CLI and needs no key at all. The agent loop cannot
+tell them apart, which is the point rather than an accident: *which* vendor's
+model read the screen is a fact about one discovery run, not a property of the
+capability it produced.
+
+The evidence in this repository was recorded with **`gpt-5.1`**, because it
+reports token usage and the CLI does not — and a discovery run that cannot state
+its own cost is a weaker piece of evidence:
+
+```
+  model       openai/gpt-5.1
+  model turns 7
+  tokens      14488 in / 931 out / 20864 cached
+  discovery cost  $0.0300
+```
+
+Three cents, once, for a capability that then replays for nothing. The cached
+figure is the system prompt and tool schemas being resent every turn and billed
+at a tenth — which is why caching is on the system prefix rather than
+decoration.
 
 ### 2 · Replay — deterministic, no model
 
@@ -128,8 +146,8 @@ npx swivel replay meridian.member-savings-balance --tenant pineridge \
 ```
 
 ```
- SUCCESS   4624ms · 6 steps · quality 100/100
-   outputs: {"balance":18402.66,"available":18402.66}
+ SUCCESS   4596ms · 6 steps · quality 100/100
+   outputs: {"currentBalance":18402.66,"availableBalance":18402.66}
 ```
 
 ### 3 · Exceptional states, on demand
@@ -276,12 +294,14 @@ Full reasoning, trade-offs and limits: **[REPORT.md](REPORT.md)**.
 | | |
 |---|---|
 | `swivel discover` | Drive a live application with a model and record a capability |
+| &nbsp;&nbsp;`--llm openai\|anthropic\|claude-cli` | Which model drives it. Defaults to whichever API key is set. |
 | `swivel replay <id>` | Execute a saved capability. No model in the loop. |
 | `swivel stability <id> --runs N` | Replay N times and report a flakiness signal |
 | `swivel list` / `show <id>` | The catalogue; the full contract, flow, signals and validation |
 | `swivel approve <id>@<v>` | Move a capability to approved so agents may invoke it unattended |
 | `swivel catalog` | The agent-facing tool catalogue |
 | `swivel codegen <id>` | Emit a runnable Playwright test from an artifact |
+| `node scripts/compare-artifacts.mjs a b` | Diff two artifacts on the parts that decide behaviour |
 | `swivel overlay new\|check <id>` | Scaffold and validate a tenant overlay |
 | `swivel verify <runId>` | Re-verify an evidence bundle's hash chain |
 | `swivel serve` / `meridian` | The console; the simulated core |

@@ -19,7 +19,7 @@ of this repository; the bundles are in [`/evidence`](evidence/).
 
 | | |
 |---|---|
-| Discovery, real model against a live UI | 2 capabilities, 7 and 11 model turns |
+| Discovery, real model against a live UI | 2 capabilities, 7 and 9 turns, **$0.030 and $0.034** measured |
 | Replay | ~4.6s, **0 model calls**, targets resolving at 100 |
 | Determinism | 5/5 identical outcomes and outputs |
 | Business outcomes exercised | `RECORD_NOT_FOUND`, `NOT_AUTHORIZED`, `SYSTEM_UNAVAILABLE_EOD` |
@@ -27,7 +27,7 @@ of this repository; the bundles are in [`/evidence`](evidence/).
 | Refusals exercised | irreversible without a token *(evidence bundle)*; off-allowlist origin, unapproved capability unattended, stale approval *(tests)* |
 | Escalation | live CDP takeover, operator drove the session; both hand-back outcomes on the record |
 | Cross-tenant | same artifact, second institution, one overlay — and the run without it |
-| Test suite | 173 tests, almost all with no browser at all |
+| Test suite | 184 tests, almost all with no browser at all |
 
 ---
 
@@ -62,8 +62,39 @@ Four decisions carry the design.
 
 **The model is in the loop exactly once.** Frontier models now clear the human
 baseline on OSWorld and still fail roughly one task in six. A 17% failure rate on
-an unattended general-ledger posting is not a product. Discovery costs cents and
-minutes; every execution after it is deterministic, free, and takes four seconds.
+an unattended general-ledger posting is not a product. Discovery cost **three
+cents** for the read-only capability and **three and a half** for the stop
+payment, once; every execution after it is deterministic, free, and takes four
+seconds. Those are measured figures from the bundles in
+[`/evidence`](evidence/), not estimates.
+
+**The model is also interchangeable, and that is testable.** Three providers
+implement one interface — OpenAI, Anthropic, and the local Claude CLI — and the
+loop is written once against it. The interesting claim is not about the loop; it
+is about the artifact. If swapping vendors changed what a capability *is*, the
+format would be recording a model's idiosyncrasies rather than an application's
+structure, and every downstream claim about durability would be weaker than it
+sounds.
+
+So it is checked rather than asserted. `scripts/compare-artifacts.mjs` diffs two
+artifacts on the parts that decide behaviour — steps, target descriptors,
+checkpoints, contract — ignoring timestamps and provenance. Recording the same
+goal twice, once through `gpt-5.1` and once through Claude:
+
+| | |
+|---|---|
+| Flow: which controls, in which order | **identical** |
+| Every target descriptor — role, name, anchors, grid row and column | **identical** |
+| Every checkpoint, and the success condition | **identical** |
+| Declared inputs, risk class, effects | **identical** |
+| The *names* the model gave the two outputs | `balance` / `available` vs `currentBalance` / `availableBalance` |
+
+The difference falls exactly on the boundary the design draws. Everything
+Swivel derives from the perception snapshot came out the same from two
+different vendors' models; the one thing the model is genuinely *asked* for — a
+name for a value it decided to extract — came out differently, and that name is
+part of the capability's public interface, so it is a thing a reviewer should
+be expected to settle at approval rather than a thing to be inferred twice.
 
 **Perception and action are one narrow seam.** Everything above `Surface` —
 resolution, replay, policy, signals, evidence, escalation — is written against a

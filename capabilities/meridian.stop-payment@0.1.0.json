@@ -5,8 +5,8 @@
     "id": "meridian.stop-payment",
     "version": "0.1.0",
     "title": "Place a stop payment on a check",
-    "summary": "Places a stop payment on a specific check number and amount against a member's share draft account, using their member number, and returns the confirmation number, check number, amount, and expiration date from the confirmation screen. Requires memberNumber, checkNumber, and amount as inputs; the reason defaults to LOST/STOLEN. Navigates via member search, the member's servicing actions, and the Stop Payment entry form.",
-    "createdAt": "2026-09-21T21:18:09.132Z",
+    "summary": "Placed a stop payment on the specified member’s share draft check through the Stop Payment servicing screen and captured the resulting confirmation number from the confirmation screen.",
+    "createdAt": "2026-09-22T03:05:59.802Z",
     "labels": {},
     "owner": "shivam"
   },
@@ -17,7 +17,10 @@
     "productVersions": "~9.2.14",
     "entry": {
       "urlTemplate": "{{tenant.baseUrl}}/main",
-      "expectedFrames": []
+      "expectedFrames": [
+        "navFrame",
+        "contentFrame"
+      ]
     },
     "vocabulary": {
       "member": "Member",
@@ -59,7 +62,7 @@
       {
         "name": "confirmationNumber",
         "type": "string",
-        "description": "The confirmation number issued for the stop payment placed on check 1042.",
+        "description": "Confirmation number for the processed stop payment request.",
         "sensitivity": "internal",
         "required": false
       }
@@ -103,7 +106,7 @@
       "dualControl": false,
       "financialImpact": true,
       "idempotent": false,
-      "summary": "The system confirmed the stop payment outright (MSG 0740 - STOP PAYMENT ACCEPTED) with no second approval required."
+      "summary": "This capability changes state in the institution's system of record."
     },
     "preconditions": []
   },
@@ -303,7 +306,7 @@
     "steps": [
       {
         "id": "click_stop_payment",
-        "intent": "Open the Stop Payment function to begin placing a stop payment on a check.",
+        "intent": "Open the Stop Payment function from the main navigation menu to begin placing a stop on the {{vocab.member}}'s check.",
         "kind": "click",
         "target": {
           "id": "stop_payment",
@@ -348,7 +351,7 @@
       },
       {
         "id": "fill_member",
-        "intent": "Enter the {{vocab.member}} number into the search field to find the {{vocab.member}}'s account for the stop payment.",
+        "intent": "Enter the provided {{vocab.member}} number to search for the {{vocab.member}} whose check will have a stop payment placed.",
         "kind": "fill",
         "target": {
           "id": "member",
@@ -389,7 +392,7 @@
       },
       {
         "id": "click_search",
-        "intent": "Search for the {{vocab.member}} using the entered {{vocab.member}} number to locate their record for the stop payment.",
+        "intent": "Search for the {{vocab.member}} using the entered {{vocab.member}} number to proceed to stop payment options for this {{vocab.member}}.",
         "kind": "click",
         "target": {
           "id": "search",
@@ -436,7 +439,7 @@
       },
       {
         "id": "click_action_cell",
-        "intent": "Activate the \"View\" link in the row where {{vocab.memberNumber}} is {{input.memberNumber}}.",
+        "intent": "Open the selected {{vocab.member}} record from the search results to access stop payment options for this {{vocab.member}}.",
         "kind": "click",
         "target": {
           "id": "action_cell",
@@ -542,7 +545,7 @@
       },
       {
         "id": "fill_check_number",
-        "intent": "Enter the check number {{input.checkNumber}} into the Check Number field for the stop payment on the {{vocab.member}}'s {{vocab.share}} draft account.",
+        "intent": "Enter the provided check number for which the {{vocab.member}} is requesting a stop payment.",
         "kind": "fill",
         "target": {
           "id": "check_number",
@@ -583,7 +586,7 @@
       },
       {
         "id": "fill_amount",
-        "intent": "Enter the amount ${{input.amount}} into the Amount field for the stop payment on check {{input.checkNumber}}.",
+        "intent": "Enter the exact check amount provided for the stop payment request.",
         "kind": "fill",
         "target": {
           "id": "amount",
@@ -624,7 +627,7 @@
       },
       {
         "id": "click_place_stop_payment",
-        "intent": "Submit the stop payment request with the entered check number, amount, and reason to place the stop payment on the {{vocab.member}}'s {{vocab.share}} draft account.",
+        "intent": "Submit the stop payment request for the specified check number, amount, and reason on the {{vocab.member}}'s {{vocab.share}} draft account.",
         "kind": "click",
         "target": {
           "id": "place_stop_payment",
@@ -656,12 +659,12 @@
         "risk": "irreversible",
         "expect": {
           "id": "click_place_stop_payment_ok",
-          "description": "Screen shows \"CONFIRM\"",
+          "description": "Reached screen SVC-0749",
           "all": [
             {
               "kind": "text_present",
-              "text": "CONFIRM",
-              "because": "the model nominated this as proof the step worked, and it was verified present during discovery"
+              "regex": "SCREEN\\s+SVC-0749",
+              "because": "the core stamps a screen identifier on every page; it is stable across runs and carries no member data"
             }
           ],
           "timeoutMs": 15000,
@@ -671,7 +674,7 @@
       },
       {
         "id": "extract_confirmation_number",
-        "intent": "Capture the confirmation number from the Stop Payment confirmation screen to return to the caller.",
+        "intent": "Capture the confirmation number assigned to the completed stop payment for reporting back to the caller.",
         "kind": "extract",
         "target": {
           "id": "confirmation_number",
@@ -716,17 +719,12 @@
     ],
     "successCheckpoint": {
       "id": "capability_complete",
-      "description": "STOP PAYMENT - CONFIRMATION SCREEN",
+      "description": "SCREEN SVC-0749",
       "all": [
         {
           "kind": "text_present",
           "regex": "SCREEN\\s+SVC-0749",
           "because": "the core stamps a screen identifier on every page; it is stable across runs and carries no member data"
-        },
-        {
-          "kind": "text_present",
-          "text": "STOP PAYMENT - CONFIRMATION SCREEN",
-          "because": "the discovery run verified this phrase was present on the final screen and that it is not run-varying data"
         }
       ],
       "timeoutMs": 20000,
@@ -734,23 +732,24 @@
     }
   },
   "provenance": {
-    "discoveredAt": "2026-09-21T21:18:09.132Z",
+    "discoveredAt": "2026-09-22T03:05:59.802Z",
     "discoveredBy": {
       "kind": "llm_discovery",
-      "provider": "claude-cli",
-      "model": "claude-code-cli"
+      "provider": "openai",
+      "model": "gpt-5.1"
     },
     "goal": "Place a stop payment on check number 1042 for $412.50 against member 0100482's share draft account, with reason LOST / STOLEN, and reach the confirmation screen. Report the confirmation number.",
     "swivelVersion": "1.0.0",
     "history": [
       {
-        "at": "2026-09-21T21:18:09.132Z",
+        "at": "2026-09-22T03:05:59.802Z",
         "actor": "shivam",
         "action": "discovered",
-        "note": "via claude-cli/claude-code-cli"
+        "note": "via openai/gpt-5.1"
       }
     ],
-    "recordedOnTenant": "pineridge"
+    "recordedOnTenant": "pineridge",
+    "transcriptSha256": "03ed91e5b459e92e3baa24d476ed844538fcebdabb07414f3536a59ca21b5312"
   },
   "quality": {
     "approvalState": "draft",
@@ -763,9 +762,7 @@
       "failed": 0
     },
     "stabilityScore": 0,
-    "notes": [
-      "The system confirmed the stop payment outright (MSG 0740 - STOP PAYMENT ACCEPTED) with no second approval required."
-    ]
+    "notes": []
   },
-  "contentHash": "74c0905eeb5005ec4828cb674e585219e5b4493d024e5d983bddc57f2c892b58"
+  "contentHash": "01ac02940441f050a8e8a276fb18f94dfcd4861c3b36061e0557663d5adccd10"
 }

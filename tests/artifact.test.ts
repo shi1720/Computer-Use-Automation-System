@@ -8,7 +8,7 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   validateCapability, validateOverlay, resolveCapability, computeContentHash,
-  render, referencesOf, TemplateError, API_VERSION, generaliseOutputName, templatise,
+  render, referencesOf, TemplateError, API_VERSION, generaliseOutputName, templatise, looksLikeData,
   type Capability, type TenantOverlay,
 } from '@swivel/core';
 
@@ -344,5 +344,29 @@ describe('a capability describes the vendor product, not one customer of it', ()
   test('prose with no institution in it is left alone', () => {
     const prose = 'Looks up a member by member number and reads a share balance.';
     assert.equal(templatise(prose, ctx(), { vocabWholeString: false }), prose);
+  });
+});
+
+describe('a capability must not assert the product version', () => {
+  test('a version stamped into screen chrome is treated as data', () => {
+    // These cores print "MERIDIAN Core 9.2.14" on every screen. A model
+    // nominating success text will include it: the string is on screen and it
+    // is stable across runs, so it passes every other test. It is still wrong
+    // in the way that costs most — the artifact's whole premise is that it
+    // travels across builds of the same product, and this pins it to one.
+    assert.equal(looksLikeData('MEMBER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 9.2.14'), true);
+    assert.equal(looksLikeData('MERIDIAN Core 10.1.3'), true);
+  });
+
+  test('screen identity without a version is still usable', () => {
+    // The screen code is the thing worth asserting, and it must survive.
+    assert.equal(looksLikeData('MEMBER INQUIRY SCREEN'), false);
+    assert.equal(looksLikeData('SCREEN INQ-0420'), false);
+    assert.equal(looksLikeData('Share Accounts'), false);
+  });
+
+  test('an amount is still data, and a plain caption still is not', () => {
+    assert.equal(looksLikeData('18,402.66'), true);
+    assert.equal(looksLikeData('Member #'), false);
   });
 });

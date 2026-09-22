@@ -8,23 +8,37 @@
  * whole economic argument of the system, so the boundary is narrow and explicit
  * rather than woven through the codebase.
  *
- * Two providers ship:
+ * Three real providers ship, and the agent loop cannot tell them apart. That is
+ * the point of the interface rather than an accident of it: which vendor's model
+ * read the screen is a fact about one discovery run, not a property of the
+ * capability it produced. The artifact is the deliverable, and it is the same
+ * document either way.
  *
- *   anthropic   The real thing: the official SDK, native tool use, adaptive
- *               thinking, and prompt caching on the system prefix (which matters
- *               a lot here — the system prompt and tool schemas are ~4k tokens
- *               and get resent on every turn of a 15-turn discovery loop).
+ *   anthropic   Official SDK, native tool use, adaptive thinking, and prompt
+ *               caching on the system prefix — which matters here, because the
+ *               system prompt and tool schemas are ~4k tokens resent on every
+ *               turn of a 15-turn loop.
  *
- *   claude-cli  Routes through the locally authenticated Claude Code CLI. No
- *               API key required, which means a reviewer can run a genuine
+ *   openai      Official SDK against the Responses API, native function calling
+ *               and reasoning effort. Prompt caching is automatic and reported,
+ *               so the cost figures in the evidence are measured rather than
+ *               estimated.
+ *
+ *   claude-cli  Routes through the locally authenticated Claude Code CLI. No API
+ *               key at all, which means a reviewer can watch a genuine
  *               LLM-driven discovery without first buying credits. Tool calls
- *               are expressed as JSON rather than native tool blocks; the agent
- *               loop above cannot tell the difference.
+ *               are JSON in the prompt rather than native tool blocks, and it
+ *               reports no token usage — so it is the right default for trying
+ *               the system out and the wrong one for measuring it.
  *
  * Plus `mock`, which replays a scripted sequence so the agent loop itself can be
  * unit-tested without a network or a bill.
+ *
+ * Credentials come from the environment and are never read from, or written to,
+ * anything in this repository.
  */
 import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { spawn } from 'node:child_process';
 
 export interface ToolSpec {
@@ -76,6 +90,15 @@ export const PRICES: Record<string, { in: number; out: number }> = {
   'claude-sonnet-5': { in: 2, out: 10 },
   'claude-haiku-4-5': { in: 1, out: 5 },
   'claude-fable-5-1': { in: 10, out: 50 },
+  // OpenAI list prices. Cached input bills at a tenth of input on both vendors,
+  // which is why `estimateCostUsd` below needs no per-vendor branch.
+  'gpt-5.1': { in: 1.25, out: 10 },
+  'gpt-5': { in: 1.25, out: 10 },
+  'gpt-5-mini': { in: 0.25, out: 2 },
+  'gpt-5-nano': { in: 0.05, out: 0.4 },
+  'gpt-4.1': { in: 2, out: 8 },
+  'gpt-4.1-mini': { in: 0.4, out: 1.6 },
+  'gpt-4o': { in: 2.5, out: 10 },
 };
 
 /** Cache reads bill at ~0.1x input, cache writes at ~1.25x. */
@@ -164,6 +187,132 @@ export class AnthropicProvider implements LlmProvider {
       },
     };
   }
+}
+
+// ── OpenAI ───────────────────────────────────────────────────────────────────
+
+/**
+ * OpenAI, through the Responses API.
+ *
+ * The Responses API rather than Chat Completions, for two reasons that both
+ * show up in the evidence. Reasoning effort is a first-class parameter, and
+ * discovery is exactly the kind of work it is for — reading an unfamiliar
+ * legacy screen and deciding which of forty identical-looking controls a teller
+ * would use. And usage comes back with cached input broken out, so the cost
+ * line in a run's evidence is measured rather than guessed.
+ *
+ * One deliberate limitation. The loop above hands every provider a complete
+ * message list each turn, which keeps providers interchangeable and keeps the
+ * loop free of vendor state. Translating that list forward means reasoning
+ * items from earlier turns are not replayed, so the model does not see its own
+ * prior chain of thought — only the conversation, which carries the same facts.
+ * `previous_response_id` would preserve it at the cost of making this provider
+ * stateful and the three implementations structurally different. The trade is
+ * worth naming and, for a tool loop, cheap.
+ */
+export class OpenAiProvider implements LlmProvider {
+  readonly name = 'openai';
+  private readonly client: OpenAI;
+
+  constructor(readonly model = process.env.SWIVEL_LLM_MODEL ?? 'gpt-5.1', apiKey?: string) {
+    this.client = new OpenAI(apiKey ? { apiKey } : {});
+  }
+
+  async complete(req: LlmRequest): Promise<LlmResponse> {
+    const res = await this.client.responses.create({
+      model: this.model,
+      instructions: req.system,
+      input: toResponsesInput(req.messages),
+      tools: req.tools.map((t) => ({
+        type: 'function' as const,
+        name: t.name,
+        description: t.description,
+        parameters: t.inputSchema as Record<string, unknown>,
+        // Not strict: these schemas have optional properties by design, and
+        // strict mode requires every property to be required. Enforcing a
+        // shape the tool does not have would push the model into supplying
+        // placeholder values, which is worse than validating our own input.
+        strict: false,
+      })),
+      reasoning: { effort: openAiEffort(req.effort) },
+      max_output_tokens: req.maxTokens ?? 8_000,
+    });
+
+    const text = res.output
+      .filter((o) => o.type === 'message')
+      .flatMap((o) => (o as { content?: Array<{ type: string; text?: string }> }).content ?? [])
+      .filter((c) => c.type === 'output_text')
+      .map((c) => c.text ?? '')
+      .join('\n');
+
+    const toolCalls = res.output
+      .filter((o) => o.type === 'function_call')
+      .map((o) => {
+        const f = o as { call_id: string; name: string; arguments: string };
+        return { id: f.call_id, name: f.name, input: safeJson(f.arguments) };
+      });
+
+    const u = res.usage;
+    const cached = u?.input_tokens_details?.cached_tokens ?? 0;
+    return {
+      text,
+      toolCalls,
+      stopReason: toolCalls.length ? 'tool_use' : (res.status ?? 'end_turn'),
+      usage: {
+        // `input_tokens` is the total and already includes the cached portion.
+        // Double-counting it here would inflate every cost figure in the
+        // evidence by the size of the system prefix, on every turn.
+        inputTokens: Math.max(0, (u?.input_tokens ?? 0) - cached),
+        outputTokens: u?.output_tokens ?? 0,
+        cacheReadTokens: cached,
+        cacheCreationTokens: 0,   // OpenAI caches automatically and does not bill writes
+      },
+    };
+  }
+}
+
+/** Reasoning effort, mapped from the loop's vocabulary to OpenAI's. */
+function openAiEffort(e: LlmRequest['effort']): 'low' | 'medium' | 'high' {
+  if (e === 'low') return 'low';
+  if (e === 'medium') return 'medium';
+  return 'high';
+}
+
+/** Tolerant of a model that emits malformed arguments; the loop treats an empty input as a bad turn. */
+function safeJson(raw: string): Record<string, unknown> {
+  try { return JSON.parse(raw) as Record<string, unknown>; } catch { return {}; }
+}
+
+/**
+ * Translate the loop's message list into Responses API input items.
+ *
+ * The shapes differ in one way that matters: a tool call and its result are
+ * blocks *inside* messages for Anthropic, and top-level items for OpenAI. A
+ * `function_call` must be followed by a `function_call_output` carrying the
+ * same `call_id` or the request is rejected, which the loop satisfies
+ * naturally by construction.
+ */
+export function toResponsesInput(messages: LlmMessage[]): OpenAI.Responses.ResponseInputItem[] {
+  const items: OpenAI.Responses.ResponseInputItem[] = [];
+  for (const m of messages) {
+    const texts = m.content.filter((c) => c.type === 'text') as Array<{ type: 'text'; text: string }>;
+    if (texts.length) {
+      // Assistant turns go back as plain text. The structured `output_text`
+      // form is what the API *returns*, and echoing it requires ids and status
+      // fields that belong to a response we are not replaying.
+      items.push(m.role === 'user'
+        ? { role: 'user', content: texts.map((t) => ({ type: 'input_text' as const, text: t.text })) }
+        : { role: 'assistant', content: texts.map((t) => t.text).join('\n') });
+    }
+    for (const c of m.content) {
+      if (c.type === 'tool_use') {
+        items.push({ type: 'function_call', call_id: c.id, name: c.name, arguments: JSON.stringify(c.input ?? {}) });
+      } else if (c.type === 'tool_result') {
+        items.push({ type: 'function_call_output', call_id: c.toolUseId, output: c.content });
+      }
+    }
+  }
+  return items;
 }
 
 // ── Claude Code CLI ──────────────────────────────────────────────────────────
@@ -287,12 +436,23 @@ export class MockProvider implements LlmProvider {
   }
 }
 
+/**
+ * Pick a provider from the environment.
+ *
+ * An explicit `SWIVEL_LLM_PROVIDER` always wins. Failing that, whichever API key
+ * is present decides — and `claude-cli` is the last resort rather than a
+ * preference, because it reports no token usage and a discovery run that cannot
+ * state its own cost is a weaker piece of evidence.
+ */
 export function providerFromEnv(): LlmProvider {
-  const kind = (process.env.SWIVEL_LLM_PROVIDER ?? (process.env.ANTHROPIC_API_KEY ? 'anthropic' : 'claude-cli')).toLowerCase();
+  const explicit = process.env.SWIVEL_LLM_PROVIDER?.toLowerCase();
+  const kind = explicit
+    ?? (process.env.ANTHROPIC_API_KEY ? 'anthropic' : process.env.OPENAI_API_KEY ? 'openai' : 'claude-cli');
   switch (kind) {
     case 'anthropic': return new AnthropicProvider();
+    case 'openai': return new OpenAiProvider();
     case 'claude-cli': return new ClaudeCliProvider();
     case 'mock': return new MockProvider([]);
-    default: throw new Error(`Unknown SWIVEL_LLM_PROVIDER "${kind}". Use anthropic | claude-cli | mock.`);
+    default: throw new Error(`Unknown SWIVEL_LLM_PROVIDER "${kind}". Use anthropic | openai | claude-cli | mock.`);
   }
 }

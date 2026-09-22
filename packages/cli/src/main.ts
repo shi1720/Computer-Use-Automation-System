@@ -10,7 +10,7 @@ import { parseArgs } from 'node:util';
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
-  SwivelStore, Runner, AnthropicProvider, ClaudeCliProvider, MockProvider,
+  SwivelStore, Runner, AnthropicProvider, OpenAiProvider, ClaudeCliProvider, MockProvider,
   verifyChain, validateCapability, validateOverlay, formatFindings, hasErrors,
   resolveCapability, computeContentHash, getProductProfile, formatResult,
   estimateCostUsd, hashPassword, stabilityScore,
@@ -83,17 +83,35 @@ async function main(): Promise<void> {
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
+/**
+ * Which model drives discovery.
+ *
+ * An explicit `--llm` wins; failing that, whichever API key is in the
+ * environment. `claude-cli` is the fallback rather than a preference: it needs
+ * no key at all, which is why a reviewer can use it, and it reports no token
+ * usage, which is why a measured run should not.
+ */
 function llmFromFlag(flag: string | undefined): LlmProvider {
-  const kind = (flag ?? process.env.SWIVEL_LLM_PROVIDER ?? (process.env.ANTHROPIC_API_KEY ? 'anthropic' : 'claude-cli')).toLowerCase();
+  const kind = (flag
+    ?? process.env.SWIVEL_LLM_PROVIDER
+    ?? (process.env.ANTHROPIC_API_KEY ? 'anthropic' : process.env.OPENAI_API_KEY ? 'openai' : 'claude-cli')
+  ).toLowerCase();
+
   if (kind === 'anthropic') {
     if (!process.env.ANTHROPIC_API_KEY) {
-      fail('ANTHROPIC_API_KEY is not set. Either export it, or use --llm claude-cli to route through a locally signed-in Claude Code CLI.');
+      fail('ANTHROPIC_API_KEY is not set. Either export it, or use --llm openai / --llm claude-cli.');
     }
     return new AnthropicProvider();
   }
+  if (kind === 'openai') {
+    if (!process.env.OPENAI_API_KEY) {
+      fail('OPENAI_API_KEY is not set. Either export it, or use --llm anthropic / --llm claude-cli.');
+    }
+    return new OpenAiProvider();
+  }
   if (kind === 'claude-cli') return new ClaudeCliProvider();
   if (kind === 'mock') return new MockProvider([]);
-  return fail(`Unknown --llm "${kind}". Use anthropic | claude-cli | mock.`);
+  return fail(`Unknown --llm "${kind}". Use anthropic | openai | claude-cli | mock.`);
 }
 
 const parseKv = (pairs: string[] | undefined): Record<string, string> =>

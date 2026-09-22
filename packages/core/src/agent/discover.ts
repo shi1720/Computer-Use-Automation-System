@@ -186,7 +186,24 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
     }
     usage = addUsage(usage, res.usage);
 
-    await evidence.log('model.turn', res.text || '(no narration)', {
+    /**
+     * What the model said it was doing, for the transcript.
+     *
+     * Not every model narrates. A reasoning model keeps its chain of thought in
+     * reasoning items the API does not return as text, so `res.text` is often
+     * empty and the transcript would read "(no narration)" for the whole run —
+     * which makes the one artefact meant to show *why* the model did what it
+     * did useless precisely when the model thought hardest.
+     *
+     * The tool call's own `intent` is the honest fallback. It is the model's
+     * sentence about this action, written for a human reviewer, and it is the
+     * same text that ends up on the step.
+     */
+    const narration = res.text?.trim()
+      || res.toolCalls.map((t) => String(t.input?.intent ?? '')).filter(Boolean).join(' ')
+      || '(no narration)';
+
+    await evidence.log('model.turn', narration, {
       turn: turns,
       toolCalls: res.toolCalls.map((t) => t.name),
       usage: res.usage,
@@ -380,12 +397,30 @@ export async function discover(req: DiscoveryRequest, deps: DiscoveryDeps): Prom
     return { status: 'failed', findings: [], message: `Discovery did not reach the goal (${why}). ${recorded.length} steps were recorded before stopping.`, turns, usage, costUsd };
   }
 
+  /**
+   * The conversation that produced this artifact, written once, in order.
+   *
+   * Tied to the capability by digest rather than embedded in it: an artifact
+   * outlives the model that wrote it, and carrying a model's output around
+   * forever makes the document harder to review and no more trustworthy.
+   */
+  const { sha256: transcriptSha256 } = await evidence.transcript(
+    messages.map((m) => ({
+      role: m.role,
+      content: m.content.map((c) =>
+        c.type === 'text' ? { type: 'text', text: c.text }
+        : c.type === 'tool_use' ? { type: 'tool_use', name: c.name, input: c.input }
+        : { type: 'tool_result', content: c.content, ...(c.isError ? { isError: true } : {}) }),
+    })),
+  );
+
   const capability = assembleCapability({
     req, profile, vocabulary, outputs,
     steps: recorded.map((r) => r.step),
     finish: finished,
     llm: { provider: llm.name, model: llm.model },
     synth,
+    transcriptSha256,
     // The frames that existed on the entry screen. Replay checks them before
     // step 1, so a build with a different frameset fails saying *that* rather
     // than failing four steps later on a control it cannot find.
@@ -824,6 +859,8 @@ function assembleCapability(a: {
   steps: Step[];
   finish: { summary: string; success_text: string; assertions?: Assertion[]; caveats?: string; awaitsSecondApproval?: boolean };
   entryFrames: string[];
+  /** Digest of the evidence bundle's transcript.json, so the two are tied together. */
+  transcriptSha256: string;
   llm: { provider: string; model: string };
   synth: SynthesisContext;
 }): Capability {
@@ -920,6 +957,7 @@ function assembleCapability(a: {
       ...base.provenance,
       discoveredBy: { kind: 'llm_discovery', provider: llm.provider, model: llm.model },
       recordedOnTenant: req.tenant.id,
+      transcriptSha256: a.transcriptSha256,
       history: [{ at: new Date().toISOString(), actor: req.owner ?? 'discovery', action: 'discovered', note: `via ${llm.provider}/${llm.model}` }],
     },
     quality: { ...base.quality, notes: finish.caveats ? [finish.caveats] : [] },

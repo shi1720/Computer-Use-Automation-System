@@ -1,0 +1,1281 @@
+{
+  "id": "b02e3461-3899-4730-828b-91203adae0c9",
+  "at": "2026-09-22T03:05:43.166Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off K. BRANNIGAN SUPERVISOR",
+    "contentFrame": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14 1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS"
+  },
+  "nodeCount": 90,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off K. BRANNIGAN SUPERVISOR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "K. BRANNIGAN SUPERVISOR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "K. BRANNIGAN SUPERVISOR",
+      "text": "K. BRANNIGAN SUPERVISOR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14 1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "text": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "text": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "MEMBER SEARCH RESULTS SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "MEMBER SEARCH RESULTS",
+      "text": "MEMBER SEARCH RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "MEMBER SEARCH RESULTS",
+      "text": "MEMBER SEARCH RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN INQ-0411 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "text": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "text": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "table",
+      "name": "",
+      "text": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "row",
+      "name": "",
+      "text": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "cell",
+      "name": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "text": "1 record(s) returned for «pii:2a94040b…0482» Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View « New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "text",
+      "name": "1",
+      "text": "1",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "text",
+      "name": "«pii:2a94040b…0482»",
+      "text": "«pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "table",
+      "name": "",
+      "text": "Member # Name SSN Branch Status Action «pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_grdResults"
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "row",
+      "name": "",
+      "text": "Member # Name SSN Branch Status Action",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "columnheader",
+      "name": "Member #",
+      "text": "Member #",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 0,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "Member #"
+      }
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "columnheader",
+      "name": "Name",
+      "text": "Name",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 1,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "Name"
+      }
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "columnheader",
+      "name": "SSN",
+      "text": "SSN",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 2,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "SSN"
+      }
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "columnheader",
+      "name": "Branch",
+      "text": "Branch",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 3,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "Branch"
+      }
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "columnheader",
+      "name": "Status",
+      "text": "Status",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 4,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "columnheader",
+      "name": "Action",
+      "text": "Action",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 0,
+        "colIndex": 5,
+        "rowValues": {
+          "Member #": "Member #",
+          "Name": "Name",
+          "SSN": "SSN",
+          "Branch": "Branch",
+          "Status": "Status",
+          "Action": "Action"
+        },
+        "columnHeader": "Action"
+      }
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "row",
+      "name": "",
+      "text": "«pii:2a94040b…0482» Whitfield, Dolores ***-**-4417 003 - CEDAR HOLLOW ACTIVE View",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "cell",
+      "name": "«pii:2a94040b…0482»",
+      "text": "«pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Member #"
+      }
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "text",
+      "name": "«pii:2a94040b…0482»",
+      "text": "«pii:2a94040b…0482»",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 0,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Member #"
+      }
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "cell",
+      "name": "Whitfield, Dolores",
+      "text": "Whitfield, Dolores",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Name"
+      }
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "text",
+      "name": "Whitfield, Dolores",
+      "text": "Whitfield, Dolores",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 1,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Name"
+      }
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "cell",
+      "name": "***-**-4417",
+      "text": "***-**-4417",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "SSN"
+      }
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "text",
+      "name": "***-**-4417",
+      "text": "***-**-4417",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 2,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "SSN"
+      }
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "cell",
+      "name": "003 - CEDAR HOLLOW",
+      "text": "003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Branch"
+      }
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "text",
+      "name": "003 - CEDAR HOLLOW",
+      "text": "003 - CEDAR HOLLOW",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 3,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Branch"
+      }
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "cell",
+      "name": "ACTIVE",
+      "text": "ACTIVE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "text",
+      "name": "ACTIVE",
+      "text": "ACTIVE",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 4,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Status"
+      }
+    },
+    {
+      "ref": "contentFrame::36",
+      "role": "cell",
+      "name": "View",
+      "text": "View",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Action"
+      }
+    },
+    {
+      "ref": "contentFrame::37",
+      "role": "link",
+      "name": "View",
+      "text": "View",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Action"
+      },
+      "domId": "ctl00_Main_grdResults_ctl02_lnkView"
+    },
+    {
+      "ref": "contentFrame::38",
+      "role": "text",
+      "name": "View",
+      "text": "View",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "table": {
+        "tableRef": "contentFrame::17",
+        "rowIndex": 1,
+        "colIndex": 5,
+        "rowValues": {
+          "Member #": "«pii:2a94040b…0482»",
+          "Name": "Whitfield, Dolores",
+          "SSN": "***-**-4417",
+          "Branch": "003 - CEDAR HOLLOW",
+          "Status": "ACTIVE",
+          "Action": "View"
+        },
+        "columnHeader": "Action"
+      }
+    },
+    {
+      "ref": "contentFrame::39",
+      "role": "link",
+      "name": "« New Search",
+      "text": "« New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::40",
+      "role": "text",
+      "name": "« New Search",
+      "text": "« New Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::41",
+      "role": "table",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::43",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::44",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::45",
+      "role": "row",
+      "name": "",
+      "text": "USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::46",
+      "role": "cell",
+      "name": "USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "text": "USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::47",
+      "role": "text",
+      "name": "USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "text": "USER: K. BRANNIGAN (SUPERVISOR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > MEMBER SEARCH > RESULTS",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    }
+  ]
+}

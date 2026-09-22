@@ -276,6 +276,21 @@ export function looksLikeData(s: string): boolean {
   // certain to be different on every future run.
   if (/^[A-Za-z]{1,4}[-_ ]?\d{4,}$/.test(t)) return true;
   if (/^[A-Za-z]{2,5}-\d{2,4}-\d{3,}$/.test(t)) return true;
+  /**
+   * A product version, anywhere in the string.
+   *
+   * These cores stamp "MERIDIAN Core 9.2.14" into the chrome of every screen,
+   * and a model nominating success text will happily include it — it is
+   * genuinely on the screen, it is genuinely stable across runs, and it passes
+   * every other test here. It is still wrong, and wrong in the way that costs
+   * most: the entire premise of the artifact is that it travels across builds
+   * of the same product, and this pins it to one. The tenant two minor versions
+   * ahead fails a checkpoint nobody can explain from reading it.
+   *
+   * The declared `target.productVersions` range is where a version belongs.
+   * A runtime assertion is not.
+   */
+  if (/\b\d+\.\d+(\.\d+)?\b/.test(t) && /[A-Za-z]/.test(t)) return true;
   return false;
 }
 

@@ -190,7 +190,24 @@ export class EvidenceRecorder {
     return file;
   }
 
-  /** Discovery only. The model's turns, redacted, stored beside the artifact. */
+  /**
+   * Write the model transcript for a discovery run.
+   *
+   * Every turn is already on the hash chain, but a chain is a log: to read
+   * *why* the model did what it did you would have to reconstruct the
+   * conversation from interleaved events. This is that conversation, in order,
+   * in one file — which is what a reviewer wants when they are judging the
+   * discovery rather than the artifact.
+   *
+   * It is evidence and not part of the capability, and the two are tied
+   * together by digest: the artifact records this file's SHA-256 in its
+   * provenance, so the transcript can be shown to be the one that produced that
+   * document without the artifact carrying a model's output around for the rest
+   * of its life.
+   *
+   * Redacted like everything else here. A model narrating a member's record
+   * writes that member's data into its own reasoning.
+   */
   async transcript(turns: unknown[]): Promise<{ file: string; sha256: string }> {
     await this.ready;
     const safe = this.redactor.deep(turns, 'transcript');

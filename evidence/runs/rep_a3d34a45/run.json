@@ -1,0 +1,45 @@
+{
+  "runId": "rep_a3d34a45",
+  "kind": "replay",
+  "startedAt": "2026-09-22T03:07:12.946Z",
+  "principal": {
+    "id": "cli",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.stop-payment",
+    "version": "0.1.0",
+    "contentHash": "01ac02940441f050a8e8a276fb18f94dfcd4861c3b36061e0557663d5adccd10"
+  },
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "checkNumber": "1042",
+    "amount": "«sensitive:0857c417…2.50»"
+  },
+  "counts": {
+    "events": 2,
+    "steps": 0,
+    "screenshots": 0,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1,
+    "sensitive": 1
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-22T03:07:13.254Z",
+  "outcome": {
+    "status": "failed",
+    "class": "POLICY_DENIED",
+    "code": "CONFIRMATION_REQUIRED",
+    "message": "Capability \"Place a stop payment on a check\" is irreversible and requires an explicit confirmationToken from the caller. Refusing to act without one."
+  },
+  "chainTip": "37a870a53b16b2da5c6ac9864d44b9377908a1716d74c489dc180fd090b20f2b"
+}

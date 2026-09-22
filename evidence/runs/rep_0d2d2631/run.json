@@ -1,0 +1,47 @@
+{
+  "runId": "rep_0d2d2631",
+  "kind": "replay",
+  "startedAt": "2026-09-22T03:08:07.939Z",
+  "principal": {
+    "id": "cli",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.member-savings-balance",
+    "version": "0.1.0",
+    "contentHash": "fe5d6595285909d51470dc76864e4fbca53c299e9e03bd92d068f943fb1b715f"
+  },
+  "tenant": {
+    "id": "harborpoint",
+    "institution": "Harbor Point Savings Bank",
+    "baseUrl": "http://127.0.0.1:4712"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "shareType": "SPECIAL SAVINGS"
+  },
+  "counts": {
+    "events": 21,
+    "steps": 5,
+    "screenshots": 1,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1,
+    "member_number": 18
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-22T03:08:22.877Z",
+  "outcome": {
+    "status": "failed",
+    "class": "TARGET_NOT_FOUND",
+    "message": "Best candidate for \"balance_cell\" scored 0, below the required 60. Matched: [hints.tag]. Missed: [cell.columnHeader, cell.rowWhere(Type={{input.shareType}})].",
+    "stepId": "extract_current_balance",
+    "expected": "balance_cell { cell row[Type={{input.shareType}}] col[Balance] frame=contentFrame }",
+    "observed": "best candidate scored 0 (matched: hints.tag; missed: cell.columnHeader, cell.rowWhere(Type={{input.shareType}}))"
+  },
+  "containsScreenCaptures": true,
+  "chainTip": "4f18a6d7222c525b1eabdb5cf6c794f8c129e40554942ee11bbccdc13bab4033"
+}

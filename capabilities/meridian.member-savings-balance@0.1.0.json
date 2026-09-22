@@ -5,8 +5,8 @@
     "id": "meridian.member-savings-balance",
     "version": "0.1.0",
     "title": "Read a member's savings balance",
-    "summary": "Looks up a member by member number and returns the current balance and available balance of their {{input.shareType}} share account. Navigates Member Search -> exact-match search by Member # -> View member -> reads the Balance and Available columns from the Share Accounts grid for the row whose Type is {{input.shareType}}.",
-    "createdAt": "2026-09-21T21:16:57.303Z",
+    "summary": "Looked up the specified member by member number, located the {{input.shareType}} share in the Share Accounts section, and recorded its current and available balances.",
+    "createdAt": "2026-09-22T03:05:15.794Z",
     "labels": {},
     "owner": "shivam"
   },
@@ -17,7 +17,10 @@
     "productVersions": "~9.2.14",
     "entry": {
       "urlTemplate": "{{tenant.baseUrl}}/main",
-      "expectedFrames": []
+      "expectedFrames": [
+        "navFrame",
+        "contentFrame"
+      ]
     },
     "vocabulary": {
       "member": "Member",
@@ -48,16 +51,16 @@
     ],
     "outputs": [
       {
-        "name": "balance",
+        "name": "currentBalance",
         "type": "money",
-        "description": "Current balance of the SPECIAL SAVINGS share account for member 0100482.",
+        "description": "Current balance of the SPECIAL SAVINGS share for member 0100482",
         "sensitivity": "sensitive",
         "required": false
       },
       {
-        "name": "available",
+        "name": "availableBalance",
         "type": "money",
-        "description": "Available balance of the SPECIAL SAVINGS share account for member 0100482.",
+        "description": "Available balance of the SPECIAL SAVINGS share for member 0100482",
         "sensitivity": "sensitive",
         "required": false
       }
@@ -101,7 +104,7 @@
       "dualControl": false,
       "financialImpact": false,
       "idempotent": true,
-      "summary": "Read-only inquiry; no transactions or record changes were submitted."
+      "summary": "This capability only reads. It makes no change to any record."
     },
     "preconditions": []
   },
@@ -301,7 +304,7 @@
     "steps": [
       {
         "id": "click_member_search",
-        "intent": "Open {{vocab.member}} Search to look up {{vocab.member}} {{input.memberNumber}}.",
+        "intent": "Open the {{vocab.member}} Search screen from the main menu to look up the {{vocab.member}} by {{vocab.member}} number.",
         "kind": "click",
         "target": {
           "id": "member_search",
@@ -346,7 +349,7 @@
       },
       {
         "id": "fill_member",
-        "intent": "Enter the {{vocab.member}} number to search for {{vocab.member}} {{input.memberNumber}}.",
+        "intent": "Enter the provided {{vocab.member}} number into the {{vocab.member}} # field for an exact {{vocab.member}} search.",
         "kind": "fill",
         "target": {
           "id": "member",
@@ -387,7 +390,7 @@
       },
       {
         "id": "click_search",
-        "intent": "Search for the {{vocab.member}} using the entered {{vocab.member}} number {{input.memberNumber}}.",
+        "intent": "Run the {{vocab.member}} search using the entered {{vocab.member}} number for an exact match.",
         "kind": "click",
         "target": {
           "id": "search",
@@ -493,8 +496,8 @@
         "authoredBy": "model"
       },
       {
-        "id": "extract_balance",
-        "intent": "Record the current balance of the {{input.shareType}} {{vocab.share}} account.",
+        "id": "extract_current_balance",
+        "intent": "Capture the current balance of the {{input.shareType}} {{vocab.share}} account from the {{vocab.shareList}} grid.",
         "kind": "extract",
         "target": {
           "id": "balance_cell",
@@ -533,15 +536,15 @@
         },
         "risk": "read_only",
         "extract": {
-          "into": "balance",
+          "into": "currentBalance",
           "source": "text",
           "transform": "money_to_number"
         },
         "authoredBy": "model"
       },
       {
-        "id": "extract_available",
-        "intent": "Record the available balance of the {{input.shareType}} {{vocab.share}} account.",
+        "id": "extract_available_balance",
+        "intent": "Capture the available balance of the {{input.shareType}} {{vocab.share}} account from the {{vocab.shareList}} grid.",
         "kind": "extract",
         "target": {
           "id": "available_cell",
@@ -580,7 +583,7 @@
         },
         "risk": "read_only",
         "extract": {
-          "into": "available",
+          "into": "availableBalance",
           "source": "text",
           "transform": "money_to_number"
         },
@@ -589,17 +592,12 @@
     ],
     "successCheckpoint": {
       "id": "capability_complete",
-      "description": "MEMBER INQUIRY SCREEN",
+      "description": "SCREEN INQ-0420",
       "all": [
         {
           "kind": "text_present",
           "regex": "SCREEN\\s+INQ-0420",
           "because": "the core stamps a screen identifier on every page; it is stable across runs and carries no member data"
-        },
-        {
-          "kind": "text_present",
-          "text": "{{vocab.member}} INQUIRY SCREEN",
-          "because": "the discovery run verified this phrase was present on the final screen and that it is not run-varying data"
         }
       ],
       "timeoutMs": 20000,
@@ -607,23 +605,24 @@
     }
   },
   "provenance": {
-    "discoveredAt": "2026-09-21T21:16:57.303Z",
+    "discoveredAt": "2026-09-22T03:05:15.794Z",
     "discoveredBy": {
       "kind": "llm_discovery",
-      "provider": "claude-cli",
-      "model": "claude-code-cli"
+      "provider": "openai",
+      "model": "gpt-5.1"
     },
     "goal": "Look up member 0100482 and report the current balance and the available balance of their SPECIAL SAVINGS share account.",
     "swivelVersion": "1.0.0",
     "history": [
       {
-        "at": "2026-09-21T21:16:57.303Z",
+        "at": "2026-09-22T03:05:15.794Z",
         "actor": "shivam",
         "action": "discovered",
-        "note": "via claude-cli/claude-code-cli"
+        "note": "via openai/gpt-5.1"
       }
     ],
-    "recordedOnTenant": "pineridge"
+    "recordedOnTenant": "pineridge",
+    "transcriptSha256": "b3bd2d6be34570127860b9749f080533421dd9cb71d0d790db36dd880d6317ca"
   },
   "quality": {
     "approvalState": "draft",
@@ -636,9 +635,7 @@
       "failed": 0
     },
     "stabilityScore": 0,
-    "notes": [
-      "Read-only inquiry; no transactions or record changes were submitted."
-    ]
+    "notes": []
   },
-  "contentHash": "9a8df99200ac49dca843a48ba418ec3d81192f77296e711a28e8f9024eb84604"
+  "contentHash": "fe5d6595285909d51470dc76864e4fbca53c299e9e03bd92d068f943fb1b715f"
 }

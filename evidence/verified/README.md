@@ -36,3 +36,5 @@ All five scenarios also passed against [the public deployment](https://swivel-de
 [Responsive checks](responsive-check.json) recorded no page errors or horizontal overflow at 1440, 768, and 390 pixel widths. The automated suite passed 192 tests across 46 suites, and TypeScript validation passed. The [chain audit](chain-audit.json) verifies every committed evidence bundle.
 
 The [console handoff check](local-handoff-ui.json) also verified a decoded live frame, navigation away and reconnection to the same ticket, Escape returning keyboard focus, and keyboard activation of Resume automation. The associated preserved bundle is [rep_3404aac0](../runs/rep_3404aac0/run.json).
+
+The same console test passed against the [final public backend](hosted-handoff-ui.json), including reconnect and keyboard hand-back, with no browser page errors.

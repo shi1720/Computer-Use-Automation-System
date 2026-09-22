@@ -1,7 +1,7 @@
 # Submission status
 
 - App: https://swivel-demo.web.app
-- Source: https://github.com/shi1720/Computer-Use-Automation-System
+- Source: https://github.com/shi1720/Computer-Use-Automation-System (public; main is the default and only branch)
 - Video: `demo/swivel-demo.mp4`, 1080p, narrated, captioned.
 - YouTube title, description, and settings: `demo/youtube-upload.txt`.
 - Assignment email: `SUBMISSION-EMAIL.txt`.

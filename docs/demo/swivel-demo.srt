@@ -19,114 +19,114 @@ A model learns the workflow once.
 Deterministic automation replays it, and a person takes over when the system cannot safely continue.
 
 6
-00:00:20,419 --> 00:00:23,796
+00:00:19,588 --> 00:00:22,965
 This is the working demo, using synthetic bank data.
 
 7
-00:00:23,796 --> 00:00:26,048
+00:00:22,965 --> 00:00:25,217
 Choose a scenario and run it.
 
 8
-00:00:26,048 --> 00:00:31,677
+00:00:25,217 --> 00:00:30,846
 Swivel opens Chromium, signs into the legacy bank, searches for the member, and reads the
 
 9
-00:00:31,677 --> 00:00:32,427
+00:00:30,846 --> 00:00:31,596
 savings balances.
 
 10
-00:00:32,427 --> 00:00:34,679
+00:00:31,596 --> 00:00:33,848
 The result comes from the application.
 
 11
-00:00:34,679 --> 00:00:38,432
+00:00:33,848 --> 00:00:37,600
 Replay makes zero model calls, and every step leaves evidence.
 
 12
-00:00:40,432 --> 00:00:43,973
+00:00:39,600 --> 00:00:43,141
 The capability is more than a click recording.
 
 13
-00:00:43,973 --> 00:00:49,726
+00:00:43,141 --> 00:00:48,895
 It declares typed inputs and outputs, permitted actions, business outcomes, and success checks.
 
 14
-00:00:49,726 --> 00:00:53,267
+00:00:48,895 --> 00:00:52,435
 Targets use names, nearby captions, and table relationships.
 
 15
-00:00:53,267 --> 00:00:59,021
+00:00:52,435 --> 00:00:58,189
 The saved OpenAI discovery completed seven model turns and produced six reusable steps.
 
 16
-00:00:59,021 --> 00:01:02,562
+00:00:58,189 --> 00:01:01,730
 That exact artifact also passed a deterministic replay.
 
 17
-00:01:04,563 --> 00:01:08,047
+00:01:03,730 --> 00:01:07,214
 A missing member is a business outcome, not a crash.
 
 18
-00:01:08,047 --> 00:01:13,274
+00:01:07,214 --> 00:01:12,441
 A session timeout is different: the engine signs back in and safely restarts because no
 
 19
-00:01:13,274 --> 00:01:15,016
+00:01:12,441 --> 00:01:14,183
 irreversible work has been committed.
 
 20
-00:01:15,016 --> 00:01:17,107
+00:01:14,183 --> 00:01:16,274
 These scenarios exercise the real browser.
 
 21
-00:01:17,107 --> 00:01:20,940
+00:01:16,274 --> 00:01:20,107
 The evidence shows which signal fired and how the engine responded.
 
 22
-00:01:28,729 --> 00:01:33,152
+00:01:22,107 --> 00:01:26,530
 Here the second institution hides its deposit accounts behind a Display button.
 
 23
-00:01:33,152 --> 00:01:37,206
+00:01:26,530 --> 00:01:30,584
 Without the tenant overlay, the engine refuses to guess and pauses.
 
 24
-00:01:37,206 --> 00:01:41,261
+00:01:30,584 --> 00:01:34,638
 The operator claims the ticket and sees the same live browser.
 
 25
-00:01:41,261 --> 00:01:44,578
+00:01:34,638 --> 00:01:37,956
 I click Display Deposit Accounts and hand control back.
 
 26
-00:01:44,578 --> 00:01:47,527
+00:01:37,956 --> 00:01:40,904
 Automation then reads the balances and verifies success.
 
 27
-00:01:47,527 --> 00:01:50,107
+00:01:40,904 --> 00:01:43,484
 The operator action stays in the evidence.
 
 28
-00:02:01,442 --> 00:02:07,313
+00:01:45,484 --> 00:01:51,356
 Swivel includes the source, a concise design report, genuine
 discovery evidence, and repeatable acceptance checks.
 
 29
-00:02:07,313 --> 00:02:10,053
+00:01:51,356 --> 00:01:54,096
 The interface works on desktop and mobile.
 
 30
-00:02:10,053 --> 00:02:13,967
+00:01:54,096 --> 00:01:58,010
 The public sandbox is bounded and uses synthetic records only.
 
 31
-00:02:13,967 --> 00:02:17,490
+00:01:58,010 --> 00:02:01,533
 Try it at swivel demo dot web dot app.
 
 32
-00:02:17,490 --> 00:02:18,664
+00:02:01,533 --> 00:02:02,707
 Learn it once.
 
 33
-00:02:18,664 --> 00:02:20,230
+00:02:02,707 --> 00:02:04,272
 Run it with confidence.

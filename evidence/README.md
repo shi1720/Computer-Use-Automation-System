@@ -23,7 +23,7 @@ npm run swivel -- verify evidence/runs/rep_2ffe6dc9
 
 The [chain audit](verified/chain-audit.json) checks every committed bundle. Hash verification detects inconsistency relative to a bundle's own recorded digest. It does not independently prove when a run happened or prevent someone from regenerating an entire chain.
 
-Text redaction and screenshot handling have different limits. Screenshots may show the simulator's synthetic member data. These captures are not a guarantee that arbitrary regulated data would be safe to persist; see [Safety in the design report](../REPORT.md#6-safety).
+Text redaction and screenshot handling have different limits. Screenshots may show the simulator's synthetic member data. These captures are not a guarantee that arbitrary regulated data would be safe to persist; see [Safety in the design report](../REPORT.md#safety).
 
 ## Reproduction
 

@@ -18,7 +18,7 @@ In this demo:
 - A session timeout triggers bounded recovery.
 - An operator claims a paused session, performs a missing UI step, and resumes automation.
 
-All banking records are synthetic. The walkthrough is recorded from the deployed app with synthetic narration and burned-in captions. This is a bounded review sandbox, not a production banking service.
+All banking records are synthetic. The walkthrough is recorded from the deployed app with synthetic narration and burned-in captions. Some waits are shortened to keep the walkthrough concise. This is a bounded review sandbox, not a production banking service.
 
 Built by Shivam Gupta.
 

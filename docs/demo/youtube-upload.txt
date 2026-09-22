@@ -1,5 +1,5 @@
 Title
-Swivel: Learn a legacy workflow once, replay it with confidence
+Swivel | AI learns the workflow. Code replays it.
 
 Description
 What if an AI only had to learn a legacy application once?
@@ -18,7 +18,7 @@ In this demo:
 - A session timeout triggers bounded recovery.
 - An operator claims a paused session, performs a missing UI step, and resumes automation.
 
-All banking records are synthetic. The walkthrough is recorded from the deployed app with synthetic narration and burned-in captions. Some waits are shortened to keep the walkthrough concise. This is a bounded review sandbox, not a production banking service.
+All banking records are synthetic. The walkthrough is recorded from the deployed app with AI-generated narration and burned-in captions. Some waits are shortened to keep the walkthrough concise. This is a bounded review sandbox, not a production banking service.
 
 Built by Shivam Gupta.
 
@@ -27,3 +27,8 @@ Audience: Not made for kids
 Language: English
 Category: Science & Technology
 Caption file: swivel-demo.srt
+Thumbnail file: swivel-thumbnail.png
+Narration: OpenAI Cedar, conversational delivery
+Duration: 1:42
+Video URL: https://youtu.be/eqc0c8pRSlw
+AI content disclosure: Yes (synthetic narration)

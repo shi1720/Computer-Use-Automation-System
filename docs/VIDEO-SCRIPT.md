@@ -1,27 +1,27 @@
 # Demo narration
 
-The final recording is [swivel-demo.mp4](demo/swivel-demo.mp4), with [captions](demo/swivel-demo.srt). It shows the working app and uses synthetic bank records and synthetic narration.
+The recording uses a conversational synthetic voice and real footage from the public app. All banking records are synthetic.
 
-## Learn it once. Run it with confidence.
+## Learn it once. Run it again.
 
-Legacy banking software often has no usable API. Staff still search records and copy values by hand. Swivel turns that work into a reusable capability. A model learns the workflow once. Deterministic automation replays it, and a person takes over when the system cannot safely continue.
+Some banking applications still need someone to click through every step by hand. Swivel uses AI to learn that workflow once. After that, ordinary code runs it again. And when it can't safely continue, a person can take over the same live session.
 
-## A real browser. A verified result.
+## A real browser. A checked result.
 
-This is the working demo, using synthetic bank data. Choose a scenario and run it. Swivel opens Chromium, signs into the legacy bank, searches for the member, and reads the savings balances. The result comes from the application. Replay makes zero model calls, and every step leaves evidence.
+Let's try a balance lookup. This is a working bank simulator, and all the records are synthetic. Swivel opens a browser, signs in, finds the member, and reads their savings balance. There it is. No model calls during replay, and we can inspect every step.
 
-## The artifact is the contract.
+## A workflow you can review.
 
-The capability is more than a click recording. It declares typed inputs and outputs, permitted actions, business outcomes, and success checks. Targets use names, nearby captions, and table relationships. The saved OpenAI discovery completed seven model turns and produced six reusable steps. That exact artifact also passed a deterministic replay.
+Here's what gets saved. It isn't just a list of clicks. The capability defines the inputs, the outputs, which actions are allowed, and how to check that the job actually finished. Our OpenAI discovery produced six reusable steps. We then replayed that exact artifact successfully.
 
-## Expected errors get deliberate answers.
+## When something goes wrong.
 
-A missing member is a business outcome, not a crash. A session timeout is different: the engine signs back in and safely restarts because no irreversible work has been committed. These scenarios exercise the real browser. The evidence shows which signal fired and how the engine responded.
+Now, what happens when the member doesn't exist? We get a clear business outcome. The app hasn't crashed. A timed-out session is handled differently: Swivel signs back in and safely restarts. And the evidence tells us exactly what happened.
 
-## A human takes over the same session.
+## A person can take over.
 
-Here the second institution hides its deposit accounts behind a Display button. Without the tenant overlay, the engine refuses to guess and pauses. The operator claims the ticket and sees the same live browser. I click Display Deposit Accounts and hand control back. Automation then reads the balances and verifies success. The operator action stays in the evidence.
+At this second institution, the accounts sit behind a Display button. Swivel stops instead of guessing. I claim the session, open the accounts, and hand control back. It's the same live browser throughout. The automation reads the balances and checks the result.
 
-## Inspect it. Run it. Reproduce it.
+## Try it for yourself.
 
-Swivel includes the source, a concise design report, genuine discovery evidence, and repeatable acceptance checks. The interface works on desktop and mobile. The public sandbox is bounded and uses synthetic records only. Try it at swivel demo dot web dot app. Learn it once. Run it with confidence.
+You can try all five scenarios in the public demo, including this handoff. The source, design decisions, and actual discovery evidence are on GitHub. You'll find both links in the description. Teach the workflow once, review what it learned, and run it with confidence.

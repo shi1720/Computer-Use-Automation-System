@@ -1,0 +1,46 @@
+{
+  "video": "swivel-demo.mp4",
+  "durationSeconds": 101.8,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "videoSha256": "f296d01914e1b13ffe7c791ff5486426e6cd0021ba1f11e9923d62002250a5c8",
+  "narration": {
+    "provider": "OpenAI",
+    "model": "gpt-4o-mini-tts",
+    "voice": "cedar",
+    "style": "Conversational technical walkthrough",
+    "synthetic": true
+  },
+  "captions": {
+    "file": "swivel-demo.srt",
+    "count": 29,
+    "timingSource": "Word timestamps from transcription of the final audio",
+    "burnedIn": true
+  },
+  "thumbnail": {
+    "file": "swivel-thumbnail.png",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "bytes": 227639
+  },
+  "checks": [
+    "Full video and audio decode completed without errors",
+    "Caption timings are ordered, non-overlapping, and within video duration",
+    "Speech transcription matches all six narration scenes",
+    "Opening, replay, discovery evidence, and handoff frames visually inspected"
+  ],
+  "youtube": {
+    "url": "https://youtu.be/eqc0c8pRSlw",
+    "visibility": "Public",
+    "hdProcessing": "complete",
+    "captions": "English",
+    "customThumbnail": "uploaded",
+    "uploadedThrough": "Codex internal browser"
+  }
+}

@@ -4,11 +4,11 @@
 
 Swivel lets an AI discover how to operate a legacy application, then saves the job as a typed, versioned capability. Subsequent runs use deterministic browser automation, with explicit outcomes, bounded recovery, policy checks, and a real human takeover path.
 
-[Open the live demo](https://swivel-demo.web.app) · [Watch the captioned demo](docs/demo/swivel-demo.mp4) · [Design report](REPORT.md) · [Verified evidence](evidence/verified/README.md)
+[Open the live demo](https://swivel-demo.web.app) · [Watch the captioned demo](https://youtu.be/eqc0c8pRSlw) · [Design report](REPORT.md) · [Verified evidence](evidence/verified/README.md)
 
 The bank is a simulator. The browser interactions, model discovery, replay, and session handoff are real. All member records and credentials in the demo are synthetic.
 
-![Swivel workspace](docs/screens/workspace-desktop.png)
+[![Watch the Swivel demo: AI learns. Code replays.](docs/demo/swivel-thumbnail.png)](https://youtu.be/eqc0c8pRSlw)
 
 ## Try it in the browser
 

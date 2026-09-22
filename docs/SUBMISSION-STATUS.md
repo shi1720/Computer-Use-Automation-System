@@ -13,6 +13,6 @@ The supplied Rice University Devpost submission URL redirects to a page stating 
 
 The revised video was published through the Codex internal browser on September 22, 2026. YouTube Studio confirms Public visibility and completed HD processing. The English subtitle track and custom thumbnail are saved.
 
-The assignment email is prepared for assignments@interface.ai using the original application account.
+The assignment email was sent to assignments@interface.ai from the original application account on September 22, 2026. Gmail confirmed "Message sent", and the sent message contains the repository URL on its own line, the hosted app URL, and the public YouTube URL.
 
 The current narrated video replaces the earlier deck and script, whose performance and regulatory claims were not supported by the submitted measurements.

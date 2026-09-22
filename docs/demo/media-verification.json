@@ -41,6 +41,13 @@
     "hdProcessing": "complete",
     "captions": "English",
     "customThumbnail": "uploaded",
-    "uploadedThrough": "Codex internal browser"
+    "uploadedThrough": "Codex internal browser",
+    "playbackVerification": {
+      "width": 1920,
+      "height": 1080,
+      "durationSeconds": 101.821,
+      "readyState": 4,
+      "playbackError": null
+    }
   }
 }

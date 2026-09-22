@@ -1,0 +1,11 @@
+.git
+node_modules
+.swivel*
+.scratch
+.env*
+artifacts
+docs
+test-results
+*.mp4
+*.wav
+*.aiff

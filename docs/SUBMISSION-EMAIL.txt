@@ -1,0 +1,22 @@
+To: assignments@interface.ai
+Subject: Computer-Use Automation assignment | Shivam Gupta | Swivel
+
+Hi interface.ai Engineering Team,
+
+Here is my completed Computer-Use Automation assignment, Swivel:
+
+https://github.com/shi1720/Computer-Use-Automation-System
+
+Live demo: https://swivel-demo.web.app
+Captioned demo video: https://github.com/shi1720/Computer-Use-Automation-System/blob/main/docs/demo/swivel-demo.mp4
+
+Swivel turns a genuine LLM-driven browser run into a typed, versioned capability and replays it without a model. The demo includes successful lookup, a member-not-found outcome, session timeout recovery, reuse at a second institution, and an operator taking control of the same live browser before handing it back.
+
+README.md contains the exact setup, discovery, and replay commands. REPORT.md uses the seven requested headings, and evidence/verified indexes the fresh OpenAI discovery, its saved artifact, deterministic replay, and acceptance results. All banking data is synthetic.
+
+Validation includes 192 passing automated tests, all five acceptance scenarios on the hosted app, valid evidence chains, and browser checks at desktop, tablet, and mobile widths. The report documents the remaining production limitations, including ephemeral hosted demo storage and the desktop adapter seam.
+
+Thank you for reviewing the project. I look forward to discussing the design and trade-offs.
+
+Best,
+Shivam Gupta

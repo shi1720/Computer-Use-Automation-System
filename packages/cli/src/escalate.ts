@@ -85,7 +85,7 @@ export class ConsoleEscalationBridge implements EscalationSink {
         if (!res.ok) continue;
         const body = await res.json() as { status: string; resolution?: 'resume' | 'completed_by_human' | 'abort'; note?: string; assignee?: { id: string; name: string }; humanActions?: Intervention['humanActions'] };
         if (body.assignee && !local.assignee) {
-          local.assignee = body.assignee;
+          this.broker.claim(id, body.assignee);
           this.opts.onNotice?.(`  ${c.yellow('→')} ${body.assignee.name} claimed the session.`);
         }
         // Mirror back what the operator actually did, so it lands on this run's

@@ -211,6 +211,7 @@ export class EscalationBroker extends EventEmitter {
   /** Called once the lease has actually moved. Never call it speculatively. */
   markInControl(id: string, control: NonNullable<InterventionContext['control']>): Intervention {
     const i = this.require(id);
+    if (i.status !== 'claimed' || !i.assignee) throw new Error('A named operator must claim the ticket before control is granted.');
     i.status = 'in_control';
     i.context.control = control;
     this.touch(i, 'control_granted', i.assignee?.id);
@@ -310,6 +311,20 @@ export class EscalationBroker extends EventEmitter {
         done(this.require(id));
       }, budget);
       this.on(`resolved:${id}`, done);
+    });
+  }
+
+  /** Keep a local ticket claimable until a real operator takes responsibility. */
+  waitForClaim(id: string): Promise<Intervention> {
+    const i = this.require(id);
+    if (i.status !== 'open') return Promise.resolve(i);
+    return new Promise((resolve) => {
+      const done = (updated: Intervention) => {
+        if (updated.id !== id || updated.status === 'open') return;
+        clearTimeout(timer); this.off('updated', done); resolve(updated);
+      };
+      const timer = setTimeout(() => this.expire(id), Math.max(1, Date.parse(i.expiresAt) - Date.now()));
+      this.on('updated', done);
     });
   }
 

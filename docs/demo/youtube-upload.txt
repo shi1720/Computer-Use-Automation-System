@@ -1,0 +1,29 @@
+Title
+Swivel: Learn a legacy workflow once, replay it with confidence
+
+Description
+What if an AI only had to learn a legacy application once?
+
+Swivel turns a genuine model-driven browser run into a typed, versioned capability. It then replays the workflow without a model, returns clear business outcomes, recovers from session timeouts, and lets an operator take over the same live browser when automation is stuck.
+
+Try the live demo: https://swivel-demo.web.app
+Source and setup: https://github.com/shi1720/Computer-Use-Automation-System
+Design report: https://github.com/shi1720/Computer-Use-Automation-System/blob/main/REPORT.md
+Discovery and replay evidence: https://github.com/shi1720/Computer-Use-Automation-System/tree/main/evidence/verified
+
+In this demo:
+- A real browser searches a legacy banking simulator and reads balances.
+- The capability declares typed inputs, outputs, policies, and success checks.
+- A missing member produces a business outcome.
+- A session timeout triggers bounded recovery.
+- An operator claims a paused session, performs a missing UI step, and resumes automation.
+
+All banking records are synthetic. The walkthrough is recorded from the deployed app with synthetic narration and burned-in captions. This is a bounded review sandbox, not a production banking service.
+
+Built by Shivam Gupta.
+
+Visibility: Public
+Audience: Not made for kids
+Language: English
+Category: Science & Technology
+Caption file: swivel-demo.srt

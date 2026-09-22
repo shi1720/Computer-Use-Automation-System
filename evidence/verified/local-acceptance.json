@@ -1,0 +1,51 @@
+{
+  "base": "http://127.0.0.1:4700",
+  "at": "2026-09-22T04:24:09.857Z",
+  "checks": [
+    {
+      "scenario": "success",
+      "runId": "rep_caeee4b6",
+      "status": "success",
+      "durationMs": 3864,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "not-found",
+      "runId": "rep_dc883f89",
+      "status": "business_outcome",
+      "durationMs": 2789,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "session-expiry",
+      "runId": "rep_a295ec6d",
+      "status": "success",
+      "durationMs": 6555,
+      "recoveries": 1,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "second-tenant",
+      "runId": "rep_d7bb4889",
+      "status": "success",
+      "durationMs": 4772,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "handoff",
+      "runId": "rep_cdf81bb1",
+      "status": "success",
+      "durationMs": 16567,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": true
+    }
+  ]
+}

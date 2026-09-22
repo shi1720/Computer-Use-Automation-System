@@ -133,9 +133,11 @@ export async function startLiveControl(
 
   const sockets = new Set<WebSocket>();
   let screencasting = false;
+  let lastFrame: string | null = null;
 
   const onFrame = async (params: { data: string; sessionId: number; metadata: unknown }) => {
     const payload = JSON.stringify({ t: 'frame', data: params.data, viewport });
+    lastFrame = payload;
     for (const ws of sockets) { if (ws.readyState === ws.OPEN) ws.send(payload); }
     try { await cdp.send('Page.screencastFrameAck', { sessionId: params.sessionId }); } catch { /* page navigating */ }
   };
@@ -185,6 +187,9 @@ export async function startLiveControl(
      */
     try {
       ws.send(JSON.stringify({ t: 'hello', viewport, url: await surface.currentUrl(), control: leases.holder }));
+      // CDP emits frames when pixels change. A returning operator must also
+      // see a paused, unchanged screen immediately after reconnecting.
+      if (lastFrame) ws.send(lastFrame);
 
       if (!screencasting) {
         screencasting = true;

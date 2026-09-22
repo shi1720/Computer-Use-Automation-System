@@ -1,0 +1,51 @@
+{
+  "base": "https://swivel-demo.web.app",
+  "at": "2026-09-22T04:30:54.257Z",
+  "checks": [
+    {
+      "scenario": "success",
+      "runId": "rep_5f7ae703",
+      "status": "success",
+      "durationMs": 7419,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "not-found",
+      "runId": "rep_959d1c13",
+      "status": "business_outcome",
+      "durationMs": 4924,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "session-expiry",
+      "runId": "rep_74755688",
+      "status": "success",
+      "durationMs": 10399,
+      "recoveries": 1,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "second-tenant",
+      "runId": "rep_240024e9",
+      "status": "success",
+      "durationMs": 7145,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": false
+    },
+    {
+      "scenario": "handoff",
+      "runId": "rep_97ea19f1",
+      "status": "success",
+      "durationMs": 21033,
+      "recoveries": 0,
+      "chain": true,
+      "liveHandoff": true
+    }
+  ]
+}

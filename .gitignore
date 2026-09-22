@@ -4,6 +4,9 @@ dist/
 .env
 .env.local
 .swivel/
+.swivel-*/
+.firebase/
+firebase-debug.log
 !evidence/**
 .DS_Store
 npm-debug.log*

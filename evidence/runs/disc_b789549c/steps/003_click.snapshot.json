@@ -1,0 +1,879 @@
+{
+  "id": "984d25f1-f117-4bdb-978d-d010ff2d2700",
+  "at": "2026-09-22T04:10:54.789Z",
+  "url": "http://127.0.0.1:4711/main",
+  "title": "Pine Ridge Federal Credit Union - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14 MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN. Operator ID Password F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY"
+  },
+  "nodeCount": 78,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "PR MAIN MENU Home INQUIRY Member Search SERVICING Address Maintenance Open Share Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "PR MAIN MENU",
+      "text": "PR MAIN MENU",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "text": "Home",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "text": "INQUIRY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Member Search",
+      "text": "Member Search",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "text": "SERVICING",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "text": "Address Maintenance",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Share",
+      "text": "Open Share",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "text": "Stop Payment",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "text": "Fee Reversal",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "text": "SESSION",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "text": "Sign Off",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "text": "A. NGUYEN MSR",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "navFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "text": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14 MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN. Operator ID Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "text": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "text": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "text": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "text": "SESSION EXPIRED SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "SESSION EXPIRED",
+      "text": "SESSION EXPIRED",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "SESSION EXPIRED",
+      "text": "SESSION EXPIRED",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "text": "SCREEN SEC-0900 | MERIDIAN Core 9.2.14",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "text": "MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN. Operator ID Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN. Operator ID Password",
+      "text": "MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN. Operator ID Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "text",
+      "name": "MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN.",
+      "text": "MSG 0900 — YOUR SESSION HAS TIMED OUT DUE TO INACTIVITY. PLEASE SIGN ON AGAIN.",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "form",
+      "name": "",
+      "text": "Operator ID Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "frmReauth"
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "table",
+      "name": "",
+      "text": "Operator ID Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "row",
+      "name": "",
+      "text": "Operator ID",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "cell",
+      "name": "Operator ID",
+      "text": "Operator ID",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "text",
+      "name": "Operator ID",
+      "text": "Operator ID",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "textbox",
+      "name": "",
+      "value": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_txtOperatorId"
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "row",
+      "name": "",
+      "text": "Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "cell",
+      "name": "Password",
+      "text": "Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "text",
+      "name": "Password",
+      "text": "Password",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "textbox",
+      "name": "",
+      "value": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "domId": "ctl00_Main_txtPassword"
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "row",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "cell",
+      "name": "",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "button",
+      "name": "Sign On",
+      "value": "Sign On",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "table",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "row",
+      "name": "",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "row",
+      "name": "",
+      "text": "NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "cell",
+      "name": "NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "text": "NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "text",
+      "name": "NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "text": "NOT SIGNED ON BUSINESS DATE: 09/21/2026 TERM: WS0142 | SECURITY",
+      "visible": true,
+      "enabled": true,
+      "framePath": [
+        "contentFrame"
+      ]
+    }
+  ]
+}

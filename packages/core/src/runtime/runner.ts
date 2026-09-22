@@ -99,6 +99,8 @@ export class Runner {
     return {
       broker: esc.broker,
       grantControl: async (i: Intervention) => {
+        const claimed = await esc.broker.waitForClaim(i.id);
+        if (claimed.status !== 'claimed' || !claimed.assignee) return;
         live = await startLiveControl(surface, leases, {
           onHumanAction: (a) => {
             esc.broker.recordHumanAction(i.id, a);
@@ -107,7 +109,7 @@ export class Runner {
         });
         // Control moves here and only here. Until this transfer the operator can
         // watch but cannot act — the live-control server drops their input.
-        leases.transfer('operator', i.assignee?.id ?? 'operator', `intervention ${i.id}: ${i.reason}`);
+        leases.transfer('operator', claimed.assignee.id, `intervention ${i.id}: ${i.reason}`);
         esc.broker.markInControl(i.id, { wsUrl: live.wsUrl, token: live.token, viewport: live.viewport });
         await evidence.log('escalation.control_granted', `Live session handed to operator (${live.wsUrl})`, { interventionId: i.id });
         await esc.onControlReady?.(esc.broker.get(i.id) as Intervention);

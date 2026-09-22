@@ -1,0 +1,8 @@
+.git
+node_modules
+.swivel*
+.scratch
+.env*
+artifacts
+docs
+test-results

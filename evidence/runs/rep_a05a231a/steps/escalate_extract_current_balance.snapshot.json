@@ -1,0 +1,3229 @@
+{
+  "id": "3f6fff1e-9591-4bb2-8f59-27117ce5eca9",
+  "at": "2026-09-22T04:26:53.053Z",
+  "url": "http://127.0.0.1:4712/main",
+  "title": "Harbor Point Savings Bank - MERIDIAN Core",
+  "frames": [
+    [],
+    [
+      "navFrame"
+    ],
+    [
+      "contentFrame"
+    ]
+  ],
+  "frameTexts": {
+    "(top)": "",
+    "navFrame": "HP MAIN MENU Home INQUIRY Customer Search SERVICING Address Maintenance Open Deposit Account Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+    "contentFrame": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3 Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14 Deposit Accounts Balances are not displayed by default under your institution's configuration. Servicing Actions F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»"
+  },
+  "nodeCount": 122,
+  "nodes": [
+    {
+      "ref": "navFrame::1",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::2",
+        "navFrame::5",
+        "navFrame::9",
+        "navFrame::12",
+        "navFrame::16",
+        "navFrame::19",
+        "navFrame::23",
+        "navFrame::27",
+        "navFrame::31",
+        "navFrame::35",
+        "navFrame::38",
+        "navFrame::42"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "HP MAIN MENU Home INQUIRY Customer Search SERVICING Address Maintenance Open Deposit Account Stop Payment Fee Reversal SESSION Sign Off A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 238
+      }
+    },
+    {
+      "ref": "navFrame::2",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::3"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "HP MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::3",
+      "role": "cell",
+      "name": "HP MAIN MENU",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::4"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "HP MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::2"
+    },
+    {
+      "ref": "navFrame::4",
+      "role": "text",
+      "name": "HP MAIN MENU",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "HP MAIN MENU",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 82,
+        "h": 12
+      },
+      "parentRef": "navFrame::3"
+    },
+    {
+      "ref": "navFrame::5",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::6"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 18,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::6",
+      "role": "cell",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::7"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 18,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::5"
+    },
+    {
+      "ref": "navFrame::7",
+      "role": "link",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::8"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/home",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 15,
+        "w": 26,
+        "h": 19
+      },
+      "parentRef": "navFrame::6"
+    },
+    {
+      "ref": "navFrame::8",
+      "role": "text",
+      "name": "Home",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Home",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 21,
+        "w": 26,
+        "h": 12
+      },
+      "parentRef": "navFrame::7"
+    },
+    {
+      "ref": "navFrame::9",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::10"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 36,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::10",
+      "role": "cell",
+      "name": "INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::11"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 36,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::9"
+    },
+    {
+      "ref": "navFrame::11",
+      "role": "text",
+      "name": "INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 39,
+        "w": 46,
+        "h": 12
+      },
+      "parentRef": "navFrame::10"
+    },
+    {
+      "ref": "navFrame::12",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::13"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Customer Search",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 54,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::13",
+      "role": "cell",
+      "name": "Customer Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::14"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Customer Search",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 54,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::12"
+    },
+    {
+      "ref": "navFrame::14",
+      "role": "link",
+      "name": "Customer Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::15"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Customer Search",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 51,
+        "w": 75,
+        "h": 19
+      },
+      "parentRef": "navFrame::13"
+    },
+    {
+      "ref": "navFrame::15",
+      "role": "text",
+      "name": "Customer Search",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Customer Search",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 57,
+        "w": 75,
+        "h": 12
+      },
+      "parentRef": "navFrame::14"
+    },
+    {
+      "ref": "navFrame::16",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::17"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 72,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::17",
+      "role": "cell",
+      "name": "SERVICING",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::18"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 72,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::16"
+    },
+    {
+      "ref": "navFrame::18",
+      "role": "text",
+      "name": "SERVICING",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SERVICING",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 75,
+        "w": 58,
+        "h": 12
+      },
+      "parentRef": "navFrame::17"
+    },
+    {
+      "ref": "navFrame::19",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::20"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 90,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::20",
+      "role": "cell",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::21"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 90,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::19"
+    },
+    {
+      "ref": "navFrame::21",
+      "role": "link",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::22"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=address",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 87,
+        "w": 94,
+        "h": 19
+      },
+      "parentRef": "navFrame::20"
+    },
+    {
+      "ref": "navFrame::22",
+      "role": "text",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Address Maintenance",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 93,
+        "w": 94,
+        "h": 12
+      },
+      "parentRef": "navFrame::21"
+    },
+    {
+      "ref": "navFrame::23",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::24"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Open Deposit Account",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 108,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::24",
+      "role": "cell",
+      "name": "Open Deposit Account",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::25"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Open Deposit Account",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 108,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::23"
+    },
+    {
+      "ref": "navFrame::25",
+      "role": "link",
+      "name": "Open Deposit Account",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::26"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=open-share",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Open Deposit Account",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 105,
+        "w": 98,
+        "h": 19
+      },
+      "parentRef": "navFrame::24"
+    },
+    {
+      "ref": "navFrame::26",
+      "role": "text",
+      "name": "Open Deposit Account",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Open Deposit Account",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 111,
+        "w": 98,
+        "h": 12
+      },
+      "parentRef": "navFrame::25"
+    },
+    {
+      "ref": "navFrame::27",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::28"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 126,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::28",
+      "role": "cell",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::29"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 126,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::27"
+    },
+    {
+      "ref": "navFrame::29",
+      "role": "link",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::30"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=stop-pay",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 123,
+        "w": 61,
+        "h": 19
+      },
+      "parentRef": "navFrame::28"
+    },
+    {
+      "ref": "navFrame::30",
+      "role": "text",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Stop Payment",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 129,
+        "w": 61,
+        "h": 12
+      },
+      "parentRef": "navFrame::29"
+    },
+    {
+      "ref": "navFrame::31",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::32"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 144,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::32",
+      "role": "cell",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::33"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 144,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::31"
+    },
+    {
+      "ref": "navFrame::33",
+      "role": "link",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::34"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "content/member-search?mode=fee-reversal",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 141,
+        "w": 56,
+        "h": 19
+      },
+      "parentRef": "navFrame::32"
+    },
+    {
+      "ref": "navFrame::34",
+      "role": "text",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Fee Reversal",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 147,
+        "w": 56,
+        "h": 12
+      },
+      "parentRef": "navFrame::33"
+    },
+    {
+      "ref": "navFrame::35",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::36"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 162,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::36",
+      "role": "cell",
+      "name": "SESSION",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::37"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 162,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::35"
+    },
+    {
+      "ref": "navFrame::37",
+      "role": "text",
+      "name": "SESSION",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SESSION",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 165,
+        "w": 45,
+        "h": 12
+      },
+      "parentRef": "navFrame::36"
+    },
+    {
+      "ref": "navFrame::38",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::39"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 180,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::39",
+      "role": "cell",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::40"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 180,
+        "w": 180,
+        "h": 18
+      },
+      "parentRef": "navFrame::38"
+    },
+    {
+      "ref": "navFrame::40",
+      "role": "link",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::41"
+      ],
+      "raw": {
+        "tag": "a",
+        "attrs": {
+          "href": "signoff",
+          "target": "contentFrame"
+        }
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 177,
+        "w": 35,
+        "h": 19
+      },
+      "parentRef": "navFrame::39"
+    },
+    {
+      "ref": "navFrame::41",
+      "role": "text",
+      "name": "Sign Off",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Sign Off",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 183,
+        "w": 35,
+        "h": 12
+      },
+      "parentRef": "navFrame::40"
+    },
+    {
+      "ref": "navFrame::42",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [
+        "navFrame::43"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 198,
+        "w": 180,
+        "h": 40
+      },
+      "parentRef": "navFrame::1"
+    },
+    {
+      "ref": "navFrame::43",
+      "role": "cell",
+      "name": "A. NGUYEN MSR",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "navFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "A. NGUYEN MSR",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 198,
+        "w": 180,
+        "h": 40
+      },
+      "parentRef": "navFrame::42"
+    },
+    {
+      "ref": "contentFrame::1",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::2",
+        "contentFrame::10"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 307
+      }
+    },
+    {
+      "ref": "contentFrame::2",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::3"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 18
+      },
+      "parentRef": "contentFrame::1"
+    },
+    {
+      "ref": "contentFrame::3",
+      "role": "cell",
+      "name": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::4"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 1099,
+        "h": 18
+      },
+      "parentRef": "contentFrame::2"
+    },
+    {
+      "ref": "contentFrame::4",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::5"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 1087,
+        "h": 12
+      },
+      "parentRef": "contentFrame::3"
+    },
+    {
+      "ref": "contentFrame::5",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::6",
+        "contentFrame::8"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "CUSTOMER INQUIRY SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 1087,
+        "h": 12
+      },
+      "parentRef": "contentFrame::4"
+    },
+    {
+      "ref": "contentFrame::6",
+      "role": "cell",
+      "name": "CUSTOMER INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::7"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "CUSTOMER INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 347,
+        "h": 12
+      },
+      "parentRef": "contentFrame::5"
+    },
+    {
+      "ref": "contentFrame::7",
+      "role": "text",
+      "name": "CUSTOMER INQUIRY",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "CUSTOMER INQUIRY",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 3,
+        "w": 106,
+        "h": 12
+      },
+      "parentRef": "contentFrame::6"
+    },
+    {
+      "ref": "contentFrame::8",
+      "role": "cell",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::9"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "ttlbar",
+        "attrs": {
+          "class": "ttlbar"
+        }
+      },
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 353,
+        "y": 3,
+        "w": 740,
+        "h": 12
+      },
+      "parentRef": "contentFrame::5"
+    },
+    {
+      "ref": "contentFrame::9",
+      "role": "text",
+      "name": "SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "SCREEN INQ-0420 | MERIDIAN Core 10.1.3",
+      "labelled": false,
+      "bounds": {
+        "x": 867,
+        "y": 3,
+        "w": 226,
+        "h": 12
+      },
+      "parentRef": "contentFrame::8"
+    },
+    {
+      "ref": "contentFrame::10",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::11"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 18,
+        "w": 1099,
+        "h": 289
+      },
+      "parentRef": "contentFrame::1"
+    },
+    {
+      "ref": "contentFrame::11",
+      "role": "cell",
+      "name": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::12"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 18,
+        "w": 1099,
+        "h": 289
+      },
+      "parentRef": "contentFrame::10"
+    },
+    {
+      "ref": "contentFrame::12",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::13",
+        "contentFrame::57",
+        "contentFrame::59",
+        "contentFrame::64",
+        "contentFrame::66"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 8,
+        "y": 26,
+        "w": 1083,
+        "h": 273
+      },
+      "parentRef": "contentFrame::11"
+    },
+    {
+      "ref": "contentFrame::13",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::14"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 27,
+        "w": 1081,
+        "h": 94
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::14",
+      "role": "cell",
+      "name": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::15"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 27,
+        "w": 1081,
+        "h": 94
+      },
+      "parentRef": "contentFrame::13"
+    },
+    {
+      "ref": "contentFrame::15",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::16",
+        "contentFrame::25",
+        "contentFrame::34",
+        "contentFrame::43",
+        "contentFrame::48"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores SSN ***-**-4417 Date of Birth 1961-03-14 Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381 Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 34,
+        "w": 1067,
+        "h": 80
+      },
+      "parentRef": "contentFrame::14"
+    },
+    {
+      "ref": "contentFrame::16",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::17",
+        "contentFrame::19",
+        "contentFrame::21",
+        "contentFrame::23"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Customer ID «pii:2a94040b…0482» Name Whitfield, Dolores",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 34,
+        "w": 1067,
+        "h": 16
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::17",
+      "role": "cell",
+      "name": "Customer ID",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::18"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Customer ID",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 34,
+        "w": 114,
+        "h": 16
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::18",
+      "role": "text",
+      "name": "Customer ID",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Customer ID",
+      "labelled": false,
+      "bounds": {
+        "x": 64,
+        "y": 36,
+        "w": 64,
+        "h": 12
+      },
+      "parentRef": "contentFrame::17"
+    },
+    {
+      "ref": "contentFrame::19",
+      "role": "cell",
+      "name": "«pii:2a94040b…0482»",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::20"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "«pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 34,
+        "w": 154,
+        "h": 16
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::20",
+      "role": "text",
+      "name": "«pii:2a94040b…0482»",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_cphMain_lblMemberNo",
+        "attrs": {}
+      },
+      "text": "«pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 36,
+        "w": 45,
+        "h": 12
+      },
+      "parentRef": "contentFrame::19"
+    },
+    {
+      "ref": "contentFrame::21",
+      "role": "cell",
+      "name": "Name",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::22"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Name",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 34,
+        "w": 94,
+        "h": 16
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::22",
+      "role": "text",
+      "name": "Name",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Name",
+      "labelled": false,
+      "bounds": {
+        "x": 347,
+        "y": 36,
+        "w": 29,
+        "h": 12
+      },
+      "parentRef": "contentFrame::21"
+    },
+    {
+      "ref": "contentFrame::23",
+      "role": "cell",
+      "name": "Whitfield, Dolores",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::24"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Whitfield, Dolores",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 34,
+        "w": 705,
+        "h": 16
+      },
+      "parentRef": "contentFrame::16"
+    },
+    {
+      "ref": "contentFrame::24",
+      "role": "text",
+      "name": "Whitfield, Dolores",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_cphMain_lblName",
+        "attrs": {}
+      },
+      "text": "Whitfield, Dolores",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 36,
+        "w": 78,
+        "h": 12
+      },
+      "parentRef": "contentFrame::23"
+    },
+    {
+      "ref": "contentFrame::25",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::26",
+        "contentFrame::28",
+        "contentFrame::30",
+        "contentFrame::32"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "SSN ***-**-4417 Date of Birth 1961-03-14",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 50,
+        "w": 1067,
+        "h": 16
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::26",
+      "role": "cell",
+      "name": "SSN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::27"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "SSN",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 50,
+        "w": 114,
+        "h": 16
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::27",
+      "role": "text",
+      "name": "SSN",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "SSN",
+      "labelled": false,
+      "bounds": {
+        "x": 108,
+        "y": 52,
+        "w": 20,
+        "h": 12
+      },
+      "parentRef": "contentFrame::26"
+    },
+    {
+      "ref": "contentFrame::28",
+      "role": "cell",
+      "name": "***-**-4417",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::29"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "***-**-4417",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 50,
+        "w": 154,
+        "h": 16
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::29",
+      "role": "text",
+      "name": "***-**-4417",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "***-**-4417",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 52,
+        "w": 56,
+        "h": 12
+      },
+      "parentRef": "contentFrame::28"
+    },
+    {
+      "ref": "contentFrame::30",
+      "role": "cell",
+      "name": "Date of Birth",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::31"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Date of Birth",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 50,
+        "w": 94,
+        "h": 16
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::31",
+      "role": "text",
+      "name": "Date of Birth",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Date of Birth",
+      "labelled": false,
+      "bounds": {
+        "x": 312,
+        "y": 52,
+        "w": 64,
+        "h": 12
+      },
+      "parentRef": "contentFrame::30"
+    },
+    {
+      "ref": "contentFrame::32",
+      "role": "cell",
+      "name": "1961-03-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::33"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "1961-03-14",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 50,
+        "w": 705,
+        "h": 16
+      },
+      "parentRef": "contentFrame::25"
+    },
+    {
+      "ref": "contentFrame::33",
+      "role": "text",
+      "name": "1961-03-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "1961-03-14",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 52,
+        "w": 51,
+        "h": 12
+      },
+      "parentRef": "contentFrame::32"
+    },
+    {
+      "ref": "contentFrame::34",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::35",
+        "contentFrame::37",
+        "contentFrame::39",
+        "contentFrame::41"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Customer Since 1994-06-02 Branch 003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 66,
+        "w": 1067,
+        "h": 16
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::35",
+      "role": "cell",
+      "name": "Customer Since",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::36"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Customer Since",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 66,
+        "w": 114,
+        "h": 16
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::36",
+      "role": "text",
+      "name": "Customer Since",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Customer Since",
+      "labelled": false,
+      "bounds": {
+        "x": 50,
+        "y": 68,
+        "w": 78,
+        "h": 12
+      },
+      "parentRef": "contentFrame::35"
+    },
+    {
+      "ref": "contentFrame::37",
+      "role": "cell",
+      "name": "1994-06-02",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::38"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "1994-06-02",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 66,
+        "w": 154,
+        "h": 16
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::38",
+      "role": "text",
+      "name": "1994-06-02",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "1994-06-02",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 68,
+        "w": 51,
+        "h": 12
+      },
+      "parentRef": "contentFrame::37"
+    },
+    {
+      "ref": "contentFrame::39",
+      "role": "cell",
+      "name": "Branch",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::40"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Branch",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 66,
+        "w": 94,
+        "h": 16
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::40",
+      "role": "text",
+      "name": "Branch",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Branch",
+      "labelled": false,
+      "bounds": {
+        "x": 341,
+        "y": 68,
+        "w": 35,
+        "h": 12
+      },
+      "parentRef": "contentFrame::39"
+    },
+    {
+      "ref": "contentFrame::41",
+      "role": "cell",
+      "name": "003 - CEDAR HOLLOW",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::42"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 66,
+        "w": 705,
+        "h": 16
+      },
+      "parentRef": "contentFrame::34"
+    },
+    {
+      "ref": "contentFrame::42",
+      "role": "text",
+      "name": "003 - CEDAR HOLLOW",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "003 - CEDAR HOLLOW",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 68,
+        "w": 100,
+        "h": 12
+      },
+      "parentRef": "contentFrame::41"
+    },
+    {
+      "ref": "contentFrame::43",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::44",
+        "contentFrame::46"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Address 2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 82,
+        "w": 1067,
+        "h": 16
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::44",
+      "role": "cell",
+      "name": "Address",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::45"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Address",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 82,
+        "w": 114,
+        "h": 16
+      },
+      "parentRef": "contentFrame::43"
+    },
+    {
+      "ref": "contentFrame::45",
+      "role": "text",
+      "name": "Address",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Address",
+      "labelled": false,
+      "bounds": {
+        "x": 88,
+        "y": 84,
+        "w": 40,
+        "h": 12
+      },
+      "parentRef": "contentFrame::44"
+    },
+    {
+      "ref": "contentFrame::46",
+      "role": "cell",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::47"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 82,
+        "w": 953,
+        "h": 16
+      },
+      "parentRef": "contentFrame::43"
+    },
+    {
+      "ref": "contentFrame::47",
+      "role": "text",
+      "name": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_cphMain_lblAddress",
+        "attrs": {}
+      },
+      "text": "2214 ORCHARD LANE, APT 4B, PINE RIDGE, OR 97381",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 84,
+        "w": 244,
+        "h": 12
+      },
+      "parentRef": "contentFrame::46"
+    },
+    {
+      "ref": "contentFrame::48",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::49",
+        "contentFrame::51",
+        "contentFrame::53",
+        "contentFrame::55"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Status ACTIVE Officer MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 98,
+        "w": 1067,
+        "h": 16
+      },
+      "parentRef": "contentFrame::15"
+    },
+    {
+      "ref": "contentFrame::49",
+      "role": "cell",
+      "name": "Status",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::50"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Status",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 98,
+        "w": 114,
+        "h": 16
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::50",
+      "role": "text",
+      "name": "Status",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Status",
+      "labelled": false,
+      "bounds": {
+        "x": 96,
+        "y": 100,
+        "w": 32,
+        "h": 12
+      },
+      "parentRef": "contentFrame::49"
+    },
+    {
+      "ref": "contentFrame::51",
+      "role": "cell",
+      "name": "ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::52"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "ACTIVE",
+      "labelled": false,
+      "bounds": {
+        "x": 130,
+        "y": 98,
+        "w": 154,
+        "h": 16
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::52",
+      "role": "text",
+      "name": "ACTIVE",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "span",
+        "domId": "ctl00_cphMain_lblStatus",
+        "attrs": {}
+      },
+      "text": "ACTIVE",
+      "labelled": false,
+      "bounds": {
+        "x": 132,
+        "y": 100,
+        "w": 37,
+        "h": 12
+      },
+      "parentRef": "contentFrame::51"
+    },
+    {
+      "ref": "contentFrame::53",
+      "role": "cell",
+      "name": "Officer",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::54"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "Officer",
+      "labelled": false,
+      "bounds": {
+        "x": 284,
+        "y": 98,
+        "w": 94,
+        "h": 16
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::54",
+      "role": "text",
+      "name": "Officer",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Officer",
+      "labelled": false,
+      "bounds": {
+        "x": 342,
+        "y": 100,
+        "w": 34,
+        "h": 12
+      },
+      "parentRef": "contentFrame::53"
+    },
+    {
+      "ref": "contentFrame::55",
+      "role": "cell",
+      "name": "MSR-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::56"
+      ],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "text": "MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 378,
+        "y": 98,
+        "w": 705,
+        "h": 16
+      },
+      "parentRef": "contentFrame::48"
+    },
+    {
+      "ref": "contentFrame::56",
+      "role": "text",
+      "name": "MSR-14",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "MSR-14",
+      "labelled": false,
+      "bounds": {
+        "x": 380,
+        "y": 100,
+        "w": 34,
+        "h": 12
+      },
+      "parentRef": "contentFrame::55"
+    },
+    {
+      "ref": "contentFrame::57",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::58"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 121,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::58",
+      "role": "cell",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 121,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::57"
+    },
+    {
+      "ref": "contentFrame::59",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::60"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Deposit Accounts Balances are not displayed by default under your institution's configuration.",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 129,
+        "w": 1081,
+        "h": 95
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::60",
+      "role": "cell",
+      "name": "Deposit Accounts Balances are not displayed by default under your institution's configuration.",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::61",
+        "contentFrame::62",
+        "contentFrame::63"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Deposit Accounts Balances are not displayed by default under your institution's configuration.",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 129,
+        "w": 1081,
+        "h": 95
+      },
+      "parentRef": "contentFrame::59"
+    },
+    {
+      "ref": "contentFrame::61",
+      "role": "text",
+      "name": "Deposit Accounts",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Deposit Accounts",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 136,
+        "w": 87,
+        "h": 12
+      },
+      "parentRef": "contentFrame::60"
+    },
+    {
+      "ref": "contentFrame::62",
+      "role": "text",
+      "name": "Balances are not displayed by default under your institution's configuration.",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "Balances are not displayed by default under your institution's configuration.",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 167,
+        "w": 333,
+        "h": 12
+      },
+      "parentRef": "contentFrame::60"
+    },
+    {
+      "ref": "contentFrame::63",
+      "role": "button",
+      "name": "Display Deposit Accounts",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "domId": "ctl00_cphMain_btnDisplayAccounts",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Display Deposit Accounts",
+          "class": "btn"
+        }
+      },
+      "value": "Display Deposit Accounts",
+      "labelled": true,
+      "bounds": {
+        "x": 16,
+        "y": 198,
+        "w": 146,
+        "h": 19
+      },
+      "parentRef": "contentFrame::60"
+    },
+    {
+      "ref": "contentFrame::64",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::65"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 224,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::65",
+      "role": "cell",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "td",
+        "attrs": {}
+      },
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 224,
+        "w": 1081,
+        "h": 8
+      },
+      "parentRef": "contentFrame::64"
+    },
+    {
+      "ref": "contentFrame::66",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::67"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 232,
+        "w": 1081,
+        "h": 66
+      },
+      "parentRef": "contentFrame::12"
+    },
+    {
+      "ref": "contentFrame::67",
+      "role": "cell",
+      "name": "Servicing Actions",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::68",
+        "contentFrame::69",
+        "contentFrame::70",
+        "contentFrame::71",
+        "contentFrame::72"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "grpbox",
+        "attrs": {
+          "class": "grpbox"
+        }
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 9,
+        "y": 232,
+        "w": 1081,
+        "h": 66
+      },
+      "parentRef": "contentFrame::66"
+    },
+    {
+      "ref": "contentFrame::68",
+      "role": "text",
+      "name": "Servicing Actions",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "b",
+        "attrs": {}
+      },
+      "text": "Servicing Actions",
+      "labelled": false,
+      "bounds": {
+        "x": 16,
+        "y": 239,
+        "w": 86,
+        "h": 12
+      },
+      "parentRef": "contentFrame::67"
+    },
+    {
+      "ref": "contentFrame::69",
+      "role": "button",
+      "name": "Address Maintenance",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Address Maintenance",
+          "class": "btn"
+        }
+      },
+      "value": "Address Maintenance",
+      "labelled": true,
+      "bounds": {
+        "x": 16,
+        "y": 272,
+        "w": 127,
+        "h": 19
+      },
+      "parentRef": "contentFrame::67"
+    },
+    {
+      "ref": "contentFrame::70",
+      "role": "button",
+      "name": "Open Deposit Account",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Open Deposit Account",
+          "class": "btn"
+        }
+      },
+      "value": "Open Deposit Account",
+      "labelled": true,
+      "bounds": {
+        "x": 148,
+        "y": 272,
+        "w": 132,
+        "h": 19
+      },
+      "parentRef": "contentFrame::67"
+    },
+    {
+      "ref": "contentFrame::71",
+      "role": "button",
+      "name": "Stop Payment",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Stop Payment",
+          "class": "btn"
+        }
+      },
+      "value": "Stop Payment",
+      "labelled": true,
+      "bounds": {
+        "x": 285,
+        "y": 272,
+        "w": 91,
+        "h": 19
+      },
+      "parentRef": "contentFrame::67"
+    },
+    {
+      "ref": "contentFrame::72",
+      "role": "button",
+      "name": "Fee Reversal",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "input",
+        "inputType": "button",
+        "className": "btn",
+        "attrs": {
+          "type": "button",
+          "value": "Fee Reversal",
+          "class": "btn"
+        }
+      },
+      "value": "Fee Reversal",
+      "labelled": true,
+      "bounds": {
+        "x": 381,
+        "y": 272,
+        "w": 85,
+        "h": 19
+      },
+      "parentRef": "contentFrame::67"
+    },
+    {
+      "ref": "contentFrame::73",
+      "role": "table",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::74",
+        "contentFrame::77"
+      ],
+      "raw": {
+        "tag": "table",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 307,
+        "w": 1099,
+        "h": 34
+      }
+    },
+    {
+      "ref": "contentFrame::74",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::75"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 308,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::73"
+    },
+    {
+      "ref": "contentFrame::75",
+      "role": "cell",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::76"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "stat",
+        "attrs": {
+          "class": "stat"
+        }
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 308,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::74"
+    },
+    {
+      "ref": "contentFrame::76",
+      "role": "text",
+      "name": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "F3=Exit F5=Refresh F10=Accept F12=Cancel F24=More Keys",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 310,
+        "w": 284,
+        "h": 12
+      },
+      "parentRef": "contentFrame::75"
+    },
+    {
+      "ref": "contentFrame::77",
+      "role": "row",
+      "name": "",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::78"
+      ],
+      "raw": {
+        "tag": "tr",
+        "attrs": {}
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 325,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::73"
+    },
+    {
+      "ref": "contentFrame::78",
+      "role": "cell",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [
+        "contentFrame::79"
+      ],
+      "raw": {
+        "tag": "td",
+        "className": "stat",
+        "attrs": {
+          "class": "stat"
+        }
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 0,
+        "y": 325,
+        "w": 1099,
+        "h": 17
+      },
+      "parentRef": "contentFrame::77"
+    },
+    {
+      "ref": "contentFrame::79",
+      "role": "text",
+      "name": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "enabled": true,
+      "visible": true,
+      "framePath": [
+        "contentFrame"
+      ],
+      "childRefs": [],
+      "raw": {
+        "tag": "font",
+        "attrs": {}
+      },
+      "text": "USER: A. NGUYEN (MSR) BRANCH: 001 - MAIN OFFICE BUSINESS DATE: 09/21/2026 TERM: WS0142 | INQUIRY > CUSTOMER «pii:2a94040b…0482»",
+      "labelled": false,
+      "bounds": {
+        "x": 6,
+        "y": 327,
+        "w": 623,
+        "h": 12
+      },
+      "parentRef": "contentFrame::78"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "runId": "rep_3404aac0",
+  "kind": "replay",
+  "startedAt": "2026-09-22T04:43:33.565Z",
+  "principal": {
+    "id": "guest-7a2fba79-c2c9-4d68-a072-795f3230144d",
+    "kind": "human"
+  },
+  "capability": {
+    "id": "meridian.member-savings-balance",
+    "version": "0.1.0",
+    "contentHash": "fe5d6595285909d51470dc76864e4fbca53c299e9e03bd92d068f943fb1b715f"
+  },
+  "tenant": {
+    "id": "harborpoint",
+    "institution": "Harbor Point Savings Bank",
+    "baseUrl": "http://127.0.0.1:4712"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "shareType": "SPECIAL SAVINGS"
+  },
+  "counts": {
+    "events": 33,
+    "steps": 7,
+    "screenshots": 1,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 1
+  },
+  "redaction": {
+    "pii": 1,
+    "member_number": 18
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-22T04:43:49.145Z",
+  "outcome": {
+    "status": "success",
+    "outputs": {
+      "currentBalance": 18402.66,
+      "availableBalance": 18402.66
+    }
+  },
+  "containsScreenCaptures": true,
+  "chainTip": "4a45431dbff767708e09c8045abc773304478c77131cdbebe4f41f04dd47b36a"
+}

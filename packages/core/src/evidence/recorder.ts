@@ -102,6 +102,7 @@ export class EvidenceRecorder {
   private readonly counts = { events: 0, steps: 0, screenshots: 0, signals: 0, recoveries: 0, escalations: 0 };
   private readonly buffered: EvidenceEvent[] = [];
   private ready: Promise<void>;
+  private writes: Promise<void> = Promise.resolve();
 
   constructor(
     readonly dir: string,
@@ -117,7 +118,15 @@ export class EvidenceRecorder {
 
   get events(): readonly EvidenceEvent[] { return this.buffered; }
 
-  async log(kind: EvidenceEventKind, message: string, data?: Record<string, unknown>): Promise<EvidenceEvent> {
+  log(kind: EvidenceEventKind, message: string, data?: Record<string, unknown>): Promise<EvidenceEvent> {
+    // Session callbacks and operator actions can log concurrently. Serialize
+    // allocation and disk writes so physical order matches the hash chain.
+    const next = this.writes.then(() => this.appendEvent(kind, message, data));
+    this.writes = next.then(() => undefined);
+    return next;
+  }
+
+  private async appendEvent(kind: EvidenceEventKind, message: string, data?: Record<string, unknown>): Promise<EvidenceEvent> {
     await this.ready;
     const safeMessage = this.redactor.text(message, `event.${kind}`);
     const safeData = data ? this.redactor.deep(data, `event.${kind}`) : undefined;
@@ -218,6 +227,7 @@ export class EvidenceRecorder {
 
   async finish(outcome: Record<string, unknown>): Promise<RunManifest> {
     await this.ready;
+    await this.writes;
     const m: RunManifest = {
       ...this.manifest,
       finishedAt: new Date().toISOString(),

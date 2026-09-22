@@ -1,0 +1,47 @@
+{
+  "runId": "disc_a528a554",
+  "kind": "discovery",
+  "startedAt": "2026-09-22T04:15:01.922Z",
+  "principal": {
+    "id": "shivam",
+    "kind": "human"
+  },
+  "goal": "Look up the member given by memberNumber and report the current balance and available balance of the share account given by shareType.",
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "shareType": "SPECIAL SAVINGS"
+  },
+  "counts": {
+    "events": 24,
+    "steps": 6,
+    "screenshots": 0,
+    "signals": 0,
+    "recoveries": 0,
+    "escalations": 0
+  },
+  "redaction": {
+    "pii": 1,
+    "member_number": 263
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-22T04:15:25.041Z",
+  "outcome": {
+    "status": "success",
+    "message": "Discovered a 6-step capability in 7 model turns.",
+    "turns": 7,
+    "usage": {
+      "inputTokens": 8951,
+      "outputTokens": 1092,
+      "cacheReadTokens": 26368,
+      "cacheCreationTokens": 0
+    },
+    "costUsd": 0.0254,
+    "capability": "meridian.verified-savings@0.1.0"
+  },
+  "chainTip": "00361ea01c15e53e4b4ee00fcc005a6498614189e639f62e82e44a0e4df29d37"
+}

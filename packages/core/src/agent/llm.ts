@@ -221,6 +221,7 @@ export class OpenAiProvider implements LlmProvider {
   async complete(req: LlmRequest): Promise<LlmResponse> {
     const res = await this.client.responses.create({
       model: this.model,
+      store: false,
       instructions: req.system,
       input: toResponsesInput(req.messages),
       tools: req.tools.map((t) => ({

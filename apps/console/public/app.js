@@ -1,5 +1,5 @@
 /**
- * Swivel console — client.
+ * Swivel console : client.
  *
  * No framework, no build step. The console is dense, mostly read-only, and its
  * one genuinely interactive surface (the live takeover) is a websocket and an
@@ -18,7 +18,7 @@ const h = (tag, attrs = {}, ...children) => {
   }
   for (const c of children.flat()) {
     if (c == null || c === false) continue;
-    el.append(c instanceof Node ? c : document.createTextNode(String(c)));
+    el.append(c instanceof Node ? c : document.createTextNode(String(c).replaceAll("\u2014", ":")));
   }
   return el;
 };
@@ -26,16 +26,16 @@ const h = (tag, attrs = {}, ...children) => {
  * `replaceChildren`, minus the footgun.
  *
  * The native method stringifies whatever it is given, so a conditional child
- * written `cond ? h(…) : null` — the idiom this file uses everywhere —
+ * written `cond ? h(…) : null` : the idiom this file uses everywhere :
  * renders the literal text "null" into the page. Two of them in a row rendered
  * "nullnull" on the run detail view for weeks. `h()` already filters its own
  * children; this makes the top-level call behave the same way.
  */
 const setChildren = (el, ...kids) => el.replaceChildren(...kids.flat().filter((c) => c != null && c !== false));
 const $ = (s, r = document) => r.querySelector(s);
-const fmtTime = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—');
+const fmtTime = (iso) => (iso ? new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : ':');
 const ago = (iso) => {
-  if (!iso) return '—';
+  if (!iso) return ':';
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
   if (s < 60) return `${Math.round(s)}s ago`;
   if (s < 3600) return `${Math.round(s / 60)}m ago`;
@@ -74,21 +74,21 @@ const dataTable = (headers, rows, onRowClick) =>
   h('table', {},
     h('thead', {}, h('tr', {}, headers.map((t) => h('th', {}, t)))),
     h('tbody', {}, rows.map((cells, i) =>
-      h('tr', onRowClick ? { class: 'click', onclick: () => onRowClick(i) } : {},
+      h('tr', onRowClick ? { class: 'click', tabindex: 0, role: 'button', onclick: () => onRowClick(i), onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowClick(i); } } } : {},
         cells.map((c) => h('td', {}, c))))));
 
 const riskPill = (r) => h('span', { class: `pill ${r === 'read_only' ? 'ok' : r === 'irreversible' ? 'danger' : 'warn'}` }, r.replace('_', '-'));
 const meter = (v) => h('span', { class: `meter ${v < 40 ? 'bad' : v < 70 ? 'low' : ''}`, title: `${v}/100` }, h('span', { style: `width:${Math.max(3, v)}%` }));
 
 // ── app state ────────────────────────────────────────────────────────────────
-const state = { user: null, interventions: [], capabilities: [], runs: [], route: location.hash || '#/capabilities', sse: null, live: null };
+const state = { user: null, interventions: [], capabilities: [], runs: [], demo: false, route: location.hash || '#/demo', sse: null, live: null };
 
 function go(hash) { location.hash = hash; }
 window.addEventListener('hashchange', () => { state.route = location.hash; render(); });
 
 // ── boot ─────────────────────────────────────────────────────────────────────
 (async function boot() {
-  try { state.user = (await api('/api/me')).user; } catch { state.user = null; }
+  try { const me = await api('/api/me'); state.user = me.user; state.demo = me.demo; } catch { state.user = null; }
   if (state.user) await refreshAll();
   render();
   if (state.user) connectEvents();
@@ -106,6 +106,14 @@ async function refreshAll() {
 }
 
 function connectEvents() {
+  if (state.demo) {
+    clearInterval(state.poll);
+    state.poll = setInterval(async () => {
+      if (!state.user) return;
+      try { await refreshAll(); updateNavCounts(); if (state.route === '#/operators') render(); } catch {}
+    }, 4000);
+    return;
+  }
   const es = new EventSource('/api/events');
   state.sse = es;
   es.addEventListener('intervention', (e) => {
@@ -119,7 +127,7 @@ function connectEvents() {
     // It owns a websocket and a set of DOM nodes the screencast writes into;
     // replacing them mid-session silently detaches the video feed from the
     // page. Claiming a ticket emits an update about the very ticket being
-    // watched, so this is not a rare race — it is the common path.
+    // watched, so this is not a rare race : it is the common path.
     if (onLiveSession()) { updateNavCounts(); return; }
     if (state.route.startsWith('#/operators')) render();
     else updateNavCounts();
@@ -137,6 +145,7 @@ function render() {
 }
 
 function loginView() {
+  if (state.demo) return welcomeView();
   const err = h('div');
   const form = h('form', {
     onsubmit: async (e) => {
@@ -167,9 +176,9 @@ function loginView() {
       h('div', { class: 'card' }, form,
         h('div', { class: 'hint' },
           h('div', {}, h('strong', {}, 'Demo accounts')),
-          h('div', { class: 'mono' }, 'shivam / swivel — author, approve, invoke'),
-          h('div', { class: 'mono' }, 'reviewer / swivel — approve only'),
-          h('div', { class: 'mono' }, 'operator / swivel — session takeover only'),
+          h('div', { class: 'mono' }, 'shivam / swivel : author, approve, invoke'),
+          h('div', { class: 'mono' }, 'reviewer / swivel : approve only'),
+          h('div', { class: 'mono' }, 'operator / swivel : session takeover only'),
         )),
     ));
 }
@@ -184,6 +193,7 @@ function shell() {
     h('aside', { class: 'sidebar' },
       h('div', { class: 'brand' }, h('div', { class: 'mark' }, '◧'),
         h('div', {}, h('div', { class: 'name' }, 'SWIVEL'), h('div', { class: 'tag' }, 'control plane'))),
+      navItem('#/demo', 'Interactive demo'),
       navItem('#/capabilities', 'Capabilities', state.capabilities.length),
       navItem('#/runs', 'Runs', state.runs.length),
       navItem('#/operators', 'Operator queue', openInts || null),
@@ -193,7 +203,7 @@ function shell() {
       h('div', { class: 'sidebar-foot' },
         h('div', { class: 'small' }, state.user.name),
         h('div', { class: 'small faint mono' }, state.user.role),
-        h('button', { class: 'btn ghost sm mt', onclick: async () => { await api('/api/auth/logout', { method: 'POST' }); state.user = null; state.sse?.close(); render(); } }, 'Sign out'),
+        h('button', { class: 'btn ghost sm mt', onclick: async () => { await api('/api/auth/logout', { method: 'POST' }); state.user = null; state.sse?.close(); clearInterval(state.poll); state.live?.close?.(); render(); } }, 'Sign out'),
       ),
     ),
     h('main', { class: 'main', id: 'main' }, routeView()),
@@ -214,6 +224,7 @@ function updateNavCounts() {
 function routeView() {
   const [, section, id] = state.route.split('/');
   switch (section) {
+    case 'demo': return demoView();
     case 'capabilities': return id ? capabilityDetail(decodeURIComponent(id)) : capabilitiesView();
     case 'runs': return id ? runDetail(id) : runsView();
     case 'operators': return id ? operatorView(id) : operatorsView();
@@ -254,7 +265,7 @@ function capabilitiesView() {
     riskPill(c.effects.riskClass),
     h('span', { class: 'mono small' }, String(c.steps)),
     h('span', { class: 'mono small' }, `${c.replays.success + c.replays.businessOutcome}/${c.replays.total}`),
-    c.replays.total ? meter(c.stabilityScore) : h('span', { class: 'faint small' }, '—'),
+    c.replays.total ? meter(c.stabilityScore) : h('span', { class: 'faint small' }, ':'),
     c.findings ? h('span', { class: 'pill warn' }, `${c.findings} findings`) : h('span', { class: 'pill ok' }, 'clean'),
   ]);
 
@@ -282,7 +293,7 @@ function capabilityDetail(id) {
     const body = h('div', {});
     const paint = () => setChildren(body, tabs[active]());
     const tabBar = h('div', { class: 'tabs' }, Object.keys(tabs).map((t) =>
-      h('div', { class: `tab${t === active ? ' active' : ''}`, onclick: (e) => { active = t; [...e.target.parentNode.children].forEach((x) => x.classList.toggle('active', x === e.target)); paint(); } }, t)));
+      h('button', { type: 'button', class: `tab${t === active ? ' active' : ''}`, onclick: (e) => { active = t; [...e.target.parentNode.children].forEach((x) => x.classList.toggle('active', x === e.target)); paint(); } }, t)));
     paint();
 
     const approve = h('button', {
@@ -346,7 +357,7 @@ function contractTab(cap, data) {
     h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Inputs')), fields(cap.contract.inputs, 'in')),
     h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Outputs')), fields(cap.contract.outputs, 'out')),
     h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Business outcomes'),
-      h('span', { class: 'small faint' }, 'answers the caller branches on — not errors')),
+      h('span', { class: 'small faint' }, 'answers the caller branches on : not errors')),
       h('table', {}, h('thead', {}, h('tr', {}, ['Code', 'Kind', 'Description', 'Retryable'].map((t) => h('th', {}, t)))),
         h('tbody', {}, cap.contract.outcomes.map((o) => h('tr', {},
           h('td', { class: 'mono' }, o.code),
@@ -390,7 +401,7 @@ function signalsTab(cap) {
       h('tbody', {}, cap.signals.map((s) => h('tr', {},
         h('td', {}, h('div', {}, s.title), h('div', { class: 'mono small faint' }, s.id)),
         h('td', {}, h('span', { class: `pill ${s.kind === 'business' ? 'info' : s.kind === 'recoverable' ? 'violet' : s.kind === 'escalate' ? 'warn' : 'danger'}` }, s.kind)),
-        h('td', { class: 'small muted' }, s.outcomeCode ? `→ ${s.outcomeCode}` : s.recovery ? `${s.recovery.strategy} ×${s.recovery.maxAttempts}${s.exhaustedOutcomeCode ? `, then ${s.exhaustedOutcomeCode}` : ''}` : '—'),
+        h('td', { class: 'small muted' }, s.outcomeCode ? `→ ${s.outcomeCode}` : s.recovery ? `${s.recovery.strategy} ×${s.recovery.maxAttempts}${s.exhaustedOutcomeCode ? `, then ${s.exhaustedOutcomeCode}` : ''}` : ':'),
         h('td', { class: 'mono small faint' }, (s.detect[0]?.regex ?? s.detect[0]?.text ?? '').slice(0, 60))))))); 
 }
 
@@ -399,29 +410,30 @@ function provenanceTab(cap, data) {
     h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Provenance')),
       h('dl', { class: 'kv' },
         h('dt', {}, 'Discovered'), h('dd', {}, fmtTime(cap.provenance.discoveredAt)),
-        h('dt', {}, 'By'), h('dd', { class: 'mono small' }, `${cap.provenance.discoveredBy.kind} · ${cap.provenance.discoveredBy.provider ?? '—'}/${cap.provenance.discoveredBy.model ?? '—'}`),
+        h('dt', {}, 'By'), h('dd', { class: 'mono small' }, `${cap.provenance.discoveredBy.kind} · ${cap.provenance.discoveredBy.provider ?? ':'}/${cap.provenance.discoveredBy.model ?? ':'}`),
         h('dt', {}, 'Goal'), h('dd', { class: 'muted' }, cap.provenance.goal),
-        h('dt', {}, 'Recorded on'), h('dd', {}, cap.provenance.recordedOnTenant ?? '—'),
+        h('dt', {}, 'Recorded on'), h('dd', {}, cap.provenance.recordedOnTenant ?? ':'),
         h('dt', {}, 'Content hash'), h('dd', { class: 'mono small' }, data.contentHash),
         h('dt', {}, 'Approved by'), h('dd', {}, cap.quality.approvedBy ? `${cap.quality.approvedBy} · ${fmtTime(cap.quality.approvedAt)}` : h('span', { class: 'faint' }, 'not approved')),
       )),
     h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'History')),
       h('div', { class: 'timeline' }, cap.provenance.history.map((e) => h('div', { class: 'tl-row' },
-        h('div', { class: 'tl-seq' }, ''), h('div', { class: 'tl-kind' }, e.action), h('div', { class: 'tl-msg' }, `${e.actor} · ${fmtTime(e.at)}${e.note ? ` — ${e.note}` : ''}`))))),
+        h('div', { class: 'tl-seq' }, ''), h('div', { class: 'tl-kind' }, e.action), h('div', { class: 'tl-msg' }, `${e.actor} · ${fmtTime(e.at)}${e.note ? ` : ${e.note}` : ''}`))))),
     data.overlays?.length ? h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Tenant overlays'),
       h('span', { class: 'small faint' }, 'the same artifact, specialised per institution')),
       h('table', {}, h('thead', {}, h('tr', {}, ['Tenant', 'Overlay', 'Vocabulary', 'Patches', 'Overrides'].map((t) => h('th', {}, t)))),
         h('tbody', {}, data.overlays.map((o) => h('tr', {},
           h('td', {}, o.metadata.institution),
           h('td', { class: 'mono small' }, o.metadata.id),
-          h('td', { class: 'mono small muted' }, Object.entries(o.vocabulary).map(([k, v]) => `${k}="${v}"`).join(' ') || '—'),
+          h('td', { class: 'mono small muted' }, Object.entries(o.vocabulary).map(([k, v]) => `${k}="${v}"`).join(' ') || ':'),
           h('td', { class: 'mono small' }, o.stepPatches.length),
           h('td', { class: 'mono small' }, Object.keys(o.targetOverrides).length)))))) : null);
 }
 
 function runPanel(cap) {
+  if (state.demo) return h('div', { class: 'row' }, h('span', { class: 'muted' }, 'Explore this contract, then run a guided scenario in the sandbox.'), h('a', { href: '#/demo', class: 'btn primary' }, 'Open interactive demo →'));
   const inputs = {};
-  const tenantSel = h('select', {}, h('option', { value: 'pineridge' }, 'Pine Ridge FCU — Meridian 9.2'), h('option', { value: 'harborpoint' }, 'Harbor Point Bank — Meridian 10.1'));
+  const tenantSel = h('select', {}, h('option', { value: 'pineridge' }, 'Pine Ridge FCU : Meridian 9.2'), h('option', { value: 'harborpoint' }, 'Harbor Point Bank : Meridian 10.1'));
   const out = h('div', {});
   const fields = cap.contract.inputs.map((f) => h('label', { class: 'field' },
     h('span', {}, f.name, ' ', h('span', { class: 'hint' }, `${f.type}${f.required ? ' · required' : ''}`)),
@@ -430,7 +442,7 @@ function runPanel(cap) {
 
   const btn = h('button', { class: 'btn primary', onclick: async () => {
     btn.disabled = true; btn.textContent = 'Running…';
-    setChildren(out, h('div', { class: 'small muted' }, 'Replaying — no model in the loop.'));
+    setChildren(out, h('div', { class: 'small muted' }, 'Replaying : no model in the loop.'));
     try {
       const body = { version: cap.metadata.version, tenant: tenantSel.value, inputs, unattended: false };
       if (cap.policy.requiresPerInvocationConfirmation) body.confirmationToken = `console-${Date.now()}`;
@@ -456,7 +468,7 @@ function resultCard(r) {
     r.error.expected ? h('div', { class: 'small faint mono mt' }, `expected: ${r.error.expected}`) : null,
     r.error.observed ? h('div', { class: 'small faint mono' }, `observed: ${r.error.observed}`) : null)]);
   if (r.status === 'escalated') rows.push(['Escalation', h('div', { class: 'small' }, `${r.intervention.reason} → ${r.intervention.resolution ?? 'pending'} (${r.intervention.humanActions} recorded human actions)`)]);
-  if (r.recoveries?.length) rows.push(['Recovered', h('div', { class: 'small' }, r.recoveries.map((x) => h('div', {}, `${x.signalTitle} — ${x.strategy} ×${x.attempts}`)))]);
+  if (r.recoveries?.length) rows.push(['Recovered', h('div', { class: 'small' }, r.recoveries.map((x) => h('div', {}, `${x.signalTitle} : ${x.strategy} ×${x.attempts}`)))]);
 
   return h('div', { style: 'margin-top:12px' },
     h('div', { class: 'row mb' }, statusPill(r.status), h('span', { class: 'small faint mono' }, `${r.durationMs}ms · ${r.steps.length} steps · quality ${r.runQuality}`),
@@ -469,10 +481,10 @@ function runsView() {
   const rows = state.runs.map((r) => [
     h('span', { class: 'mono small' }, r.runId),
     h('span', { class: `pill ${r.kind === 'discovery' ? 'violet' : 'muted'}` }, r.kind),
-    h('span', { class: 'mono small' }, r.capabilityId ?? '—'),
-    h('span', { class: 'small' }, r.tenantId ?? '—'),
+    h('span', { class: 'mono small' }, r.capabilityId ?? ':'),
+    h('span', { class: 'small' }, r.tenantId ?? ':'),
     statusPill(r.status),
-    h('span', { class: 'mono small' }, r.durationMs ? `${r.durationMs}ms` : '—'),
+    h('span', { class: 'mono small' }, r.durationMs ? `${r.durationMs}ms` : ':'),
     h('span', { class: 'small muted' }, (r.summary ?? '').slice(0, 60)),
     h('span', { class: 'small faint' }, ago(r.startedAt)),
   ]);
@@ -506,7 +518,7 @@ function runDetail(runId) {
           h('div', { class: 'sub mono small' }, `${run.kind} · ${run.capabilityId ?? ''} · ${run.tenantId ?? ''} · ${fmtTime(run.startedAt)}`)),
         h('div', { class: 'row' }, statusPill(run.status),
           // Three states, not two. A chain can be intact, broken at a named
-          // event, or *absent* — and "broken at undefined" is what the last one
+          // event, or *absent* : and "broken at undefined" is what the last one
           // used to read, which tells a reviewer nothing about the one case
           // they most need to understand.
           h('span', { class: `pill ${chain.ok ? 'ok' : 'danger'}`, title: chain.message },
@@ -553,7 +565,7 @@ function operatorsView() {
     h('span', { class: 'mono small' }, i.id),
     statusPill(i.status),
     h('span', { class: 'pill warn' }, i.reason.replace(/_/g, ' ')),
-    h('span', { class: 'small' }, i.context.capability?.title ?? i.context.goal ?? '—'),
+    h('span', { class: 'small' }, i.context.capability?.title ?? i.context.goal ?? ':'),
     h('span', { class: 'small muted' }, i.context.diagnosis.message.slice(0, 70)),
     h('span', { class: 'small faint' }, ago(i.createdAt)),
   ]);
@@ -581,7 +593,7 @@ function operatorView(id) {
     const log = h('div', { class: 'action-log' });
     const statusDot = h('span', { class: 'dot idle' });
     const statusText = h('span', { class: 'small muted' }, 'not connected');
-    const frame = h('img', { alt: 'live session', style: 'display:none' });
+    const frame = h('img', { alt: 'live session', tabindex: '0', style: 'display:none', title: 'Click to control the browser. Press Escape to return to the console.' });
     const off = h('div', { class: 'live-off' }, 'Claim the session to take control of the live browser.');
     const viewport = i.context.control?.viewport ?? { width: 1280, height: 860 };
 
@@ -590,18 +602,20 @@ function operatorView(id) {
     let ws = null;
     const connect = () => {
       const ctl = i.context.control;
-      if (!ctl) { toast('This ticket has no live-control channel — the run may have ended.', 'err'); return; }
+      if (!ctl) { toast('This ticket has no live-control channel : the run may have ended.', 'err'); return; }
       // The token rides in the subprotocol rather than the query string: a URL
       // that can drive a live teller session should not land in an access log.
       ws = new WebSocket(ctl.wsUrl, [`swivel.token.${ctl.token}`]);
-      ws.onopen = () => { statusDot.className = 'dot live'; statusText.textContent = 'connected — you are driving the live session'; frame.style.display = 'block'; off.style.display = 'none'; };
+      state.live = ws;
+      ws.onopen = () => { statusDot.className = 'dot live'; statusText.textContent = 'connected : waiting for the live screen'; off.textContent = 'Connected. Waiting for the first frame…'; };
+      frame.onload = () => { frame.style.display = 'block'; off.style.display = 'none'; statusText.textContent = 'connected : click the live screen to drive'; };
       ws.onclose = () => { statusDot.className = 'dot idle'; statusText.textContent = 'disconnected'; };
       ws.onerror = () => { statusDot.className = 'dot err'; statusText.textContent = 'connection error'; };
       ws.onmessage = (ev) => {
         const m = JSON.parse(ev.data);
         if (m.t === 'frame') frame.src = `data:image/jpeg;base64,${m.data}`;
-        else if (m.t === 'denied') pushLog(`denied — ${m.reason}`);
-        else if (m.t === 'error') pushLog(`error — ${m.message}`);
+        else if (m.t === 'denied') pushLog(`denied : ${m.reason}`);
+        else if (m.t === 'error') pushLog(`error : ${m.message}`);
       };
     };
 
@@ -612,19 +626,24 @@ function operatorView(id) {
     };
     const send = (m) => ws?.readyState === 1 && ws.send(JSON.stringify(m));
 
-    frame.addEventListener('mousedown', (e) => { e.preventDefault(); const p = toViewport(e); send({ t: 'mouse', type: 'mousePressed', ...p, button: 'left', clickCount: 1 }); });
+    frame.addEventListener('mousedown', (e) => { e.preventDefault(); frame.focus({ preventScroll: true }); const p = toViewport(e); send({ t: 'mouse', type: 'mousePressed', ...p, button: 'left', clickCount: 1 }); });
     frame.addEventListener('mouseup', (e) => { const p = toViewport(e); send({ t: 'mouse', type: 'mouseReleased', ...p, button: 'left', clickCount: 1 }); pushLog(`click (${Math.round(p.x)}, ${Math.round(p.y)})`); });
     frame.addEventListener('wheel', (e) => { e.preventDefault(); const p = toViewport(e); send({ t: 'wheel', ...p, dx: e.deltaX, dy: e.deltaY }); }, { passive: false });
 
     const keyHandler = (e) => {
       if (!ws || ws.readyState !== 1) return;
-      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') return;
+      if (document.activeElement !== frame) return;
+      if (e.key === 'Escape') { frame.blur(); return; }
       e.preventDefault();
       if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) { send({ t: 'text', value: e.key }); }
       else { send({ t: 'key', type: 'down', key: e.key }); send({ t: 'key', type: 'up', key: e.key }); pushLog(`key ${e.key}`); }
     };
     document.addEventListener('keydown', keyHandler);
-    window.addEventListener('hashchange', () => document.removeEventListener('keydown', keyHandler), { once: true });
+    window.addEventListener('hashchange', () => {
+      document.removeEventListener('keydown', keyHandler);
+      ws?.close();
+      if (state.live === ws) state.live = null;
+    }, { once: true });
 
     // The header's status pill, updated in place.
     //
@@ -671,13 +690,13 @@ function operatorView(id) {
       try {
         await api(`/api/interventions/${id}/return`, { method: 'POST', body: JSON.stringify({ resolution, note }) });
         ws?.close();
-        toast(`Control returned — ${label}.`);
+        toast(`Control returned : ${label}.`);
         await refreshAll(); go('#/operators');
       } catch (e) { toast(e.message, 'err'); }
     } }, label);
 
-    // If this operator already holds the channel — they claimed it a moment ago,
-    // or reloaded the page mid-session — reconnect straight away. Losing the
+    // If this operator already holds the channel : they claimed it a moment ago,
+    // or reloaded the page mid-session : reconnect straight away. Losing the
     // live session to a browser refresh would be an unforced error.
     if (i.context.control && ['claimed', 'in_control'].includes(i.status)) {
       claimBtn.textContent = 'You have control';
@@ -698,17 +717,17 @@ function operatorView(id) {
               h('span', { class: 'mono small faint' }, `${viewport.width}×${viewport.height}`)),
             h('div', { style: 'position:relative' }, frame, off)),
           h('div', { class: 'row mt' },
-            handBack('resume', 'Hand back — resume the run', 'primary'),
-            handBack('completed_by_human', 'Hand back — I completed it', ''),
+            handBack('resume', 'Resume automation', 'primary'),
+            handBack('completed_by_human', 'Mark completed by human', ''),
             handBack('abort', 'Abort the run', 'danger')),
-          h('div', { class: 'small faint mt' }, 'Your clicks and keystrokes are forwarded to the same browser session the automation was using, and every one is recorded on the run\'s evidence chain.')),
+          h('div', { class: 'small faint mt' }, 'Click the live screen to use its mouse and keyboard. Press Escape to return to the console controls. Every forwarded action is recorded on the run\'s evidence chain.')),
 
         h('div', {},
           h('div', { class: 'card' }, h('div', { class: 'card-head' }, h('h2', {}, 'Context')),
             h('dl', { class: 'kv' },
               h('dt', {}, 'Run'), h('dd', {}, h('a', { href: `#/runs/${i.context.runId}` }, i.context.runId)),
-              h('dt', {}, 'Institution'), h('dd', {}, i.context.tenant?.institution ?? '—'),
-              h('dt', {}, 'Step'), h('dd', { class: 'small' }, i.context.stepIntent ?? '—'),
+              h('dt', {}, 'Institution'), h('dd', {}, i.context.tenant?.institution ?? ':'),
+              h('dt', {}, 'Step'), h('dd', { class: 'small' }, i.context.stepIntent ?? ':'),
               h('dt', {}, 'Diagnosis'), h('dd', { class: 'small mono' }, i.context.diagnosis.code),
               i.context.diagnosis.expected ? h('dt', {}, 'Expected') : null,
               i.context.diagnosis.expected ? h('dd', { class: 'small mono faint' }, i.context.diagnosis.expected) : null,
@@ -731,17 +750,17 @@ function tenantsView() {
     const { tenants } = await api('/api/tenants');
     setChildren(wrap, 
       h('div', { class: 'page-head' }, h('div', {}, h('h1', {}, 'Tenants'),
-        h('div', { class: 'sub' }, 'Institutions running the same vendor product. One capability, one overlay each — never a re-recording.'))),
+        h('div', { class: 'sub' }, 'Institutions running the same vendor product. One capability, one overlay each : never a re-recording.'))),
       h('div', { class: 'grid two' }, tenants.map((t) => h('div', { class: 'card' },
         h('div', { class: 'card-head' }, h('h2', {}, t.institution), h('span', { class: 'pill muted' }, t.id)),
         h('dl', { class: 'kv' },
           h('dt', {}, 'Instance'), h('dd', { class: 'mono small' }, t.baseUrl),
-          h('dt', {}, 'Product version'), h('dd', { class: 'mono small' }, t.productVersion ?? '—'),
+          h('dt', {}, 'Product version'), h('dd', { class: 'mono small' }, t.productVersion ?? ':'),
           h('dt', {}, 'Vocabulary'), h('dd', { class: 'mono small muted' }, Object.entries(t.vocabulary ?? {}).map(([k, v]) => `${k}="${v}"`).join('  ') || 'product defaults'),
           h('dt', {}, 'Overlays'), h('dd', {}, t.overlays.length
             ? t.overlays.map((o) => h('div', { class: 'small' }, h('span', { class: 'mono' }, o.capabilityId), ' ',
                 h('span', { class: 'faint' }, `${o.patches} patches · ${o.overrides} overrides · ${o.extraSignals} extra signals`)))
-            : h('span', { class: 'faint small' }, 'none — runs on the base capability unchanged')),
+            : h('span', { class: 'faint small' }, 'none : runs on the base capability unchanged')),
         )))));
   })();
   return wrap;
@@ -775,4 +794,86 @@ function agentsView() {
           h('div', { class: 'mono small faint mt' }, `args: ${Object.keys(t.inputSchema.properties).join(', ') || 'none'}   returns: ${Object.keys(t.outputSchema?.properties ?? {}).join(', ') || 'none'}`)))));
   })();
   return wrap;
+}
+
+function welcomeView() {
+  const error = h('div', { role: 'alert' });
+  const enter = h('button', { class: 'btn primary large', onclick: async () => {
+    enter.disabled = true; enter.textContent = 'Opening your workspace…';
+    try {
+      state.user = (await api('/api/auth/demo', { method: 'POST', body: '{}' })).user;
+      await refreshAll(); render(); connectEvents();
+    } catch (e) { error.textContent = e.message; enter.disabled = false; enter.textContent = 'Open interactive demo'; }
+  } }, 'Open interactive demo', h('span', {}, '↗'));
+  return h('div', { class: 'welcome' },
+    h('header', { class: 'welcome-nav' }, h('a', { href: '/', class: 'wordmark' }, '◧ SWIVEL'), h('a', { href: 'https://github.com/shi1720/Computer-Use-Automation-System', target: '_blank', rel: 'noopener' }, 'View source ↗')),
+    h('main', { class: 'welcome-grid' },
+      h('section', {}, h('div', { class: 'eyebrow' }, h('span', { class: 'dot live' }), 'COMPUTER USE, BUILT TO REPEAT'),
+        h('h1', {}, 'Learn it once.', h('br'), h('span', {}, 'Run it with confidence.')),
+        h('p', { class: 'lead' }, 'Turn a job inside legacy software into a reusable capability. AI discovers the steps. Deterministic replay does the work. A person takes over when it matters.'),
+        enter, error, h('p', { class: 'small muted mt' }, 'No signup. Real browser automation. Synthetic bank data only.')),
+      h('section', { class: 'welcome-diagram', 'aria-label': 'Discovery to replay workflow' },
+        h('div', { class: 'diagram-label' }, 'ONE GOAL → A REUSABLE CAPABILITY'),
+        ...[['01', 'Discover', 'A model navigates the live application.', 'AI learns'], ['02', 'Review', 'Typed inputs, stable targets, clear checkpoints.', 'Artifact saved'], ['03', 'Replay', 'Run the same flow without a model.', '0 model calls']].map(([n,title,desc,badge]) => h('div', { class: 'diagram-step' }, h('span', { class: 'diagram-number' }, n), h('div', {}, h('h2', {}, title), h('p', {}, desc)), h('span', { class: 'pill ok' }, badge))),
+        h('div', { class: 'diagram-foot' }, '↳ If the run is stuck, a human gets the same live session.'))),
+    h('footer', { class: 'welcome-footer' }, h('span', {}, 'Designed for the software your APIs cannot reach.'), h('span', {}, 'TypeScript · Playwright · OpenAI')));
+}
+
+const demoScenarios = [
+  { id: 'success', title: 'Read a balance', detail: 'Search, open the member, and read the savings balances.', tag: 'Happy path' },
+  { id: 'not-found', title: 'Member not found', detail: 'Return a known business outcome without treating it as a crash.', tag: 'Business outcome' },
+  { id: 'session-expiry', title: 'Recover a timeout', detail: 'Expire the session mid-flow, sign back in, and safely restart.', tag: 'Recovery' },
+  { id: 'second-tenant', title: 'Try another institution', detail: 'Use the same capability with a small tenant overlay.', tag: 'Reuse' },
+  { id: 'handoff', title: 'Take the controls', detail: 'Pause at a missing step. Open the live session, click Display Deposit Accounts, and resume.', tag: 'Human handoff' },
+];
+const demoState = { scenario: 'success', job: null, events: [], busy: false, error: '' };
+function demoView() {
+  const wrap = h('div', { class: 'demo-page' });
+  const paint = () => {
+    const d = demoScenarios.find(x => x.id === demoState.scenario);
+    const result = demoState.job?.result;
+    const ticket = state.interventions.find(x => x.context.runId === demoState.job?.runId && ['open','claimed','in_control'].includes(x.status));
+    setChildren(wrap,
+      h('div', { class: 'demo-topline' }, h('span', { class: 'eyebrow' }, 'THE LIVE WORKSPACE'), h('span', { class: 'pill ok' }, 'Synthetic data only')),
+      h('div', { class: 'demo-heading' }, h('h1', {}, 'From a goal to a reliable action.'), h('p', {}, 'Explore the real engine. Every run opens a browser, follows a saved capability, and verifies the result.')),
+      h('div', { class: 'journey' }, ...[['01','Model discovery','A genuine OpenAI run is saved in the evidence.'],['02','Reviewed capability','Inspect the typed contract and recorded steps.'],['03','Deterministic replay','Run it here with zero model calls.']].map(([n,title,desc]) => h('div', {}, h('span', { class: 'journey-number' }, n), h('h3', {}, title), h('p', {}, desc)))),
+      h('div', { class: 'demo-layout' },
+        h('section', { class: 'card scenario-panel' }, h('div', { class: 'section-kicker' }, '01 / CHOOSE A SCENARIO'),
+          ...demoScenarios.map(x => h('button', { class: `scenario${x.id === demoState.scenario ? ' selected' : ''}`, disabled: demoState.busy, 'aria-pressed': x.id === demoState.scenario ? 'true' : 'false', onclick: () => { demoState.scenario = x.id; demoState.job = null; demoState.events = []; demoState.error = ''; paint(); } }, h('span', {}, h('strong', {}, x.title), h('small', {}, x.tag)), h('span', { class: 'scenario-arrow' }, '↗')))),
+        h('section', { class: 'card execution-panel' },
+          h('div', { class: 'section-kicker' }, '02 / RUN THE CAPABILITY'), h('h2', {}, d.title), h('p', { class: 'muted mt' }, d.detail),
+          h('div', { class: 'request-preview' }, h('span', {}, 'CAPABILITY'), h('code', {}, 'meridian.member-savings-balance'), h('span', {}, 'INSTITUTION'), h('strong', {}, ['second-tenant','handoff'].includes(d.id) ? 'Harbor Point Savings Bank' : 'Pine Ridge Federal Credit Union'), h('span', {}, 'MEMBER / PRODUCT'), h('code', {}, `${d.id === 'not-found' ? '9999999' : '0100482'} / SPECIAL SAVINGS`)),
+          h('div', { class: 'row' }, h('button', { class: 'btn primary large', disabled: demoState.busy || !state.demo, onclick: startDemo }, demoState.busy ? 'Running in a real browser…' : 'Run this scenario', h('span', {}, '→')), h('span', { class: 'small muted' }, '0 model calls during replay')),
+          !state.demo ? h('p', { class: 'small muted mt' }, 'Start npm run hosted to use the guided demo. The capability console is available now.') : null,
+          demoState.error ? h('div', { class: 'err-box mt', role: 'alert' }, demoState.error) : null,
+          ticket ? h('div', { class: 'handoff-callout' }, h('strong', {}, 'A person is needed. Your browser session is paused.'), h('p', {}, 'Claim the session, click Display Deposit Accounts on the live bank screen, then hand control back.'), h('a', { class: 'btn primary', href: `#/operators/${ticket.id}` }, 'Open live session →')) : null,
+          result ? h('div', { class: `result-box ${result.status}`, role: 'status' }, h('div', { class: 'row' }, statusPill(result.status), h('span', { class: 'small muted' }, `${(result.durationMs / 1000).toFixed(1)} seconds`)),
+            result.status === 'success' ? h('div', { class: 'balance-grid' }, ...Object.entries(result.outputs).map(([key,value]) => h('div', {}, h('span', {}, key.replace(/([A-Z])/g,' $1')), h('strong', {}, typeof value === 'number' ? value.toLocaleString('en-US', { style:'currency', currency:'USD' }) : String(value))))) : h('p', { class: 'mt' }, result.outcome?.message ?? result.error?.message ?? 'The run has ended.'),
+            h('a', { href: `#/runs/${result.runId}`, class: 'evidence-link' }, 'Inspect the run and evidence →')) : null)),
+      h('section', { class: 'card activity-card' }, h('div', { class: 'row mb' }, h('div', { class: 'section-kicker' }, '03 / FOLLOW THE EVIDENCE'), h('span', { class: 'spacer' }), demoState.busy ? h('span', { class:'pill info' }, 'Live run') : h('span', { class: 'small muted' }, 'Recorded by the engine')),
+        demoState.events.length ? h('div', { class: 'demo-events', 'aria-live': 'polite' }, ...demoState.events.slice(-8).map(e => h('div', {}, h('span', { class: 'event-dot' }), h('code', {}, e.kind), h('span', {}, e.message)))) : h('div', { class: 'activity-empty' }, h('span', {}, '◎'), h('div', {}, h('strong', {}, 'Ready when you are.'), h('p', {}, 'Choose a scenario above. Each verified step will appear here.')))),
+      h('div', { class: 'demo-footer-links' }, h('a', { href: '#/capabilities/meridian.member-savings-balance' }, 'Inspect the capability ↗'), h('a', { href: '#/runs' }, 'Browse saved discovery and replay evidence ↗'), h('a', { href: 'https://github.com/shi1720/Computer-Use-Automation-System/blob/main/REPORT.md', target: '_blank', rel: 'noopener' }, 'Read the design ↗')));
+  };
+  async function startDemo() {
+    demoState.busy = true; demoState.error = ''; demoState.events = []; demoState.job = null; paint();
+    try {
+      demoState.job = await api('/api/demo/run', { method: 'POST', body: JSON.stringify({ scenario: demoState.scenario }) });
+      const deadline = Date.now() + 12 * 60 * 1000;
+      while (demoState.job.status === 'running' && Date.now() < deadline) {
+        await new Promise(r => setTimeout(r, 1200));
+        demoState.job = await api(`/api/demo/jobs/${demoState.job.id}`);
+        if (demoState.job.runId) {
+          const detail = await api(`/api/runs/${demoState.job.runId}`);
+          demoState.events = detail.events.filter(e => ['step.started','step.checkpoint','extract','signal.fired','recovery.attempted','recovery.succeeded','run.finished','escalation.raised','escalation.resumed'].includes(e.kind));
+        }
+        state.interventions = (await api('/api/interventions')).interventions;
+        if (state.route === '#/demo') demoState.repaint?.();
+      }
+      if (demoState.job.status === 'failed') throw new Error(demoState.job.error);
+      if (demoState.job.status === 'running') throw new Error('This run is still waiting. Check the operator queue to resume or abort it.');
+      await refreshAll();
+    } catch (e) { demoState.error = e.message; }
+    finally { demoState.busy = false; if (state.route === '#/demo') demoState.repaint?.(); }
+  }
+  demoState.repaint = paint; paint(); return wrap;
 }

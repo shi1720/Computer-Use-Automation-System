@@ -17,7 +17,7 @@
  * to hand-wave authentication.
  */
 import express, { type NextFunction, type Request, type Response } from 'express';
-import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
+import { createHmac, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { readFile, realpath } from 'node:fs/promises';
 import { join, normalize, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -32,8 +32,9 @@ import { toToolDefinition } from './tools.js';
 const HERE = fileURLToPath(new URL('.', import.meta.url));
 const PUBLIC_DIR = join(HERE, '..', 'public');
 
-const SESSION_COOKIE = 'swivel_session';
-const SECRET = process.env.SWIVEL_SESSION_SECRET ?? 'swivel-dev-secret-change-me';
+// Firebase Hosting forwards only __session to a rewritten backend.
+const SESSION_COOKIE = '__session';
+const SECRET = process.env.SWIVEL_SESSION_SECRET ?? randomBytes(32).toString('hex');
 
 interface Session { userId: string; issuedAt: number }
 
@@ -49,12 +50,12 @@ function readToken(token: string | undefined): Session | null {
   const [body, mac] = token.split('.');
   if (!body || !mac) return null;
   const expect = sign(body);
-  if (mac.length !== expect.length || !timingSafeEqual(Buffer.from(mac), Buffer.from(expect))) return null;
+  if (Buffer.byteLength(mac) !== Buffer.byteLength(expect) || !timingSafeEqual(Buffer.from(mac), Buffer.from(expect))) return null;
   try {
     const s = JSON.parse(Buffer.from(body, 'base64url').toString()) as Session;
     // Eight hours. An operator console that can drive a teller session should
     // not hold a session open across a weekend.
-    if (Date.now() - s.issuedAt > 8 * 60 * 60_000) return null;
+    if (typeof s.userId !== 'string' || !Number.isFinite(s.issuedAt) || s.issuedAt > Date.now() || Date.now() - s.issuedAt > 8 * 60 * 60_000) return null;
     return s;
   } catch { return null; }
 }
@@ -63,13 +64,22 @@ export interface ConsoleDeps {
   store: SwivelStore;
   config: SwivelConfig;
   broker: EscalationBroker;
+  demo?: boolean;
 }
 
 export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> {
   const { store, config, broker } = deps;
   const app = express();
   app.disable('x-powered-by');
+  app.use((_req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Referrer-Policy', 'same-origin');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Cache-Control', 'private, no-store');
+    next();
+  });
   app.use(express.json({ limit: '2mb' }));
+  app.get('/api/health', (_req, res) => res.json({ status: 'ok', demo: !!deps.demo, version: '1.1.0' }));
 
   /**
    * The live-control channel is a websocket that can drive a teller session.
@@ -79,7 +89,13 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
    */
   const visible = (i: Intervention, user: User): Intervention => {
     const mayDrive = user.roles.includes('operator.takeover') && i.assignee?.id === user.id;
-    if (mayDrive) return i;
+    if (mayDrive) {
+      const base = process.env.SWIVEL_PUBLIC_RUN_URL;
+      if (base && i.context.control) return { ...i, context: { ...i.context, control: {
+        ...i.context.control, wsUrl: `${base.replace(/^http/, 'ws')}/live/${i.id}`,
+      } } };
+      return i;
+    }
     const { control, ...rest } = i.context;
     void control;
     return { ...i, context: rest };
@@ -144,6 +160,9 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
 
   app.post('/api/auth/login', async (req, res) => {
     const { id, password } = req.body as { id?: string; password?: string };
+    if (typeof id !== 'string' || typeof password !== 'string' || id.length > 100 || password.length > 512) {
+      res.status(400).json({ error: 'Enter a valid user and password.' }); return;
+    }
     const user = id ? await store.findUser(id) : null;
     if (!user?.passwordHash || !user.salt || !password || !verifyPassword(password, user.passwordHash, user.salt)) {
       // One message for both failure modes — enumerating valid user ids is free
@@ -168,8 +187,59 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
 
   app.get('/api/me', async (req, res) => {
     const user = await currentUser(req);
-    res.json({ user: user ? publicUser(user) : null });
+    res.json({ user: user ? publicUser(user) : null, demo: !!deps.demo });
   });
+
+  if (deps.demo) {
+    app.post('/api/auth/demo', async (req, res) => {
+      const user: User = { id: `guest-${randomUUID()}`, name: 'Demo visitor', email: '', role: 'operator',
+        roles: ['capability.invoke', 'operator.takeover', 'evidence.read'], createdAt: new Date().toISOString() };
+      await store.putUser(user);
+      const secure = req.secure || req.headers['x-forwarded-proto'] === 'https' ? ' Secure;' : '';
+      res.setHeader('Set-Cookie', `${SESSION_COOKIE}=${mintToken({ userId: user.id, issuedAt: Date.now() })}; Path=/; HttpOnly;${secure} SameSite=Lax; Max-Age=28800`);
+      res.json({ user: publicUser(user) });
+    });
+    const jobs = new Map<string, { id: string; scenario: string; status: string; runId?: string; result?: unknown; error?: string }>();
+    let busy = false;
+    app.post('/api/demo/run', requireAuth('capability.invoke'), async (req, res) => {
+      const scenario = req.body?.scenario;
+      if (!['success', 'not-found', 'session-expiry', 'second-tenant', 'handoff'].includes(scenario)) {
+        res.status(400).json({ error: 'Choose one of the available demo scenarios.' }); return;
+      }
+      if (busy) { res.status(409).json({ error: 'Another demo is running. Please try again when it finishes.' }); return; }
+      busy = true;
+      const job = { id: randomUUID(), scenario, status: 'running' } as { id: string; scenario: string; status: string; runId?: string; result?: unknown; error?: string };
+      jobs.set(job.id, job);
+      while (jobs.size > 80) jobs.delete(jobs.keys().next().value as string);
+      res.status(202).json(job);
+      try {
+        const tenant = requireTenant(config, ['second-tenant', 'handoff'].includes(scenario) ? 'harborpoint' : 'pineridge');
+        // Isolated, synthetic simulator only. Never accept a URL from the caller.
+        const reset = await fetch(`${tenant.baseUrl}/__sim/reset`, { method: 'POST' });
+        if (!reset.ok) throw new Error('The demo bank could not be reset.');
+        if (scenario === 'session-expiry') await fetch(`${tenant.baseUrl}/__sim/scenario`, {
+          method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ sessionExpiresAfterRequests: 3 }),
+        });
+        const cap = await store.getCapability('meridian.member-savings-balance');
+        if (!cap) throw new Error('The demo capability is missing.');
+        const overlay = scenario === 'handoff' ? null : await store.getOverlay(tenant.id, cap.metadata.id);
+        const runner = new Runner({ store, headless: true, ...(scenario === 'handoff' ? { escalation: { broker } } : {}) });
+        job.result = await runner.runReplay({ capability: cap, overlay, tenant,
+          inputs: { memberNumber: scenario === 'not-found' ? '9999999' : '0100482', shareType: 'SPECIAL SAVINGS' },
+          principal: { id: userOf(req).id, kind: 'human', roles: userOf(req).roles }, unattended: false,
+          onStart: ({ runId }) => { job.runId = runId; },
+        });
+        job.status = 'complete';
+        push('run.finished', { runId: job.runId });
+      } catch (e) { job.status = 'failed'; job.error = (e as Error).message; }
+      finally { busy = false; }
+    });
+    app.get('/api/demo/jobs/:id', requireAuth(), (req, res) => {
+      const job = jobs.get(req.params.id as string);
+      if (!job) { res.status(404).json({ error: 'Demo expired. Start a new run.' }); return; }
+      res.json(job);
+    });
+  }
 
   // ── catalogue ─────────────────────────────────────────────────────────────
   app.get('/api/capabilities', requireAuth(), async (_req, res) => {
@@ -365,6 +435,7 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
    * principal's roles, the origin allowlist.
    */
   app.post('/api/capabilities/:id/invoke', requireAuth('capability.invoke'), async (req, res) => {
+    if (deps.demo) { res.status(403).json({ error: 'Use the guided demo for hosted execution. Custom invocations are available in a local installation.' }); return; }
     const body = req.body as { version?: string; tenant: string; inputs: Record<string, unknown>; unattended?: boolean; confirmationToken?: string };
     const cap = await store.getCapability(req.params.id as string, body.version);
     if (!cap) { res.status(404).json({ error: 'No such capability' }); return; }
@@ -412,6 +483,8 @@ export async function buildConsole(deps: ConsoleDeps): Promise<express.Express> 
     const keepalive = setInterval(() => res.write(': ping\n\n'), 25_000);
     req.on('close', () => { clearInterval(keepalive); sseClients.delete(client); });
   });
+
+  app.use('/api', (_req, res) => { res.status(404).json({ error: 'No such API route.' }); });
 
   // ── static ────────────────────────────────────────────────────────────────
   app.use(express.static(PUBLIC_DIR, { index: false, maxAge: 0 }));

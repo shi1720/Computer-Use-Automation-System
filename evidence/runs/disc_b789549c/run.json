@@ -1,0 +1,47 @@
+{
+  "runId": "disc_b789549c",
+  "kind": "discovery",
+  "startedAt": "2026-09-22T04:10:45.373Z",
+  "principal": {
+    "id": "shivam",
+    "kind": "human"
+  },
+  "goal": "Look up the member given by memberNumber and report the current balance and available balance of the share account given by shareType.",
+  "tenant": {
+    "id": "pineridge",
+    "institution": "Pine Ridge Federal Credit Union",
+    "baseUrl": "http://127.0.0.1:4711"
+  },
+  "inputs": {
+    "memberNumber": "«pii:2a94040b…0482»",
+    "shareType": "SPECIAL SAVINGS"
+  },
+  "counts": {
+    "events": 15,
+    "steps": 3,
+    "screenshots": 0,
+    "signals": 1,
+    "recoveries": 0,
+    "escalations": 1
+  },
+  "redaction": {
+    "pii": 1,
+    "member_number": 4
+  },
+  "swivelVersion": "1.0.0",
+  "finishedAt": "2026-09-22T04:10:58.451Z",
+  "outcome": {
+    "status": "escalated",
+    "message": "Discovery escalated to a human operator: The session timed out and the system is requesting Operator ID and Password on the SESSION EXPIRED SCREEN SEC-0900. I am not permitted to invent or enter credentials that were not provided as parameters, and no operator credentials were supplied. A human operator needs to sign back on (enter Operator ID and Password and submit Sign On) to restore an authenticated session; once logged in, I can resume the workflow to search for member «pii:2a94040b…0482», open their Share Accounts, and read the current and available balance for the SPECIAL SAVINGS share.",
+    "turns": 4,
+    "usage": {
+      "inputTokens": 3759,
+      "outputTokens": 459,
+      "cacheReadTokens": 6912,
+      "cacheCreationTokens": 0
+    },
+    "costUsd": 0.0102,
+    "capability": null
+  },
+  "chainTip": "a3c8719ae64b620cfb7e66d606da9c550be05d932c1a01cf9dcc965cf8db6412"
+}

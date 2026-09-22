@@ -2,7 +2,7 @@
   "name": "swivel",
   "private": true,
   "version": "1.0.0",
-  "description": "Swivel — computer-use capabilities for systems that were never meant to be automated.",
+  "description": "Swivel : computer-use capabilities for systems that were never meant to be automated.",
   "type": "module",
   "workspaces": [
     "packages/*",
@@ -19,7 +19,11 @@
     "demo": "bash scripts/demo.sh",
     "typecheck": "tsc -p tsconfig.json",
     "test": "node --test --import tsx tests/*.test.ts",
-    "lint": "tsc -p tsconfig.json"
+    "lint": "tsc -p tsconfig.json",
+    "hosted": "tsx scripts/hosted.ts",
+    "start": "tsx scripts/hosted.ts",
+    "test:demo": "node scripts/check-demo.mjs",
+    "test:ui": "node scripts/check-ui.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.127.0",

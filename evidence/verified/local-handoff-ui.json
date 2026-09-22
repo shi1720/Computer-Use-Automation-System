@@ -1,0 +1,9 @@
+{
+  "base": "http://127.0.0.1:4700",
+  "runId": "rep_3404aac0",
+  "status": "success",
+  "renderedFrame": true,
+  "reconnect": true,
+  "keyboardResume": true,
+  "errors": []
+}
